@@ -11,8 +11,16 @@ package ltd.newbee.mall.controller.mall;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
+import ltd.newbee.mall.controller.vo.GoodsDescVO;
+import ltd.newbee.mall.controller.vo.GoodsImageVO;
+import ltd.newbee.mall.controller.vo.GoodsQaVO;
+import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
+import ltd.newbee.mall.entity.GoodsDesc;
+import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
@@ -26,15 +34,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Controller
-public class GoodsController {
+public class GoodsController<GoddsImageVo> {
 
-    @Resource
+    private static final Collection GoodsImageVO = null;
+	private static final List GoodsQaEntity = null;
+	@Resource
     private NewBeeMallGoodsService newBeeMallGoodsService;
     @Resource
     private NewBeeMallCategoryService newBeeMallCategoryService;
+	private Integer goodsId;
+	private Object imageVO;
+	private Object descVO;
 
     @GetMapping({"/search", "/search.html"})
     public String searchPage(@RequestParam Map<String, Object> params, HttpServletRequest request) {
@@ -86,7 +105,148 @@ public class GoodsController {
         BeanUtil.copyProperties(goods, goodsDetailVO);
         goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
         request.setAttribute("goodsDetail", goodsDetailVO);
-        return "mall/detail";
-    }
+        
+        
+        
+        
+      //4/19日 新加机能     
+      // <goodimage>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+        
+        
+		List<GoodsImage> list = newBeeMallGoodsService.getGoodsImageEntityByGoodsId(goodsId);
+        if(list == null) {
+        	NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+ 
+        List<GoodsImageVO> imageVOList = new ArrayList<GoodsImageVO>();
+            for(int i = 0; i < list.size();i++) {
+            GoodsImage image = new GoodsImage();
+            image = list.get(i);
+            if (image !=null)  {
+//	            String path = image.getPath();
+	            GoodsImageVO imageVO = new GoodsImageVO();
+//	            imageVO.setPath(path);
+	            BeanUtil.copyProperties(image, imageVO);
+	            imageVOList.add(imageVO);	
+	            
+         }            		 
+         }
+            	
+            
+            request.setAttribute("goodsImegeDetail", imageVOList);  
+            
+         
+       
+    //===============================================================================================================
 
+
+        List<GoodsQa> listQa =  newBeeMallGoodsService.getGoodsQaEntityByGoodsId(goodsId);
+        if(listQa == null) {
+        	NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+        List<GoodsQaVO> qaVOList = new ArrayList<GoodsQaVO>();
+           for(int i = 0; i < listQa.size();i++) {
+        	   GoodsQa qa = new GoodsQa();
+        	   qa = listQa.get(i);
+        	   if (qa !=null) {
+//        		   String question = qa.getQuestion();
+//        		   String id = qa.getId();
+//        		   Date submitDate = qa.getSubmitDate();
+//        		   String answer = qa.getAnswer();
+//        		   String answerDate = qa.getAnswer();
+//        		   String helpedNum = qa.getHelpedNum();
+        		   GoodsQaVO qaVO = new GoodsQaVO();
+//        		   qaVO.setQuestion(question);
+        		   BeanUtil.copyProperties(qa, qaVO);
+        		   qaVOList.add(qaVO);
+        	   }  
+               }
+          request.setAttribute("goodsQaDetail", qaVOList);
+//===================================================================================================================================
+          List<GoodsReview> listReview = newBeeMallGoodsService.getGoodsReviewEntityByGoodsId(goodsId);
+          if(listReview == null) {
+        	  NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+          }
+          List<GoodsReviewVO> reviewVOList = new ArrayList<GoodsReviewVO>();
+             for(int i = 0; i < listReview.size();i++) {
+            	 GoodsReview review = new GoodsReview();
+            	 review = listReview.get(i);
+            	 if (review !=null) {
+//            		 String picture = review.getPicture();
+//            		 String id = review.getContent();
+//            		 Integer star = review.getStar();
+//            		 String custermerId = review.getCustermerId();
+//            		 Date commentDate = review.getCommentDate();
+//            		 String title = review.getContent();
+//            		 String content = review.getContent();
+            		 GoodsReviewVO reviewVO = new GoodsReviewVO();
+//            		 reviewVO.setPicture(picture);
+            		 BeanUtil.copyProperties(review, reviewVO);
+            		 reviewVOList.add(reviewVO);
+            		 
+            	 }
+                 }
+             request.setAttribute("goodsReviewDetail", reviewVOList);
+//===================================================================================================================================
+          GoodsDesc goodsDesc = newBeeMallGoodsService.getGoodsDescEntityByGoodsId(goodsId);
+          if (goodsDesc == null) {
+           	  NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+           }
+             GoodsDescVO desc = new GoodsDescVO();
+             BeanUtil.copyProperties(goodsDesc, desc);
+             request.setAttribute("goodsDescDetail", desc);
+    
+              return "mall/detail";
+             
+                
+    }
 }
+           
+             
+              
+         
+
+
+
+
+       	  
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+ 
+        
+    
+    
+                                   
+    
+   
+
+
+
+

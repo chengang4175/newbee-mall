@@ -8,12 +8,17 @@
  */
 package ltd.newbee.mall.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsDesc;
+import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.util.PageQueryUtil;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 public interface NewBeeMallGoodsMapper {
     int deleteByPrimaryKey(Long goodsId);
@@ -45,5 +50,21 @@ public interface NewBeeMallGoodsMapper {
     int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
 
     int batchUpdateSellStatus(@Param("orderIds")Long[] orderIds,@Param("sellStatus") int sellStatus);
+    
+    
+    
+     //获得图片列表
+    List<GoodsImage> getGoodsImageList(Long goodsId);
+    //获取评论列表
+    List<GoodsReview> getGoodsReviewList(Long goodsId);
+//    //获得Qa列表
+    List<GoodsQa> getGoodsQaList(Long goodsId);
+//    //获得说明
+    
+
+	GoodsDesc getGoodsDesc(Long goodsId);
+    
+
 
 }
+ 
