@@ -44,17 +44,11 @@ import java.util.Map;
 
 @Controller
 public class GoodsController<GoddsImageVo> {
-
-    private static final Collection GoodsImageVO = null;
-	private static final List GoodsQaEntity = null;
 	@Resource
     private NewBeeMallGoodsService newBeeMallGoodsService;
     @Resource
     private NewBeeMallCategoryService newBeeMallCategoryService;
-	private Integer goodsId;
-	private Object imageVO;
-	private Object descVO;
-
+	
     @GetMapping({"/search", "/search.html"})
     public String searchPage(@RequestParam Map<String, Object> params, HttpServletRequest request) {
         if (StringUtils.isEmpty(params.get("page"))) {
@@ -202,51 +196,3 @@ public class GoodsController<GoddsImageVo> {
                 
     }
 }
-           
-             
-              
-         
-
-
-
-
-       	  
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
- 
-        
-    
-    
-                                   
-    
-   
-
-
-
-

@@ -53,18 +53,16 @@ public interface NewBeeMallGoodsMapper {
     
     
     
-     //获得图片列表
+//获得图片列表
     List<GoodsImage> getGoodsImageList(Long goodsId);
-    //获取评论列表
+//获取评论列表
     List<GoodsReview> getGoodsReviewList(Long goodsId);
-//    //获得Qa列表
+//获得Qa列表
     List<GoodsQa> getGoodsQaList(Long goodsId);
-//    //获得说明
-    
-
-	GoodsDesc getGoodsDesc(Long goodsId);
-    
-
+//获得说明
+    GoodsDesc getGoodsDesc(Long goodsId);
+//分页功能
+    List<GoodsQa>  getGoodsQaPageList(PageQueryUtil pageUtil);
 
 }
  

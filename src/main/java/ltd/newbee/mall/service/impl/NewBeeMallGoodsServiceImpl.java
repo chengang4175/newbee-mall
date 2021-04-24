@@ -34,6 +34,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 
     @Autowired
     private NewBeeMallGoodsMapper goodsMapper;
+	private PageQueryUtil pegeUtil;
 
     @Override
     public PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil) {
@@ -133,21 +134,11 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		return list;
 	}
 
-	
-
-	
-
-
-
-	
-	
-	
-	
-
-	
-
-	
-	
-
-	
+	@Override
+	public PageResult getGoodsQaEntityByGoodsId(PageQueryUtil pageUtil) {
+		List <GoodsQa> qaPageList = goodsMapper.getGoodsQaPageList(pageUtil);
+		int total = goodsMapper.getTotalNewBeeMallGoods(pegeUtil);
+		PageResult pageResult = new PageResult(qaPageList,total,pegeUtil.getLimit(),pageUtil.getPage());
+		return pageResult;
+	}
 }

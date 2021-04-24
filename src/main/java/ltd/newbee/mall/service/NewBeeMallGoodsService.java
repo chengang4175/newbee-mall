@@ -74,27 +74,15 @@ public interface NewBeeMallGoodsService {
      * @return
      */
     PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil);
-    
-//    
+//======================================================================================================
+   
     List<GoodsQa> getGoodsQaEntityByGoodsId(Long goodsId);
     List<GoodsReview> getGoodsReviewEntityByGoodsId(Long goodsId);
     List<GoodsImage> getGoodsImageEntityByGoodsId(Long goodsId);
     GoodsDesc getGoodsDescEntityByGoodsId(Long goodsId);
+//关于分页
+    PageResult getGoodsQaEntityByGoodsId(PageQueryUtil pageUtil);
 
 	
-
 	
-
-	
-
-	
-
-	
-
-
-	
-
-	
-    
-    
 }
