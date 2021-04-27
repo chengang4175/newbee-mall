@@ -54,6 +54,7 @@ public class NewBeeMallOrderController {
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
             return ResultGenerator.genFailResult("参数异常！");
         }
+        params.put("orderBy", "help_num");
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         return ResultGenerator.genSuccessResult(newBeeMallOrderService.getNewBeeMallOrdersPage(pageUtil));
     }

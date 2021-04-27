@@ -74,7 +74,7 @@ public interface NewBeeMallGoodsService {
      * @return
      */
     PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil);
-//======================================================================================================
+//
    
     List<GoodsQa> getGoodsQaEntityByGoodsId(Long goodsId);
     List<GoodsReview> getGoodsReviewEntityByGoodsId(Long goodsId);
@@ -82,7 +82,10 @@ public interface NewBeeMallGoodsService {
     GoodsDesc getGoodsDescEntityByGoodsId(Long goodsId);
 //关于分页
     PageResult getGoodsQaEntityByGoodsId(PageQueryUtil pageUtil);
-
-	
-	
+//页面排序
+    PageResult getHelpedNumListEntityByGoodsId(PageQueryUtil pageUtil);
+//页面内容输入实现
+    String saveInsertQa(GoodsQa question);
+    
+    	
 }

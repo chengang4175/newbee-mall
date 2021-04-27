@@ -62,7 +62,16 @@ public interface NewBeeMallGoodsMapper {
 //获得说明
     GoodsDesc getGoodsDesc(Long goodsId);
 //分页功能
-    List<GoodsQa>  getGoodsQaPageList(PageQueryUtil pageUtil);
+    List<GoodsQa> getGoodsQaPageList(PageQueryUtil pageUtil);
+    int getGoodsQacount(PageQueryUtil pageUtil);
+   
+    
+//四月二十四日页面排序
+    List<GoodsQa> getHelpedNumList(PageQueryUtil pageUtil);
+//四月二十四日页面内容输入
+    int insertGoodsQa(GoodsQa question);
+
+	
 
 }
  

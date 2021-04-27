@@ -22,15 +22,24 @@ import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.PagingQa;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
+import ltd.newbee.mall.util.PageResult;
+import ltd.newbee.mall.util.Result;
+import ltd.newbee.mall.util.ResultGenerator;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +48,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -143,15 +153,8 @@ public class GoodsController<GoddsImageVo> {
            for(int i = 0; i < listQa.size();i++) {
         	   GoodsQa qa = new GoodsQa();
         	   qa = listQa.get(i);
-        	   if (qa !=null) {
-//        		   String question = qa.getQuestion();
-//        		   String id = qa.getId();
-//        		   Date submitDate = qa.getSubmitDate();
-//        		   String answer = qa.getAnswer();
-//        		   String answerDate = qa.getAnswer();
-//        		   String helpedNum = qa.getHelpedNum();
-        		   GoodsQaVO qaVO = new GoodsQaVO();
-//        		   qaVO.setQuestion(question);
+        	   if (qa !=null) {        		  
+        		   GoodsQaVO qaVO = new GoodsQaVO();      
         		   BeanUtil.copyProperties(qa, qaVO);
         		   qaVOList.add(qaVO);
         	   }  
@@ -167,15 +170,7 @@ public class GoodsController<GoddsImageVo> {
             	 GoodsReview review = new GoodsReview();
             	 review = listReview.get(i);
             	 if (review !=null) {
-//            		 String picture = review.getPicture();
-//            		 String id = review.getContent();
-//            		 Integer star = review.getStar();
-//            		 String custermerId = review.getCustermerId();
-//            		 Date commentDate = review.getCommentDate();
-//            		 String title = review.getContent();
-//            		 String content = review.getContent();
             		 GoodsReviewVO reviewVO = new GoodsReviewVO();
-//            		 reviewVO.setPicture(picture);
             		 BeanUtil.copyProperties(review, reviewVO);
             		 reviewVOList.add(reviewVO);
             		 
@@ -192,7 +187,19 @@ public class GoodsController<GoddsImageVo> {
              request.setAttribute("goodsDescDetail", desc);
     
               return "mall/detail";
-             
-                
     }
-}
+
+              
+              @RequestMapping(value = "/goods/qaSort", method = RequestMethod.POST)
+              @ResponseBody
+              public Result getHelpedNumListEntityByGoodsId(@RequestBody(required = false) PagingQa page) {    	
+            		Map<String,Object> params = new HashMap<String,Object>();
+            		params.put("page","1");
+            		params.put("limit",Constants.GOODS_QA_PAGE_LIMIT);
+            		params.put("orderBy","helped_num");
+            		PageQueryUtil pageUtil = new PageQueryUtil(params);
+            		PageResult rs = newBeeMallGoodsService.getHelpedNumListEntityByGoodsId(pageUtil);                           
+                    return ResultGenerator.genSuccessResult(rs);                  
+           }              
+    }
+

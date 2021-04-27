@@ -133,12 +133,32 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		List<GoodsReview> list = goodsMapper.getGoodsReviewList(goodsId);
 		return list;
 	}
-
+//分页功能
 	@Override
 	public PageResult getGoodsQaEntityByGoodsId(PageQueryUtil pageUtil) {
 		List <GoodsQa> qaPageList = goodsMapper.getGoodsQaPageList(pageUtil);
-		int total = goodsMapper.getTotalNewBeeMallGoods(pegeUtil);
-		PageResult pageResult = new PageResult(qaPageList,total,pegeUtil.getLimit(),pageUtil.getPage());
+		int total = goodsMapper.getGoodsQacount(pageUtil);
+		PageResult pageResult = new PageResult(qaPageList,total,pageUtil.getLimit(),pageUtil.getPage());
 		return pageResult;
 	}
+//页面排序
+	@Override
+	public PageResult getHelpedNumListEntityByGoodsId(PageQueryUtil pageUtil) {
+		List <GoodsQa> qaSubmitDateList = goodsMapper.getHelpedNumList(pageUtil);
+		int total = goodsMapper.getGoodsQacount(pageUtil);
+		PageResult pegeResult = new PageResult(qaSubmitDateList,total,pageUtil.getLimit(),pageUtil.getPage());
+		return pegeResult;
+	}
+
+	@Override
+	
+	public String saveInsertQa(GoodsQa question) {
+		if (goodsMapper.insertGoodsQa(question) > 0) {
+			return ServiceResultEnum.SUCCESS.getResult();
+			
+		}
+         return ServiceResultEnum.DB_ERROR.getResult();	
+	}
+
+
 }

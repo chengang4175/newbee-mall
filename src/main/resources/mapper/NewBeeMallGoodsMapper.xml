@@ -398,8 +398,85 @@
   </select>
   <select id="getGoodsQaPageList" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsQa">
   select goods_id,id,question,submit_date,answer,answer_date,
-  helped_num from goods_qa order by submit_date
-  limit #{start},{limit}
+  helped_num from goods_qa
+  limit #{start},#{limit}
   </select>
+  <!--四月二十四日页面排序******************************************************************************************  -->
   
+  <select id="getHelpedNumList" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsQa">
+  select goods_id,id,question,submit_date,answer,answer_date,
+  helped_num from goods_qa 
+         <if test="orderBy!=null and orderBy!=''">
+            <choose>
+                <when test="orderBy == 'helped_num'">
+                    <!-- 按照参考人数从小到大排列 -->
+                    order by helped_num 
+                </when>
+            </choose>
+        </if>
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+  </select>
+  <!--goodsQa-count四月二十四日  -->
+  <select id = "getGoodsQacount" parameterType="Map" resultType="int">
+   select count(*) from goods_qa limit #{start},#{limit}
+  
+  </select>
+  <!-- 四月二十四日，内容输入实现 
+  <insert id="insertQa" parameterType="ltd.newbee.mall.entity.GoodsQa">
+    insert into goods_qa (goods_id, question, submit_date, answer, answer_date, helped_num, id)
+    values (#{goodsId,jdbcType=BIGINT}, #{question,jdbcType=VARCHAR}, #{submit_date,jdbcType=DATETIME}, 
+      #{answer,jdbcType=VARCHAR}, #{answer_date,jdbcType=VARCHAR}, #{helped_num,jdbcType=VARCHAR}, 
+      #{id,jdbcType=VARCHAR})
+  </insert>-->
+   <insert id="insertGoodsQa" parameterType="ltd.newbee.mall.entity.GoodsQa">
+    insert into goods_qa
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="question != null">
+        question,
+      </if>
+      <if test="submitDate != null">
+        submit_date,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="answerDate != null">
+        answer_date,
+      </if>
+      <if test="helpedNum != null">
+        helped_num,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="question != null">
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null">
+        #{submitDate,jdbcType=DATETIME},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="answerDate != null">
+        #{answerDate,jdbcType=VARCHAR},
+      </if>
+      <if test="helpedNum != null">
+        #{helpedNum,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
 </mapper>
