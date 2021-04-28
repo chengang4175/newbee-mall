@@ -1336,3 +1336,7 @@ img {
 .hiddenQaDiv {
     display:none;
 }
+.nextPage{
+	cursor: pointer;
+	color: #009e96
+}

@@ -144,8 +144,15 @@ public class GoodsController<GoddsImageVo> {
        
     //===============================================================================================================
 
-
-        List<GoodsQa> listQa =  newBeeMallGoodsService.getGoodsQaEntityByGoodsId(goodsId);
+              	
+        Map<String,Object> params = new HashMap<>();
+        params.put("page","1");
+        params.put("limit",Constants.GOODS_QA_PAGE_LIMIT);
+        params.put("orderBy","helped_num");
+        PageQueryUtil pageUtil = new PageQueryUtil(params);
+        PageResult rs = newBeeMallGoodsService.getHelpedNumListEntityByGoodsId(pageUtil);
+        List<GoodsQa> listQa = (List<GoodsQa>) rs.getList();
+//        List<GoodsQa> listQa =  newBeeMallGoodsService.getGoodsQaEntityByGoodsId(goodsId);
         if(listQa == null) {
         	NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }
@@ -193,8 +200,8 @@ public class GoodsController<GoddsImageVo> {
               @RequestMapping(value = "/goods/qaSort", method = RequestMethod.POST)
               @ResponseBody
               public Result getHelpedNumListEntityByGoodsId(@RequestBody(required = false) PagingQa page) {    	
-            		Map<String,Object> params = new HashMap<String,Object>();
-            		params.put("page","1");
+            		Map<String,Object> params = new HashMap<>();
+            		params.put("page",page.getPage());
             		params.put("limit",Constants.GOODS_QA_PAGE_LIMIT);
             		params.put("orderBy","helped_num");
             		PageQueryUtil pageUtil = new PageQueryUtil(params);
