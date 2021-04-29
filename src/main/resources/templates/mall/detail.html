@@ -145,7 +145,7 @@
 <th:block th:each="qa: ${goodsQaDetail}" th:if="${qa != null}">
 
 
-  <div class="zv-cqa hiddenQaDiv">
+  <div class="zv-cqa delete">
     <div class="zv-cqa-question">
       <span class="zv-space">Q. </span>
       <span class="zv-cqa-step" th:text="${qa.question}">この商品は脚を外してロースタイルにすることは可能でしょうか？</span>
@@ -224,7 +224,7 @@
     </div>
   </div>
   
-  <div class="zv-cqa">
+  <div class="zv-cqa hiddenQaDiv">
     <div class="zv-cqa-question">
       <span class="zv-space">Q. </span>
       <span class="zv-cqa-step" th:text="${qa.question}">この商品は脚を外してロースタイルにすることは可能でしょうか？</span>

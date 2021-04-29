@@ -85,7 +85,12 @@ public interface NewBeeMallGoodsService {
 //页面排序
     PageResult getHelpedNumListEntityByGoodsId(PageQueryUtil pageUtil);
 //页面内容输入实现
-    String saveInsertQa(GoodsQa question);
+    int insertGoodsQa(GoodsQa qaRecord);
+    Long getMaxQaId(Long goodsId);
+
+	
+
+	
     
     	
 }

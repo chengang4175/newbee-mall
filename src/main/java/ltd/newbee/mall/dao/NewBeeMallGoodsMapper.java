@@ -69,7 +69,8 @@ public interface NewBeeMallGoodsMapper {
 //四月二十四日页面排序
     List<GoodsQa> getHelpedNumList(PageQueryUtil pageUtil);
 //四月二十四日页面内容输入
-    int insertGoodsQa(GoodsQa question);
+    int insertGoodsQa(GoodsQa qaRecord);
+    Long getMaxQaId(Long goodsId);
 
 	
 

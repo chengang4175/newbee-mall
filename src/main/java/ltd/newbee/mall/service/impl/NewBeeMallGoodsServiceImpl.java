@@ -149,16 +149,22 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		PageResult pegeResult = new PageResult(qaSubmitDateList,total,pageUtil.getLimit(),pageUtil.getPage());
 		return pegeResult;
 	}
-
-	@Override
+ 
 	
-	public String saveInsertQa(GoodsQa question) {
-		if (goodsMapper.insertGoodsQa(question) > 0) {
-			return ServiceResultEnum.SUCCESS.getResult();
-			
-		}
-         return ServiceResultEnum.DB_ERROR.getResult();	
+	@Override	
+	public int insertGoodsQa(GoodsQa qaRecord) {
+		int count = goodsMapper.insertGoodsQa(qaRecord);
+		return count;
 	}
+	@Override
+	public Long getMaxQaId(Long goodsId) {
+		Long maxGoodsId = goodsMapper.getMaxQaId(goodsId);
+		if(maxGoodsId !=null) {
+			return maxGoodsId + 1;
+		}else {
+		return 1L;
+	
 
-
+	}
+	}
 }

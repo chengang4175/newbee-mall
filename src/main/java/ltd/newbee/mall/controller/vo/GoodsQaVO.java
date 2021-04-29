@@ -3,17 +3,17 @@ package ltd.newbee.mall.controller.vo;
 import java.util.Date;
 
 public class GoodsQaVO {
-	private String id;
+	private Long id;
 	private String question;
 	private Date submitDate;
 	private String answer;
-	private String answerDate;
+	private Date answerDate;
 	private String helpedNum;
 	private Long goodsId;
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getQuestion() {
@@ -34,10 +34,10 @@ public class GoodsQaVO {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	public String getAnswerDate() {
+	public Date getAnswerDate() {
 		return answerDate;
 	}
-	public void setAnswerDate(String answerDate) {
+	public void setAnswerDate(Date answerDate) {
 		this.answerDate = answerDate;
 	}
 	public String getHelpedNum() {
@@ -52,6 +52,7 @@ public class GoodsQaVO {
 	public void setGoodsId(Long goodsId) {
 		this.goodsId = goodsId;
 	}
+	
 	
 	
 

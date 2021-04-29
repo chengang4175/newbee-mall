@@ -111,13 +111,13 @@ public void testGoodsReview() {
     public void testInsertGoodsQa() {
 	   GoodsQa qa = new GoodsQa();
 	   qa.setQuestion("好吃吗");
-	   qa.setId("009");
+//	   qa.setId(009L);
 	   qa.setAnswer("好吃厉害");
-	   qa.setAnswerDate("20210423");
+//	   qa.setAnswerDate("20210423");
 	   qa.setHelpedNum("20");
 	   qa.setSubmitDate(null);
 	   qa.setGoodsId(10070L);
-	   String rs = newBeeMallGoodsService.saveInsertQa(qa);
+	   int rs = newBeeMallGoodsService.insertGoodsQa(qa);
 	   assertEquals(ServiceResultEnum.SUCCESS.getResult(),rs);
 	   
 	   

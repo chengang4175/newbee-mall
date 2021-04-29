@@ -152,7 +152,7 @@ public class GoodsController<GoddsImageVo> {
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         PageResult rs = newBeeMallGoodsService.getHelpedNumListEntityByGoodsId(pageUtil);
         List<GoodsQa> listQa = (List<GoodsQa>) rs.getList();
-//        List<GoodsQa> listQa =  newBeeMallGoodsService.getGoodsQaEntityByGoodsId(goodsId);
+//      List<GoodsQa> listQa =  newBeeMallGoodsService.getGoodsQaEntityByGoodsId(goodsId);
         if(listQa == null) {
         	NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }
@@ -199,14 +199,29 @@ public class GoodsController<GoddsImageVo> {
               
               @RequestMapping(value = "/goods/qaSort", method = RequestMethod.POST)
               @ResponseBody
-              public Result getHelpedNumListEntityByGoodsId(@RequestBody(required = false) PagingQa page) {    	
+              public Result getHelpedNumListEntityByGoodsId(@RequestBody PagingQa page) {    	
             		Map<String,Object> params = new HashMap<>();
             		params.put("page",page.getPage());
             		params.put("limit",Constants.GOODS_QA_PAGE_LIMIT);
             		params.put("orderBy","helped_num");
             		PageQueryUtil pageUtil = new PageQueryUtil(params);
-            		PageResult rs = newBeeMallGoodsService.getHelpedNumListEntityByGoodsId(pageUtil);                           
-                    return ResultGenerator.genSuccessResult(rs);                  
-           }              
-    }
+            		PageResult Result = newBeeMallGoodsService.getHelpedNumListEntityByGoodsId(pageUtil);                           
+                    return ResultGenerator.genSuccessResult(Result);                  
+           }
+              
+              /*@RequestMapping(value = "/goods/insertGoodsQa", method = RequestMethod.POST)
+              @ResponseBody
+              public Result insertGoodsQa(GoodsQa qa) { 
+            	  Integer count = null;
+            	  Long qaId = newBeeMallGoodsService.getMaxQaId(qa.getGoodsId());
+            	  qa.setId(qaId);
+            	  Date submiDate = new Date();
+            	  
+            	  if(qa !=null) {
+            		  count = newBeeMallGoodsService.saveInsertQa(qa);
+              }
+                               
+                    return ResultGenerator.genSuccessResult(count);           */
+    
 
+}

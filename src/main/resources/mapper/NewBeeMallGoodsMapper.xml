@@ -420,7 +420,8 @@
   </select>
   <!--goodsQa-count四月二十四日  -->
   <select id = "getGoodsQacount" parameterType="Map" resultType="int">
-   select count(*) from goods_qa limit #{start},#{limit}
+   select count(*) from goods_qa 
+   where goods_id = #{goodsId}
   
   </select>
   <!-- 四月二十四日，内容输入实现 
@@ -479,4 +480,7 @@
       </if>
     </trim>
   </insert>
+  <select id="getMaxQaId" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsQa">
+  select max(id) from goods_qa where goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
 </mapper>
