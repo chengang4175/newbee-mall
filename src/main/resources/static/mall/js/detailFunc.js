@@ -5,11 +5,10 @@
 		"page": page
 	};
 	debugger;*/
-    (function(){
+    $(function(){
 	debugger;
-	$(".prviousPage").css("pointer-events","none").css("color","grey");
-    });
-	
+	$(".prviousPage").css("pointer-events","none").css("color","grey"); 
+	});   	
 	$("#zv-cqa-select-sort").change(function(){				
 	    paging(2);
 	});
@@ -20,6 +19,10 @@
 	$(".previousPage").click(function(){
 		paging(1);
 	});
+
+	
+	
+	
 				
 	function paging(num){
 		var page = $("#currentPageNo").text();		
@@ -33,45 +36,35 @@
 			}else{
 				PageNo = 1
 			}
-			
 		    data = {
 				"page":PageNo
 				}
-			}
 		
-	$.ajax({
+	   $.ajax({
             type: 'POST',//方法类型            
             url : "/goods/qaSort",
             contentType: 'application/json',
-            
+            data:JSON.stringify(data),
             success: function (result) {
-	
                 if (result.resultCode == 200) {                    
-                    /*swal("保存成功", {
-                        icon: "success",
-                    });*/
                    var el;
                    if(result.data.list.length> 0){
 	               $("#ZVCQuestionsArea").find(".delete").remove();
                    }
                    var ar = result.data.list;
-                   
                    for(let i =0; i < ar.length; i++){
 	               el = $(".hiddenQaDiv").clone().removeClass("hiddenQaDiv");
 	               el.find(".zv-cqa-q-text").html(result.data.list[i].question);
+	               el.find(".zv-cqa-q-info").html(result.data.list[i].submitDate);
+	               el.find(".zv-cqa-q-text").html(result.data.list[i].answer);
+	               el.find(".zv-cqa-q-info").html(result.data.list[i].answerDate);
 	               $("#dateilFooter"),before(el);
 	               }
-	
-	                   /*var qa = $(".hiddenQaDiv")[0].clone().removeClass("hiddenQaDiv");
-	                   qa.find(".zv-cqa-q-text").html(ar[i].question + "chen");*/	               
-	                   /*qa.addendTO("#ZVCQuestionsArea")*/
-
                 } else {                  	
                     swal(result.message, {
                         icon: "error",
                     });
-                }
-                ;
+                };
             },
             error: function () {
                 swal("操作失败", {
@@ -79,4 +72,43 @@
                 });
             }
         });
+        }
+	 
+	 $("#ZVPostQuestionButton").click(function(){
+		debugger;
+		var question = $("#ZVQuestionTextarea").val();
+		var path = window.location.pathname;
+		var ar = path.split("/");
+		var len = ar.length;
+		var goodsId = ar[len-1];
+		debugger;
+		data = {
+			"question":question,
+			"goodsId" :goodsId
+	    };
+		
+	$.ajax({
+            type: 'POST',//方法类型            
+            url : "/goods/insertGoodsQa",
+            contentType: 'application/json',
+            data:JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {  
+	                swal("感谢您的留言",{  
+		                incon:"success"
+		             });
+                } else {                  	
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                };
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+   });
+        
     

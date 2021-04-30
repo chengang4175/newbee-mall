@@ -163,8 +163,6 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 			return maxGoodsId + 1;
 		}else {
 		return 1L;
-	
-
-	}
+	    }
 	}
 }

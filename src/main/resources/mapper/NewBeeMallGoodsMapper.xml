@@ -408,10 +408,18 @@
   helped_num from goods_qa 
          <if test="orderBy!=null and orderBy!=''">
             <choose>
-                <when test="orderBy == 'helped_num'">
-                    <!-- 按照参考人数从小到大排列 -->
-                    order by helped_num 
+                <when test="orderBy == 'submit_date'">
+                    <!-- 按照发布时间倒序排列 -->
+                    order by submit_date
                 </when>
+                <when test="orderBy == 'id'">
+                    <!-- 按照id从小到大排列 -->
+                    order by id
+                </when>
+                <otherwise>
+                    <!-- 默认按照参考人数从大到小排列 -->
+                    order by helped_num
+                </otherwise>
             </choose>
         </if>
         <if test="start!=null and limit!=null">
@@ -464,23 +472,23 @@
         #{question,jdbcType=VARCHAR},
       </if>
       <if test="submitDate != null">
-        #{submitDate,jdbcType=DATETIME},
+        #{submitDate,jdbcType=TIMESTAMP},
       </if>
       <if test="answer != null">
         #{answer,jdbcType=VARCHAR},
       </if>
       <if test="answerDate != null">
-        #{answerDate,jdbcType=VARCHAR},
+        #{answerDate,jdbcType=TIMESTAMP},
       </if>
       <if test="helpedNum != null">
         #{helpedNum,jdbcType=VARCHAR},
       </if>
       <if test="id != null">
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="getMaxQaId" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsQa">
+  <select id="getMaxQaId" parameterType="java.lang.Long" resultType="java.lang.Long">
   select max(id) from goods_qa where goods_id = #{goodsId,jdbcType=BIGINT}
   </select>
 </mapper>

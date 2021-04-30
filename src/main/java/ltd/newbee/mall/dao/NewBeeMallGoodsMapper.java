@@ -64,15 +64,11 @@ public interface NewBeeMallGoodsMapper {
 //分页功能
     List<GoodsQa> getGoodsQaPageList(PageQueryUtil pageUtil);
     int getGoodsQacount(PageQueryUtil pageUtil);
-   
-    
 //四月二十四日页面排序
     List<GoodsQa> getHelpedNumList(PageQueryUtil pageUtil);
 //四月二十四日页面内容输入
     int insertGoodsQa(GoodsQa qaRecord);
     Long getMaxQaId(Long goodsId);
-
-	
 
 }
  

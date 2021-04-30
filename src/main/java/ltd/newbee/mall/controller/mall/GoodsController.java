@@ -188,40 +188,43 @@ public class GoodsController<GoddsImageVo> {
           GoodsDesc goodsDesc = newBeeMallGoodsService.getGoodsDescEntityByGoodsId(goodsId);
           if (goodsDesc == null) {
            	  NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
-           }
+              }
              GoodsDescVO desc = new GoodsDescVO();
              BeanUtil.copyProperties(goodsDesc, desc);
              request.setAttribute("goodsDescDetail", desc);
     
-              return "mall/detail";
-    }
+             return "mall/detail";
+             }
 
               
-              @RequestMapping(value = "/goods/qaSort", method = RequestMethod.POST)
-              @ResponseBody
-              public Result getHelpedNumListEntityByGoodsId(@RequestBody PagingQa page) {    	
-            		Map<String,Object> params = new HashMap<>();
-            		params.put("page",page.getPage());
-            		params.put("limit",Constants.GOODS_QA_PAGE_LIMIT);
-            		params.put("orderBy","helped_num");
-            		PageQueryUtil pageUtil = new PageQueryUtil(params);
-            		PageResult Result = newBeeMallGoodsService.getHelpedNumListEntityByGoodsId(pageUtil);                           
-                    return ResultGenerator.genSuccessResult(Result);                  
-           }
+            @RequestMapping(value = "/goods/qaSort", method = RequestMethod.POST)
+            @ResponseBody
+            public Result getHelpedNumListEntityByGoodsId(@RequestBody PagingQa page) {    	
+            	Map<String,Object> params = new HashMap<>();
+            	params.put("page",page.getPage());
+            	params.put("limit",Constants.GOODS_QA_PAGE_LIMIT);
+            	params.put("orderBy","helped_num");
+            	PageQueryUtil pageUtil = new PageQueryUtil(params);
+            	PageResult Result = newBeeMallGoodsService.getHelpedNumListEntityByGoodsId(pageUtil);                           
+                return ResultGenerator.genSuccessResult(Result);                  
+             }
               
-              /*@RequestMapping(value = "/goods/insertGoodsQa", method = RequestMethod.POST)
-              @ResponseBody
-              public Result insertGoodsQa(GoodsQa qa) { 
-            	  Integer count = null;
-            	  Long qaId = newBeeMallGoodsService.getMaxQaId(qa.getGoodsId());
-            	  qa.setId(qaId);
-            	  Date submiDate = new Date();
-            	  
-            	  if(qa !=null) {
-            		  count = newBeeMallGoodsService.saveInsertQa(qa);
-              }
+            @RequestMapping(value = "/goods/insertGoodsQa", method = RequestMethod.POST)
+            @ResponseBody
+            public Result insertGoodsQa(@RequestBody GoodsQa qaRecord) { 
+               Integer count = null;
+               Long qaId = newBeeMallGoodsService.getMaxQaId(qaRecord.getGoodsId());
+               qaRecord.setId(qaId);
+               Date submiDate = new Date();
+               qaRecord.setSubmitDate(submiDate);            	  
+            	 if(qaRecord !=null) {
+            		 count = newBeeMallGoodsService.insertGoodsQa(qaRecord);
+                 }
+            	 if(!(count > 0)) {
+            	    return ResultGenerator.genFailResult("投稿失败");
+            	 }
                                
-                    return ResultGenerator.genSuccessResult(count);           */
+                    return ResultGenerator.genSuccessResult(count);           
     
-
+            }
 }
