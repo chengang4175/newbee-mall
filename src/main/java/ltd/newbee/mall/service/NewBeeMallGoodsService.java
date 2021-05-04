@@ -11,9 +11,11 @@ package ltd.newbee.mall.service;
 import java.util.List;
 
 import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.HelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
@@ -74,7 +76,6 @@ public interface NewBeeMallGoodsService {
      * @return
      */
     PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil);
-//
    
     List<GoodsQa> getGoodsQaEntityByGoodsId(Long goodsId);
     List<GoodsReview> getGoodsReviewEntityByGoodsId(Long goodsId);
@@ -87,10 +88,12 @@ public interface NewBeeMallGoodsService {
 //页面内容输入实现
     int insertGoodsQa(GoodsQa qaRecord);
     Long getMaxQaId(Long goodsId);
+//
+    List<GoodsReviewVO> getGoodsReviews(Long goodsId);
+//参考人数
+    long getGoodsReviewHelpNum(long reviewId);
 
-	
+	boolean addHelpNum(HelpNum goodsReviewHelpNum);
 
-	
-    
-    	
+	boolean updateReviewNum(HelpNum goodsReviewHelpNum);    	
 }

@@ -401,7 +401,7 @@
   helped_num from goods_qa
   limit #{start},#{limit}
   </select>
-  <!--四月二十四日页面排序******************************************************************************************  -->
+  <!--四月二十四日页面排序 -->
   
   <select id="getHelpedNumList" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsQa">
   select goods_id,id,question,submit_date,answer,answer_date,
@@ -490,5 +490,22 @@
   </insert>
   <select id="getMaxQaId" parameterType="java.lang.Long" resultType="java.lang.Long">
   select max(id) from goods_qa where goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
+  <select id="getGoodsReviews" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsReview">
+       select id,star,custermer_id,comment_date,goods_id,title,content,picture
+       from review where goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
+  <!--参考人数实现  -->
+  <insert id = "insertHelpNum" parameterType="ltd.newbee.mall.entity.HelpNum">
+   insert into help_num(review_id, user_id)
+   values(#{reviewId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT})
+  </insert>
+  <update id="updateReviewNum">
+   update review set review_num = review_num + 1
+   where id = #{reviewId}
+  </update>
+  <select id="getGoodsReviewHelpNum" parameterType="java.lang.Long" resultType="java.lang.Long">
+  select review_num
+  from review where id = #{reviewId,jdbcType=BIGINT}
   </select>
 </mapper>

@@ -13,6 +13,7 @@ public class GoodsReviewVO {
 	private String picture;
 	private String nickName;
 	private String goodsName;
+	private Long reviewNum;
 	public String getId() {
 		return id;
 	}
@@ -73,6 +74,13 @@ public class GoodsReviewVO {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
+	public Long getReviewNum() {
+		return reviewNum;
+	}
+	public void setReviewNum(Long reviewNum) {
+		this.reviewNum = reviewNum;
+	}
+	
 	
 
 }

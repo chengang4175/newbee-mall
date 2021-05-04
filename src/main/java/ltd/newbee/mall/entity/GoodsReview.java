@@ -13,6 +13,7 @@ public class GoodsReview {
 	private String picture;
 	private String nickName;
 	private String goodsName;
+	private Long reviewNum;
 	public String getId() {
 		return id;
 	}
@@ -73,12 +74,19 @@ public class GoodsReview {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
+	public Long getReviewNum() {
+		return reviewNum;
+	}
+	public void setReviewNum(Long reviewNum) {
+		this.reviewNum = reviewNum;
+	}
 	@Override
 	public String toString() {
 		return "GoodsReview [id=" + id + ", star=" + star + ", custermerId=" + custermerId + ", commentDate="
 				+ commentDate + ", goodsId=" + goodsId + ", title=" + title + ", content=" + content + ", picture="
-				+ picture + ", nickName=" + nickName + ", goodsName=" + goodsName + "]";
+				+ picture + ", nickName=" + nickName + ", goodsName=" + goodsName + ", reviewNum=" + reviewNum + "]";
 	}
+	
 	
 
 }

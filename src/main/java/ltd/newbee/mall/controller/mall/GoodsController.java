@@ -16,11 +16,13 @@ import ltd.newbee.mall.controller.vo.GoodsImageVO;
 import ltd.newbee.mall.controller.vo.GoodsQaVO;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
+import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.HelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.PagingQa;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
@@ -43,6 +45,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -207,7 +210,7 @@ public class GoodsController<GoddsImageVo> {
             	PageQueryUtil pageUtil = new PageQueryUtil(params);
             	PageResult Result = newBeeMallGoodsService.getHelpedNumListEntityByGoodsId(pageUtil);                           
                 return ResultGenerator.genSuccessResult(Result);                  
-             }
+            }
               
             @RequestMapping(value = "/goods/insertGoodsQa", method = RequestMethod.POST)
             @ResponseBody
@@ -223,8 +226,38 @@ public class GoodsController<GoddsImageVo> {
             	 if(!(count > 0)) {
             	    return ResultGenerator.genFailResult("投稿失败");
             	 }
-                               
                     return ResultGenerator.genSuccessResult(count);           
     
+              }
+            
+            @RequestMapping(value = "/goods/showMoreReviews", method = RequestMethod.POST)
+            @ResponseBody
+            public Result showMoreReviews(@RequestBody Long goodsId) { 
+            	List<GoodsReviewVO> reviewVoList = newBeeMallGoodsService.getGoodsReviews(goodsId);             
+                   return ResultGenerator.genSuccessResult(reviewVoList);           
+    
+             }
+            @RequestMapping(value = "/goods/helpNum", method = RequestMethod.POST)
+            @ResponseBody
+            public Result helpNum(@RequestBody HelpNum goodsReviewHelpNum,HttpSession httpSession) { 
+            	  NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+            	  if(user!=null) {
+            		  goodsReviewHelpNum.setUserId(user.getUserId());
+            	  }
+            	  boolean addFlag = newBeeMallGoodsService.addHelpNum(goodsReviewHelpNum);
+            	  if(addFlag) {
+            		  boolean updateFlag = newBeeMallGoodsService.updateReviewNum(goodsReviewHelpNum);
+            		  if(updateFlag) {
+            		  long helpNum = newBeeMallGoodsService.getGoodsReviewHelpNum(goodsReviewHelpNum.getReviewId());
+            		  
+            		  return ResultGenerator.genSuccessResult(true);
+            	     }else {
+            		  return ResultGenerator.genFailResult("失败");
+            	     }
+            	  }else {
+            		  return ResultGenerator.genFailResult("插入失败");
+            	  }
             }
+                              
+            
 }

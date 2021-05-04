@@ -16,6 +16,7 @@ import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.HelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -69,6 +70,12 @@ public interface NewBeeMallGoodsMapper {
 //四月二十四日页面内容输入
     int insertGoodsQa(GoodsQa qaRecord);
     Long getMaxQaId(Long goodsId);
+//展开更多评论
+    List<GoodsReview> getGoodsReviews(Long goodsId);
+//参考人数
+    boolean insertHelpNum(HelpNum goodsReviewaHelpNum);
+    boolean updateReviewNum(HelpNum goodsReviewaHelpNum);
+    long getGoodsReviewHelpNum(long reviewId);
 
 }
  

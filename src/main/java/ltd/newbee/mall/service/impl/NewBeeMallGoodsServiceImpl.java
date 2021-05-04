@@ -17,12 +17,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import ltd.newbee.mall.common.ServiceResultEnum;
+import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.HelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
@@ -148,9 +150,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		int total = goodsMapper.getGoodsQacount(pageUtil);
 		PageResult pegeResult = new PageResult(qaSubmitDateList,total,pageUtil.getLimit(),pageUtil.getPage());
 		return pegeResult;
-	}
- 
-	
+	}	
 	@Override	
 	public int insertGoodsQa(GoodsQa qaRecord) {
 		int count = goodsMapper.insertGoodsQa(qaRecord);
@@ -165,4 +165,31 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		return 1L;
 	    }
 	}
+
+	@Override
+	public List<GoodsReviewVO> getGoodsReviews(Long goodsId) {
+		List<GoodsReview> entityList = goodsMapper.getGoodsReviews(goodsId);
+		List<GoodsReviewVO> reviewVoList = BeanUtil.copyList(entityList,GoodsReviewVO.class);
+		return reviewVoList;
+	}
+//参考人数
+	
+	@Override
+	public long getGoodsReviewHelpNum(long reviewId) {
+		
+		return goodsMapper.getGoodsReviewHelpNum(reviewId);
+	}
+
+	@Override
+	public boolean addHelpNum(HelpNum goodsReviewHelpNum) {
+		
+		return goodsMapper.insertHelpNum(goodsReviewHelpNum);
+	}
+
+	@Override
+	public boolean updateReviewNum(HelpNum goodsReviewHelpNum) {
+		
+		return goodsMapper.updateReviewNum(goodsReviewHelpNum);
+	}
+	
 }

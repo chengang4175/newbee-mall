@@ -407,7 +407,7 @@
 
 
 
-<li class="g-reviewList_item">
+<li class="g-reviewList_item hiddenList">
 
 	    <p class="g-label-brand g-reviewList_label">ピックアップレビュー</p>
 	        <div class="g-lg-flow-sm">
@@ -456,7 +456,10 @@
 	    <p class="g-reviewList_h"th:text="${review.title}">可愛い</p>
 	    <p th:text="${review.content}">コンパクトで色もめっちゃ可愛いです。本当に買って良かったです。
 組み立ても簡単でした。</p>
-	 	<p class="g-reviewList_like"><a class="g-link reviewLike1" id="js-hitLike" data-count="1" data="60476d48d3d291002900011a" data-clickable=""><i class="g-s g-s-like-g" aria-hidden="true"></i><span>参考になった（2人）</span></a></p>
+	 	<p class="g-reviewList_like"><a class="g-link reviewLike1" id="js-hitLike" data-count="1" data="60476d48d3d291002900011a" data-clickable=""><i class="g-s g-s-like-g" aria-hidden="true"></i>
+	 	<span class="helpNumSpan">参考になった（2人）</span>
+	 	<span class="hidSpForRevId"></span>
+	 	</a></p>
   	</li>
 
   	<li class="g-reviewList_item">
@@ -466,9 +469,9 @@
 					<span class="g-clip">text.product.review.Rating</span>
 	      		</span>
 			</p>
-	      	
+	 </th:block>
 								<div class="g-foot-v g-foot-sm" id="js-review-more" aria-hidden="false">
-									<p class="g-align-tc">
+									<p class="g-align-tc" id="showMoreReviewsBtn">
 										<a class="g-link displaymorereview" href="#p-reviewMore" role="button" aria-expanded="false" aria-controls="p-reviewMore" data-label="閉じる" data-accordion="{&quot;scroll&quot;:false}">
 										<i class="g-i g-i-arrow-d"></i><span>レビューをもっと見る（3/<span id="js-reviews-more">4</span>）</span></a>
 									</p>

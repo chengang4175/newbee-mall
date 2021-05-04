@@ -74,7 +74,7 @@
         });
         }
 	 
-	 $("#ZVPostQuestionButton").click(function(){
+	$("#ZVPostQuestionButton").click(function(){
 		debugger;
 		var question = $("#ZVQuestionTextarea").val();
 		var path = window.location.pathname;
@@ -87,8 +87,8 @@
 			"goodsId" :goodsId
 	    };
 		
-	$.ajax({
-            type: 'POST',//方法类型            
+	  $.ajax({
+            type: 'POST',            
             url : "/goods/insertGoodsQa",
             contentType: 'application/json',
             data:JSON.stringify(data),
@@ -110,5 +110,87 @@
             }
         });
    });
+/*展开更多评论*/
+   $("#showMoreReviewsBtn").click(function(){
+	debugger;
+	var goodsId = getGoodsId();
+	var data = {
+		"goodsId": goodsId
+	           };
+	 $.ajax({
+            type: 'POST',            
+            url : "/goods/showMoreReviews",
+            contentType: 'application/json',
+            data:JSON.stringify(goodsId),
+            success: function (result) {
+                if (result.resultCode == 200) {
+	                debugger;
+	                var list = result.data;
+	                if(list === undefined){
+		             swal(error,{
+			             icon:"error",
+			
+		                 });
+	                 }
+	               if(list !=undefined && list.length !=0){
+		               for( i =0; i< list.length; i++){
+			               var el =$(".g-reviewList_item").clone().removeClass("hiddenList");
+			               $(".g-reviewList_item").before(el);
+		               }
+	                }  
+	                
+                } else {                  	
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                };
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+	
+     })
+     function getGoodsId(){
+	 var path = window.location.pathname;
+	 var ar = path.split("/");
+	 var len = ar.length;
+	 var goodsId  = ar[len-1];
+	 return  goodsId;
+	 
+     }
+/*参考人数*/
+     function helpNumClickFunc(){
+	 var reviewId = $( this ).parent().find(".hidSpForRevId").text();
+	 var data = {
+		 "reviewId": reviewId
+	}
+	$.ajax({
+            type: 'POST',//方法类型            
+            url : "/goods/helpNum",
+            contentType: 'application/json',
+            data:JSON.stringify(goodsId),
+            success: function (result) {
+                if (result.resultCode == 200) {
+	                debugger;
+	               console.log(data);
+	               _this.find(".helpNumSpan").text("参考人数("+ result.data + "人)");
+	                
+                } else {                  	
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                };
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+}
+    
         
     
