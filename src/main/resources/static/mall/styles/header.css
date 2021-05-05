@@ -1340,3 +1340,12 @@ img {
 	cursor: pointer;
 	color: #009e96
 }
+.hiddenList{
+    display:none;
+}
+.hidSpForRevId{
+    display:none;
+}
+.helpNumSpan{
+    cursor:pointer;
+} 

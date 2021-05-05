@@ -75,7 +75,7 @@ public interface NewBeeMallGoodsMapper {
 //参考人数
     boolean insertHelpNum(HelpNum goodsReviewaHelpNum);
     boolean updateReviewNum(HelpNum goodsReviewaHelpNum);
-    long getGoodsReviewHelpNum(long reviewId);
+    long getGoodsReviewHelpNum(int reviewId);
 
 }
  

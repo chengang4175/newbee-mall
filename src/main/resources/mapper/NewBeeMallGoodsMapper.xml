@@ -389,7 +389,7 @@
        where goods_id = #{goodsId,jdbcType=BIGINT}
  </select>
  <select id="getGoodsReviewList" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsReview">
-       select r.id,r.star,r.custermer_id,r.comment_date,r.goods_id,r.title,r.content,r.picture,
+       select r.id,r.star,r.custermer_id,r.comment_date,r.goods_id,r.title,r.content,r.picture,r.review_num,
        u.user_id,u.nick_name,u.login_name,
        i.goods_name
        from goods_review as r join tb_newbee_mall_user as u on r.custermer_id=u.user_id join 
@@ -493,7 +493,7 @@
   </select>
   <select id="getGoodsReviews" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsReview">
        select id,star,custermer_id,comment_date,goods_id,title,content,picture
-       from review where goods_id = #{goodsId,jdbcType=BIGINT}
+       from goods_review where goods_id = #{goodsId,jdbcType=BIGINT}
   </select>
   <!--参考人数实现  -->
   <insert id = "insertHelpNum" parameterType="ltd.newbee.mall.entity.HelpNum">
@@ -501,11 +501,11 @@
    values(#{reviewId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT})
   </insert>
   <update id="updateReviewNum">
-   update review set review_num = review_num + 1
+   update goods_review set review_num = review_num + 1
    where id = #{reviewId}
   </update>
-  <select id="getGoodsReviewHelpNum" parameterType="java.lang.Long" resultType="java.lang.Long">
+  <select id="getGoodsReviewHelpNum" parameterType="int" resultType="java.lang.Long">
   select review_num
-  from review where id = #{reviewId,jdbcType=BIGINT}
+  from goods_review where id = #{reviewId,jdbcType=BIGINT}
   </select>
 </mapper>

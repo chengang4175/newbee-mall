@@ -91,7 +91,7 @@ public interface NewBeeMallGoodsService {
 //
     List<GoodsReviewVO> getGoodsReviews(Long goodsId);
 //参考人数
-    long getGoodsReviewHelpNum(long reviewId);
+    long getGoodsReviewHelpNum(int reviewId);
 
 	boolean addHelpNum(HelpNum goodsReviewHelpNum);
 

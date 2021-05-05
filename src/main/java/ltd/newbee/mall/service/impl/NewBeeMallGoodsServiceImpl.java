@@ -175,7 +175,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 //参考人数
 	
 	@Override
-	public long getGoodsReviewHelpNum(long reviewId) {
+	public long getGoodsReviewHelpNum(int reviewId) {
 		
 		return goodsMapper.getGoodsReviewHelpNum(reviewId);
 	}

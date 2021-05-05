@@ -248,13 +248,12 @@ public class GoodsController<GoddsImageVo> {
             	  if(addFlag) {
             		  boolean updateFlag = newBeeMallGoodsService.updateReviewNum(goodsReviewHelpNum);
             		  if(updateFlag) {
-            		  long helpNum = newBeeMallGoodsService.getGoodsReviewHelpNum(goodsReviewHelpNum.getReviewId());
-            		  
-            		  return ResultGenerator.genSuccessResult(true);
-            	     }else {
+            		          long helpNum = newBeeMallGoodsService.getGoodsReviewHelpNum(goodsReviewHelpNum.getReviewId());
+            		          return ResultGenerator.genSuccessResult(helpNum);
+            	      }else {
             		  return ResultGenerator.genFailResult("失败");
             	     }
-            	  }else {
+            	 }else{
             		  return ResultGenerator.genFailResult("插入失败");
             	  }
             }

@@ -8,38 +8,50 @@
     $(function(){
 	debugger;
 	$(".prviousPage").css("pointer-events","none").css("color","grey"); 
-	});   	
+	$("#closeBtn").hide();
+	});   
+	
+		
 	$("#zv-cqa-select-sort").change(function(){				
 	    paging(2);
 	});
 	$(".nextPage").click(function(){
 		paging(0);
-	$(".previousPage").css("pointer-events","auto").css("color","#009e96");
+	    $(".previousPage").css("pointer-events","auto").css("color","#009e96");
 	});
 	$(".previousPage").click(function(){
 		paging(1);
+	});
+	
+	
+	$("#closeBth").click(function(){
+	   $(".g-reviewList").hide();
+	   $(".#closeBth").hide();
+	   $(".#showMoreReviewBth").show();
+		
 	});
 
 	
 	
 	
-				
-	function paging(num){
+//排序功能				
+function paging(num){
 		var page = $("#currentPageNo").text();		
 		var PageNo = 0;
 		console.log("current page: ",page);
 		var url = "/goods/qaSort";
 		if(num == 0){			
 			PageNo = parseInt(page) + 1;
-			}else if (num == 1){
+		}else if (num == 1){
 			PageNo = parseInt(page) - 1;
-			}else{
+		}else{
 				PageNo = 1
 			}
 		    data = {
 				"page":PageNo
-				}
+			};
 		
+	console.log("data",data);
 	   $.ajax({
             type: 'POST',//方法类型            
             url : "/goods/qaSort",
@@ -49,22 +61,23 @@
                 if (result.resultCode == 200) {                    
                    var el;
                    if(result.data.list.length> 0){
-	               $("#ZVCQuestionsArea").find(".delete").remove();
+	                   $("#ZVCQuestionsArea").find(".zv-cqa").remove();
                    }
-                   var ar = result.data.list;
-                   for(let i =0; i < ar.length; i++){
-	               el = $(".hiddenQaDiv").clone().removeClass("hiddenQaDiv");
-	               el.find(".zv-cqa-q-text").html(result.data.list[i].question);
-	               el.find(".zv-cqa-q-info").html(result.data.list[i].submitDate);
-	               el.find(".zv-cqa-q-text").html(result.data.list[i].answer);
-	               el.find(".zv-cqa-q-info").html(result.data.list[i].answerDate);
-	               $("#dateilFooter"),before(el);
+                   
+                   for(let i =0; i < result.length; i++){
+	                   el = $(".hiddenQaDiv").clone().removeClass("hiddenQaDiv");
+	                   el.find(".zv-cqa-q-text").html(result.data.list[i].question);
+	                   el.find(".zv-cqa-q-info").html(result.data.list[i].submitDate);
+	                   el.find(".zv-cqa-q-text").html(result.data.list[i].answer);
+	                   el.find(".zv-cqa-q-info").html(result.data.list[i].answerDate);
+	                   $("#dateilFooter"),before(el);
 	               }
                 } else {                  	
                     swal(result.message, {
                         icon: "error",
                     });
-                };
+                }
+                ;
             },
             error: function () {
                 swal("操作失败", {
@@ -72,9 +85,9 @@
                 });
             }
         });
-        }
-	 
-	$("#ZVPostQuestionButton").click(function(){
+}
+//留言功能实装	 
+$("#ZVPostQuestionButton").click(function(){
 		debugger;
 		var question = $("#ZVQuestionTextarea").val();
 		var path = window.location.pathname;
@@ -109,14 +122,12 @@
                 });
             }
         });
-   });
+});
 /*展开更多评论*/
-   $("#showMoreReviewsBtn").click(function(){
+$("#showMoreReviewsBtn").click(function(){
 	debugger;
 	var goodsId = getGoodsId();
-	var data = {
-		"goodsId": goodsId
-	           };
+	
 	 $.ajax({
             type: 'POST',            
             url : "/goods/showMoreReviews",
@@ -126,6 +137,7 @@
                 if (result.resultCode == 200) {
 	                debugger;
 	                var list = result.data;
+	                $("#p-reviewMore").show();
 	                if(list === undefined){
 		             swal(error,{
 			             icon:"error",
@@ -134,10 +146,17 @@
 	                 }
 	               if(list !=undefined && list.length !=0){
 		               for( i =0; i< list.length; i++){
-			               var el =$(".g-reviewList_item").clone().removeClass("hiddenList");
-			               $(".g-reviewList_item").before(el);
+			               var el =$(".hiddenList").clone().removeClass("hiddenList");
+			                el.find(".g-clip").html(list[i].id);
+							el.find(".hidSpForRevId").html(list[i].id);
+							el.find(".helpNumSpan").on( "click", helpNumClickFunc);
+			               $(".hiddenList").before(el);
 		               }
 	                }  
+	                //レビューをもっと見るの非表示
+					$("#showMoreReviewsBtn").hide();
+					//閉じるボタンを表示させる
+					$("#closeBtn").show();
 	                
                 } else {                  	
                     swal(result.message, {
@@ -152,32 +171,27 @@
             }
         });
 	
-     })
-     function getGoodsId(){
-	 var path = window.location.pathname;
-	 var ar = path.split("/");
-	 var len = ar.length;
-	 var goodsId  = ar[len-1];
-	 return  goodsId;
-	 
-     }
+})
+    
 /*参考人数*/
-     function helpNumClickFunc(){
+
+function helpNumClickFunc(){
 	 var reviewId = $( this ).parent().find(".hidSpForRevId").text();
 	 var data = {
 		 "reviewId": reviewId
-	}
+	 }
+	 var _this = $( this );
 	$.ajax({
             type: 'POST',//方法类型            
             url : "/goods/helpNum",
             contentType: 'application/json',
-            data:JSON.stringify(goodsId),
+            data:JSON.stringify(data),
             success: function (result) {
                 if (result.resultCode == 200) {
 	                debugger;
-	               console.log(data);
-	               _this.find(".helpNumSpan").text("参考人数("+ result.data + "人)");
-	                
+	                console.log(data);
+	                _this.text("参考人数("+ result.data + "人)");
+	                 
                 } else {                  	
                     swal(result.message, {
                         icon: "error",
@@ -191,6 +205,12 @@
             }
         });
 }
-    
+    function getGoodsId(){
+	 var path = window.location.pathname;
+	 var ar = path.split("/");
+	 var len = ar.length;
+	 var goodsId  = ar[len-1];
+	 return  goodsId;
+     }
         
     
