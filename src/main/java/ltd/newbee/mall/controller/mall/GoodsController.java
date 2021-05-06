@@ -112,6 +112,7 @@ public class GoodsController<GoddsImageVo> {
         BeanUtil.copyProperties(goods, goodsDetailVO);
         goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
         request.setAttribute("goodsDetail", goodsDetailVO);
+    
         
         
         
@@ -128,26 +129,18 @@ public class GoodsController<GoddsImageVo> {
  
         List<GoodsImageVO> imageVOList = new ArrayList<GoodsImageVO>();
             for(int i = 0; i < list.size();i++) {
-            GoodsImage image = new GoodsImage();
-            image = list.get(i);
-            if (image !=null)  {
+              GoodsImage image = new GoodsImage();
+              image = list.get(i);
+             if (image !=null) {
 //	            String path = image.getPath();
 	            GoodsImageVO imageVO = new GoodsImageVO();
 //	            imageVO.setPath(path);
 	            BeanUtil.copyProperties(image, imageVO);
 	            imageVOList.add(imageVO);	
 	            
-         }            		 
-         }
-            	
-            
-            request.setAttribute("goodsImegeDetail", imageVOList);  
-            
-         
-       
-    //===============================================================================================================
-
-              	
+             }            		 
+           }         	
+//===============================================================================================================
         Map<String,Object> params = new HashMap<>();
         params.put("page","1");
         params.put("limit",Constants.GOODS_QA_PAGE_LIMIT);
@@ -168,8 +161,8 @@ public class GoodsController<GoddsImageVo> {
         		   BeanUtil.copyProperties(qa, qaVO);
         		   qaVOList.add(qaVO);
         	   }  
-               }
-          request.setAttribute("goodsQaDetail", qaVOList);
+           }
+          
 //===================================================================================================================================
           List<GoodsReview> listReview = newBeeMallGoodsService.getGoodsReviewEntityByGoodsId(goodsId);
           if(listReview == null) {
@@ -185,21 +178,21 @@ public class GoodsController<GoddsImageVo> {
             		 reviewVOList.add(reviewVO);
             		 
             	 }
-                 }
+              }
+             request.setAttribute("goodsImegeDetail", imageVOList); 
+             request.setAttribute("goodsQaDetail", qaVOList);
              request.setAttribute("goodsReviewDetail", reviewVOList);
 //===================================================================================================================================
           GoodsDesc goodsDesc = newBeeMallGoodsService.getGoodsDescEntityByGoodsId(goodsId);
           if (goodsDesc == null) {
            	  NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
-              }
+          }
              GoodsDescVO desc = new GoodsDescVO();
              BeanUtil.copyProperties(goodsDesc, desc);
              request.setAttribute("goodsDescDetail", desc);
     
              return "mall/detail";
              }
-
-              
             @RequestMapping(value = "/goods/qaSort", method = RequestMethod.POST)
             @ResponseBody
             public Result getHelpedNumListEntityByGoodsId(@RequestBody PagingQa page) {    	
@@ -233,7 +226,8 @@ public class GoodsController<GoddsImageVo> {
             @RequestMapping(value = "/goods/showMoreReviews", method = RequestMethod.POST)
             @ResponseBody
             public Result showMoreReviews(@RequestBody Long goodsId) { 
-            	List<GoodsReviewVO> reviewVoList = newBeeMallGoodsService.getGoodsReviews(goodsId);             
+            	List<GoodsReviewVO> reviewVoList = newBeeMallGoodsService.getGoodsReviews(goodsId);
+            	List<GoodsReviewVO>	subReviewList = reviewVoList.subList(3, reviewVoList.size()-1); 
                    return ResultGenerator.genSuccessResult(reviewVoList);           
     
              }

@@ -24,10 +24,10 @@
 	});
 	
 	
-	$("#closeBth").click(function(){
-	   $(".g-reviewList").hide();
-	   $(".#closeBth").hide();
-	   $(".#showMoreReviewBth").show();
+	$("#closeBtn").click(function(){
+	   $(".chen").hide();
+	   $("#closeBtn").hide();
+	   $("#showMoreReviewBtn").show();
 		
 	});
 
@@ -137,7 +137,7 @@ $("#showMoreReviewsBtn").click(function(){
                 if (result.resultCode == 200) {
 	                debugger;
 	                var list = result.data;
-	                $("#p-reviewMore").show();
+	                $(".chen").show();
 	                if(list === undefined){
 		             swal(error,{
 			             icon:"error",
@@ -212,5 +212,9 @@ function helpNumClickFunc(){
 	 var goodsId  = ar[len-1];
 	 return  goodsId;
      }
+/*图片切换*/
+    function clickImage(src){
+	$(".swiper-container").find("img").attr('src',src);
+	}	
         
     
