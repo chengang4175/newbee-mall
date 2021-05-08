@@ -95,5 +95,7 @@ public interface NewBeeMallGoodsService {
 
 	boolean addHelpNum(HelpNum goodsReviewHelpNum);
 
-	boolean updateReviewNum(HelpNum goodsReviewHelpNum);    	
+	boolean updateReviewNum(HelpNum goodsReviewHelpNum); 
+//
+	List<NewBeeMallGoods> getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName);
 }

@@ -508,4 +508,14 @@
   select review_num
   from goods_review where id = #{reviewId,jdbcType=BIGINT}
   </select>
+  <select id="getTotalNewBeeMallGoodsName" parameterType="Map" resultType="int">
+        select count(*) from tb_newbee_mall_goods_info
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                and (goods_name like CONCAT('%',#{keyword},'%') or goods_intro like CONCAT('%',#{keyword},'%'))
+            </if>
+            
+        </where>
+    </select>
+  
 </mapper>

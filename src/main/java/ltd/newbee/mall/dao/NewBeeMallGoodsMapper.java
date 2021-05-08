@@ -70,12 +70,14 @@ public interface NewBeeMallGoodsMapper {
 //四月二十四日页面内容输入
     int insertGoodsQa(GoodsQa qaRecord);
     Long getMaxQaId(Long goodsId);
-//展开更多评论
+//展开更多评论s
     List<GoodsReview> getGoodsReviews(Long goodsId);
 //参考人数
     boolean insertHelpNum(HelpNum goodsReviewaHelpNum);
     boolean updateReviewNum(HelpNum goodsReviewaHelpNum);
     long getGoodsReviewHelpNum(int reviewId);
+//
+    List<NewBeeMallGoods> getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName);
 
 }
  

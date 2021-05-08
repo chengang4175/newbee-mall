@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
+import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
 import ltd.newbee.mall.entity.GoodsQa;
@@ -190,6 +191,31 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	public boolean updateReviewNum(HelpNum goodsReviewHelpNum) {
 		
 		return goodsMapper.updateReviewNum(goodsReviewHelpNum);
+	}
+//暧昧显示
+	@Override
+	public List<NewBeeMallGoods> getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName) {
+		 List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
+		 List<NewBeeMallGoods> total = goodsMapper.getTotalNewBeeMallGoodsName(goodsName);
+	        if (!CollectionUtils.isEmpty(newBeeMallSearchGoodsVOS)) {
+	            newBeeMallSearchGoodsVOS = BeanUtil.copyList(newBeeMallSearchGoodsVOS, NewBeeMallSearchGoodsVO.class);
+	            for (NewBeeMallSearchGoodsVO newBeeMallSearchGoodsVO : newBeeMallSearchGoodsVOS) {
+	                String goodsName1 = newBeeMallSearchGoodsVO.getGoodsName();
+	                String goodsIntro = newBeeMallSearchGoodsVO.getGoodsIntro();
+	                // 字符串过长导致文字超出的问题
+	                if (goodsName1.length() > 28) {
+	                    goodsName1 = goodsName1.substring(0, 28) + "...";
+	                    newBeeMallSearchGoodsVO.setGoodsName(goodsName1);
+	                }
+	                if (goodsIntro.length() > 30) {
+	                    goodsIntro = goodsIntro.substring(0, 30) + "...";
+	                    newBeeMallSearchGoodsVO.setGoodsIntro(goodsIntro);
+	                }
+	            }
+	        }
+	     
+	        return goodsMapper.getTotalNewBeeMallGoodsName(goodsName);
+		
 	}
 	
 }
