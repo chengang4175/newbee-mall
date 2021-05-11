@@ -84,6 +84,22 @@
             limit #{start},#{limit}
         </if>
     </select>
+    
+<!--  暧昧检索-->
+    <select id="findHitGoodsList" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_goods_info
+        <where>
+            <if test="goodsName!=null and goodsName!=''">
+                and goods_name like CONCAT('%', #{goodsName} ,'%')
+            </if>
+        </where>
+        order by goods_id desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
 
     <select id="findNewBeeMallGoodsListBySearch" parameterType="Map" resultMap="BaseResultMap">
         select
@@ -508,7 +524,7 @@
   select review_num
   from goods_review where id = #{reviewId,jdbcType=BIGINT}
   </select>
-  <select id="getTotalNewBeeMallGoodsName" parameterType="Map" resultType="int">
+  <!-- <select id="getTotalNewBeeMallGoodsName" parameterType="Map" resultType="int">
         select count(*) from tb_newbee_mall_goods_info
         <where>
             <if test="keyword!=null and keyword!=''">
@@ -516,6 +532,90 @@
             </if>
             
         </where>
-    </select>
+    </select> -->
+  <!--  <select id="getSearchHistory" parameterType="int" resultType="ltd.newbee.mall.entity.SearchHistory">
+     SELECT * FROM search_history where user_id= ? And keyword= ? Order by ? limit ?;
+   </select> -->
+    <insert id="getSearchHistory" parameterType="ltd.newbee.mall.entity.SearchHistory">
+    insert into search_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id!= null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="keyWord != null">
+        keyWord,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+     
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="keyWord != null">
+        #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=Date},
+      </if>
+    
+    </trim>
+  </insert>
+   <select id="getMaxKeyWordId" parameterType="java.lang.Long" resultType="java.lang.Long">
+  select max(id) from search_history  where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 5月11号 -->
+   <select id="getgoodsCoupon" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.goodsCoupon">
+  select coupon_id,coupon_name,flag from goods_coupon
+       where id = #{Id,jdbcType=BIGINT}
+  </select>
+   <select id="gettbCategory" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.tbCategory">
+  select id,category_id,start_date,end_date from tb_category
+       where goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
+  <select id="getgoodsTable" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.goodsTable">
+  select id,goods_id,start_date,end_date from goods_table
+       where goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
+  <select id="getgoodsSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.goodsSale">
+  select content1,content2,content3,content4,content5,flagfrom goods_table
+       where flag = #{flag	,jdbcType=BIGINT}
+  </select>
+  <insert id="getgoodsCoupon" parameterType="ltd.newbee.mall.entity.SearchHistory">
+    insert into goods_coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="couponIsd!= null">
+        coupon_id,
+      </if>
+      <if test="couponName != null">
+        coupon_name,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+     
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{couponIsd,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{couponName,jdbcType=BIGINT},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
   
 </mapper>

@@ -17,12 +17,14 @@ import ltd.newbee.mall.controller.vo.GoodsQaVO;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
+import ltd.newbee.mall.controller.vo.SearchHistoryVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.HelpNum;
+
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.PagingQa;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
@@ -271,6 +273,28 @@ public class GoodsController<GoddsImageVo> {
             	
             	
             }
+            // 5/11
+            @RequestMapping(value = "/goods/searchHistory", method = RequestMethod.POST)
+            @ResponseBody
+            public Result SearchHistory(@RequestBody SearchHistoryVO id) {
+            	Integer count = null;
+            	Long keyWordId = newBeeMallGoodsService.getMaxKeyWordId(id.getUserId());
+            	id.setId(keyWordId);
+            	Date date = new Date();
+            	String keyword = new String();
+            	id.setDate(date);
+            	id.setKeyWord(keyword);
+            	 if(id !=null) {
+            		 count = newBeeMallGoodsService.getSearchHistory(id);
+                 }
+            	 if(!(count > 0)) {
+            	    return ResultGenerator.genFailResult("投稿失败");
+            	 }
+                    return ResultGenerator.genSuccessResult(count);           
+    
+              }
+            
+            
                               
             
 }

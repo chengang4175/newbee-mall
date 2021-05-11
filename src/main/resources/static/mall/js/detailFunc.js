@@ -1,10 +1,12 @@
      /*$("#zv-cqa-select-sort").change(function(){
+	
 	var page = $("#currentPageNo").text();
 	var url = "/goods/qaSort";
 	data = {
 		"page": page
 	};
 	debugger;*/
+	var currentImageIndex = 1;
     $(function(){
 	debugger;
 	$(".prviousPage").css("pointer-events","none").css("color","grey"); 
@@ -147,11 +149,16 @@ $("#showMoreReviewsBtn").click(function(){
 	               if(list !=undefined && list.length !=0){
 		               for( i =0; i< list.length; i++){
 			               var el =$(".hiddenList").clone().removeClass("hiddenList");
-			                el.find(".g-clip").html(list[i].id);
+			                //el.find(".g-clip").html(list[i].id);
 							el.find(".hidSpForRevId").html(list[i].id);
 							el.find(".helpNumSpan").on( "click", helpNumClickFunc);
-			               $(".hiddenList").before(el);
-		               }
+							var img = "<img src='/goods-img/star.jpg'>";
+							var star = list[i].star;
+							  for(var j=0; j<star; j++){
+								el.find(".g-clip").append(img)
+			                  }
+		                    }
+		               $(".hiddenList").before(el);
 	                }  
 	                //レビューをもっと見るの非表示
 					$("#showMoreReviewsBtn").hide();
@@ -216,5 +223,41 @@ function helpNumClickFunc(){
     function clickImage(src){
 	$(".swiper-container").find("img").attr('src',src);
 	}	
-        
+ /*insert*/       
+    $("#keywordButton").click(function(){
+		debugger;
+		var keyword = $("#keyword").val();
+		var id = getId();
+		/*var ar = path.split("/");
+		var len = ar.length;
+		var goodsId = ar[len-1];*/
+		debugger;
+		data = {
+			"keyword":keyword,
+			
+	    };
+		
+	  $.ajax({
+            type: 'POST',            
+            url : "goods/searchHistory",
+            contentType: 'application/json',
+            data:JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {  
+	                swal("null",{  
+		                incon:"success"
+		             });
+                } else {                  	
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                };
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+});
     

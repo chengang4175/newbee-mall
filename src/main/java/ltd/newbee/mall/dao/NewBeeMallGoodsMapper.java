@@ -18,6 +18,7 @@ import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.HelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.util.PageQueryUtil;
 
@@ -43,6 +44,8 @@ public interface NewBeeMallGoodsMapper {
     List<NewBeeMallGoods> selectByPrimaryKeys(List<Long> goodsIds);
 
     List<NewBeeMallGoods> findNewBeeMallGoodsListBySearch(PageQueryUtil pageUtil);
+    //检索
+    List<NewBeeMallGoods> findHitGoodsList(PageQueryUtil pageUtil);
 
     int getTotalNewBeeMallGoodsBySearch(PageQueryUtil pageUtil);
 
@@ -77,7 +80,16 @@ public interface NewBeeMallGoodsMapper {
     boolean updateReviewNum(HelpNum goodsReviewaHelpNum);
     long getGoodsReviewHelpNum(int reviewId);
 //
-    List<NewBeeMallGoods> getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName);
+	/*
+	 * List<NewBeeMallGoods> getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName);
+	 */
 
+//
+	int getSearchHistory(SearchHistory id);
+	Long getMaxKeyWordId(Long id);
+
+	List<ltd.newbee.mall.entity.SearchHistory> SearchHistory(Long id);
+
+	
 }
  

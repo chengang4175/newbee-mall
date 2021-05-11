@@ -12,11 +12,13 @@ import java.util.List;
 
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
+import ltd.newbee.mall.controller.vo.SearchHistoryVO;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.HelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
 
@@ -97,5 +99,18 @@ public interface NewBeeMallGoodsService {
 
 	boolean updateReviewNum(HelpNum goodsReviewHelpNum); 
 //
-	List<NewBeeMallGoods> getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName);
+	//List<NewBeeMallGoods> getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName);
+
+	PageResult findHitGoodsList(PageQueryUtil pageUtil);
+//
+	int getSearchHistory(SearchHistory pageUtil);
+	Long getMaxKeyWordId(Long id);
+	
+
+	List<SearchHistoryVO> getSearchHistory(Long id);
+
+	Integer getSearchHistory(SearchHistoryVO id);
+
+	
+	
 }

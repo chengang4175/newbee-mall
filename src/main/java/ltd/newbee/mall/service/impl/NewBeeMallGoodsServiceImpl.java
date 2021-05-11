@@ -20,6 +20,7 @@ import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
+import ltd.newbee.mall.controller.vo.SearchHistoryVO;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsDesc;
@@ -27,6 +28,7 @@ import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.HelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -193,29 +195,73 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		return goodsMapper.updateReviewNum(goodsReviewHelpNum);
 	}
 //暧昧显示
+	
+	/*
+	 * @Override public List<NewBeeMallGoods>
+	 * getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName) {
+	 * List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
+	 * List<NewBeeMallGoods> total =
+	 * goodsMapper.getTotalNewBeeMallGoodsName(goodsName); if
+	 * (!CollectionUtils.isEmpty(newBeeMallSearchGoodsVOS)) {
+	 * newBeeMallSearchGoodsVOS = BeanUtil.copyList(newBeeMallSearchGoodsVOS,
+	 * NewBeeMallSearchGoodsVO.class); for (NewBeeMallSearchGoodsVO
+	 * newBeeMallSearchGoodsVO : newBeeMallSearchGoodsVOS) { String goodsName1 =
+	 * newBeeMallSearchGoodsVO.getGoodsName(); String goodsIntro =
+	 * newBeeMallSearchGoodsVO.getGoodsIntro(); // 字符串过长导致文字超出的问题 if
+	 * (goodsName1.length() > 28) { goodsName1 = goodsName1.substring(0, 28) +
+	 * "..."; newBeeMallSearchGoodsVO.setGoodsName(goodsName1); } if
+	 * (goodsIntro.length() > 30) { goodsIntro = goodsIntro.substring(0, 30) +
+	 * "..."; newBeeMallSearchGoodsVO.setGoodsIntro(goodsIntro); } } }
+	 * 
+	 * return goodsMapper.getTotalNewBeeMallGoodsName(goodsName);
+	 * 
+	 * }
+	 */
+	
 	@Override
-	public List<NewBeeMallGoods> getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName) {
-		 List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
-		 List<NewBeeMallGoods> total = goodsMapper.getTotalNewBeeMallGoodsName(goodsName);
-	        if (!CollectionUtils.isEmpty(newBeeMallSearchGoodsVOS)) {
-	            newBeeMallSearchGoodsVOS = BeanUtil.copyList(newBeeMallSearchGoodsVOS, NewBeeMallSearchGoodsVO.class);
-	            for (NewBeeMallSearchGoodsVO newBeeMallSearchGoodsVO : newBeeMallSearchGoodsVOS) {
-	                String goodsName1 = newBeeMallSearchGoodsVO.getGoodsName();
-	                String goodsIntro = newBeeMallSearchGoodsVO.getGoodsIntro();
-	                // 字符串过长导致文字超出的问题
-	                if (goodsName1.length() > 28) {
-	                    goodsName1 = goodsName1.substring(0, 28) + "...";
-	                    newBeeMallSearchGoodsVO.setGoodsName(goodsName1);
-	                }
-	                if (goodsIntro.length() > 30) {
-	                    goodsIntro = goodsIntro.substring(0, 30) + "...";
-	                    newBeeMallSearchGoodsVO.setGoodsIntro(goodsIntro);
-	                }
-	            }
-	        }
-	     
-	        return goodsMapper.getTotalNewBeeMallGoodsName(goodsName);
-		
+	public PageResult findHitGoodsList(PageQueryUtil pageUtil) {
+		  List<NewBeeMallGoods> goodsList = goodsMapper.findHitGoodsList(pageUtil);
+	       // int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
+	        PageResult pageResult = new PageResult(goodsList, 10, pageUtil.getLimit(), pageUtil.getPage());
+	        return pageResult;
 	}
+	//5/11
+
+	
+	@Override
+	public int getSearchHistory(SearchHistory pageUtil) {
+		int count = goodsMapper.getSearchHistory(pageUtil);
+		return count;
+	
+	}
+
+	@Override
+	public Long getMaxKeyWordId(Long id) {
+		Long maxGoodsId = goodsMapper.getMaxQaId(id);
+		if(maxGoodsId !=null) {
+			return maxGoodsId + 1;
+		}else {
+		return 1L;
+	    }
+	}
+
+	
+	
+	@Override
+	public List<SearchHistoryVO> getSearchHistory(Long id) {
+		List<SearchHistory> entityList = goodsMapper.SearchHistory(id);
+		List<SearchHistoryVO> reviewVoList = BeanUtil.copyList(entityList,SearchHistoryVO.class);
+		return reviewVoList;
+	}
+
+	@Override
+	public Integer getSearchHistory(SearchHistoryVO id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
 	
 }
