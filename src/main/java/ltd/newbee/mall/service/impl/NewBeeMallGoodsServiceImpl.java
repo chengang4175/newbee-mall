@@ -225,39 +225,73 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	        PageResult pageResult = new PageResult(goodsList, 10, pageUtil.getLimit(), pageUtil.getPage());
 	        return pageResult;
 	}
+	//
+	
+	@Override
+	public int insertSearchHistory(SearchHistory id) {
+	    int count = goodsMapper.insertSearchHistory(id);
+	    return count;
+	}
+	//getMaxKeywordID
+	@Override
+	public Long getMaxKeywordId(Long userId) {
+	    Long a = goodsMapper.getMaxKeywordId(userId);
+	     if(a !=null) {
+	     return a + 1;
+	     }else {
+	       return 1L;
+	     }
+	}
 	//5/11
-
+  
 	
 	@Override
-	public int getSearchHistory(SearchHistory pageUtil) {
-		int count = goodsMapper.getSearchHistory(pageUtil);
-		return count;
-	
+	public List<ltd.newbee.mall.entity.TbSale> TbSale(Long id) {
+	    List<ltd.newbee.mall.entity.TbSale> list = goodsMapper.getTbSale(id); 
+	    return list;
 	}
 
 	@Override
-	public Long getMaxKeyWordId(Long id) {
-		Long maxGoodsId = goodsMapper.getMaxQaId(id);
-		if(maxGoodsId !=null) {
-			return maxGoodsId + 1;
-		}else {
-		return 1L;
-	    }
-	}
-
-	
-	
-	@Override
-	public List<SearchHistoryVO> getSearchHistory(Long id) {
-		List<SearchHistory> entityList = goodsMapper.SearchHistory(id);
-		List<SearchHistoryVO> reviewVoList = BeanUtil.copyList(entityList,SearchHistoryVO.class);
-		return reviewVoList;
+	public List<ltd.newbee.mall.entity.TbCategory> TbCategory(Long id) {
+	    List<ltd.newbee.mall.entity.TbCategory> list = goodsMapper.getTbCategory(id);
+	    return list;
 	}
 
 	@Override
-	public Integer getSearchHistory(SearchHistoryVO id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ltd.newbee.mall.entity.GoodsSale> GoodsSale(Long id) {
+	    List<ltd.newbee.mall.entity.GoodsSale> list = goodsMapper.getGoodsSale(id); 
+	    return list;
+	}
+
+	@Override
+	public List<ltd.newbee.mall.entity.GoodsCoupon> GoodsCoupon(Long couponId) {
+	     List<ltd.newbee.mall.entity.GoodsCoupon> list = goodsMapper.getGoodsCoupon(couponId);
+	    return list;
+	}
+   //insert 2021/05/11
+	@Override
+	public int insertTbSale(ltd.newbee.mall.entity.TbSale id) {
+            int count = goodsMapper.insertTbSale(id);
+	    return count;
+	}
+
+	@Override
+	public int insertTbCategory(ltd.newbee.mall.entity.TbCategory id) {
+	    int count = goodsMapper.insertTbCategory(id);
+	    return count;
+	}
+
+
+	@Override
+	public int insertGoodsSale(ltd.newbee.mall.entity.GoodsSale id) {
+	    int count = goodsMapper.insertGoodsSale(id);
+	    return count;
+	}
+
+	@Override
+	public int insertGoodsCoupon(ltd.newbee.mall.entity.GoodsCoupon couponId) {
+	    int count = goodsMapper.insertGoodsCoupon(couponId);
+	    return count;
 	}
 
 	

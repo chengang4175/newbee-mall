@@ -27,6 +27,7 @@ import ltd.newbee.mall.entity.HelpNum;
 
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.PagingQa;
+import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
@@ -261,7 +262,7 @@ public class GoodsController<GoddsImageVo> {
             	NewBeeMallGoods goods2 = new NewBeeMallGoods();
             	NewBeeMallGoods goods3 = new NewBeeMallGoods();
             	goods1.setGoodsId(10700L);
-            	goods1.setGoodsName("无印良品 MUJI 基础润肤化妆水");
+            	goods1.setGoodsName("iphone10");
             	list.add(goods1);
             	goods2.setGoodsId(10003L);
             	goods2.setGoodsName("无印良品 MUJI 柔和洁面泡沫");
@@ -270,31 +271,40 @@ public class GoodsController<GoddsImageVo> {
             	goods3.setGoodsName("无印良品 MUJI 基础润肤乳液");
             	list.add(goods3);
             	return ResultGenerator.genSuccessResult(list);
-            	
-            	
-            }
+             }
+				/*
+				 * @RequestMapping(value = "/goods/search", method = RequestMethod.POST)
+				 * 
+				 * @ResponseBody //public Result getHitGoodsList(@RequestParam Map<String,
+				 * Object> params) { public Result getHitGoodsList(@RequestBody String
+				 * goodsName) { Map<String, Object> params = new HashMap<String, Object>();
+				 * params.put("keyword", goodsName); params.put("page", 1); params.put("limit",
+				 * 9); //params.put("start", 0); PageQueryUtil pageUtil = new
+				 * PageQueryUtil(params); return
+				 * ResultGenerator.genSuccessResult(newBeeMallGoodsService.searchNewBeeMallGoods
+				 * (pageUtil)); }
+				 */
             // 5/11
-            @RequestMapping(value = "/goods/searchHistory", method = RequestMethod.POST)
-            @ResponseBody
-            public Result SearchHistory(@RequestBody SearchHistoryVO id) {
-            	Integer count = null;
-            	Long keyWordId = newBeeMallGoodsService.getMaxKeyWordId(id.getUserId());
-            	id.setId(keyWordId);
-            	Date date = new Date();
-            	String keyword = new String();
-            	id.setDate(date);
-            	id.setKeyWord(keyword);
-            	 if(id !=null) {
-            		 count = newBeeMallGoodsService.getSearchHistory(id);
-                 }
-            	 if(!(count > 0)) {
-            	    return ResultGenerator.genFailResult("投稿失败");
-            	 }
-                    return ResultGenerator.genSuccessResult(count);           
-    
-              }
-            
-            
-                              
+			
+			  @RequestMapping(value = "/goods/insertKeyword", method = RequestMethod.POST)
+			  
+			  @ResponseBody public Result insertKeyword(@RequestBody SearchHistory id,HttpSession httpSession) {
+		      NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+			  id.setUserId(user.getUserId());
+			  Integer count = null; 
+			  Long keyWordId =newBeeMallGoodsService.getMaxKeywordId(id.getUserId()); id.setId(keyWordId);
+			  Date date = new Date();
+			  String keyword = new String();
+			 
+			  id.setDate(date);
+			  id.setKeyWord(keyword);
+			     if(id != null) { 
+			     count = newBeeMallGoodsService.insertSearchHistory(id); 
+			     }
+			     if(!(count > 0)) { 
+				  return ResultGenerator.genFailResult("投稿失敗！"); 
+				 } 
+			      return ResultGenerator.genSuccessResult(count); 
+			  }
             
 }

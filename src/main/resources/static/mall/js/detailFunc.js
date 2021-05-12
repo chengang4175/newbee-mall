@@ -223,41 +223,5 @@ function helpNumClickFunc(){
     function clickImage(src){
 	$(".swiper-container").find("img").attr('src',src);
 	}	
- /*insert*/       
-    $("#keywordButton").click(function(){
-		debugger;
-		var keyword = $("#keyword").val();
-		var id = getId();
-		/*var ar = path.split("/");
-		var len = ar.length;
-		var goodsId = ar[len-1];*/
-		debugger;
-		data = {
-			"keyword":keyword,
-			
-	    };
-		
-	  $.ajax({
-            type: 'POST',            
-            url : "goods/searchHistory",
-            contentType: 'application/json',
-            data:JSON.stringify(data),
-            success: function (result) {
-                if (result.resultCode == 200) {  
-	                swal("null",{  
-		                incon:"success"
-		             });
-                } else {                  	
-                    swal(result.message, {
-                        icon: "error",
-                    });
-                };
-            },
-            error: function () {
-                swal("操作失败", {
-                    icon: "error",
-                });
-            }
-        });
-});
+ 
     

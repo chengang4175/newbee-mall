@@ -103,13 +103,19 @@ public interface NewBeeMallGoodsService {
 
 	PageResult findHitGoodsList(PageQueryUtil pageUtil);
 //
-	int getSearchHistory(SearchHistory pageUtil);
-	Long getMaxKeyWordId(Long id);
-	
-
-	List<SearchHistoryVO> getSearchHistory(Long id);
-
-	Integer getSearchHistory(SearchHistoryVO id);
+	int insertSearchHistory(SearchHistory id);
+    //getMaxKeywordID
+    Long getMaxKeywordId(Long userId);
+    //20210511
+    List<ltd.newbee.mall.entity.TbSale>TbSale(Long id); 
+    List<ltd.newbee.mall.entity.TbCategory>TbCategory(Long id);
+    List<ltd.newbee.mall.entity.GoodsSale>GoodsSale(Long id);   
+    List<ltd.newbee.mall.entity.GoodsCoupon>GoodsCoupon(Long couponId);
+    //insert 20210511
+    int insertTbSale(ltd.newbee.mall.entity.TbSale id);
+    int insertTbCategory(ltd.newbee.mall.entity.TbCategory id);
+    int insertGoodsSale(ltd.newbee.mall.entity.GoodsSale id);
+    int insertGoodsCoupon(ltd.newbee.mall.entity.GoodsCoupon couponId);
 
 	
 	

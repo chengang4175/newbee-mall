@@ -13,13 +13,17 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.HelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.StockNumDTO;
+import ltd.newbee.mall.entity.TbCategory;
+import ltd.newbee.mall.entity.TbSale;
 import ltd.newbee.mall.util.PageQueryUtil;
 
 public interface NewBeeMallGoodsMapper {
@@ -85,10 +89,19 @@ public interface NewBeeMallGoodsMapper {
 	 */
 
 //
-	int getSearchHistory(SearchHistory id);
-	Long getMaxKeyWordId(Long id);
-
-	List<ltd.newbee.mall.entity.SearchHistory> SearchHistory(Long id);
+    int insertSearchHistory(SearchHistory id);
+    //getMaxKeywordID
+    Long getMaxKeywordId(Long userId);
+    //sale 2021/05/11
+    List<TbSale> getTbSale(Long id); 
+    List<TbCategory> getTbCategory(Long id);
+    List<GoodsSale> getGoodsSale(Long id);   
+    List<GoodsCoupon> getGoodsCoupon(Long couponId);
+    //sale insert 2021/05/11
+    int insertTbSale(TbSale id);
+    int insertTbCategory(TbCategory id);
+    int insertGoodsSale(GoodsSale id);
+    int insertGoodsCoupon(GoodsCoupon couponId);
 
 	
 }
