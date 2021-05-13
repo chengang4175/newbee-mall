@@ -51,6 +51,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -286,25 +287,28 @@ public class GoodsController<GoddsImageVo> {
 				 */
             // 5/11
 			
-			  @RequestMapping(value = "/goods/insertKeyword", method = RequestMethod.POST)
-			  
-			  @ResponseBody public Result insertKeyword(@RequestBody SearchHistory id,HttpSession httpSession) {
-		      NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-			  id.setUserId(user.getUserId());
-			  Integer count = null; 
-			  Long keyWordId =newBeeMallGoodsService.getMaxKeywordId(id.getUserId()); id.setId(keyWordId);
-			  Date date = new Date();
-			  String keyword = new String();
-			 
-			  id.setDate(date);
-			  id.setKeyWord(keyword);
-			     if(id != null) { 
-			     count = newBeeMallGoodsService.insertSearchHistory(id); 
-			     }
-			     if(!(count > 0)) { 
-				  return ResultGenerator.genFailResult("投稿失敗！"); 
-				 } 
-			      return ResultGenerator.genSuccessResult(count); 
-			  }
-            
+			  @RequestMapping(value ="/goods/insertKeyword", method = RequestMethod.POST)
+			  @ResponseBody
+			  public Result insertKeyword(@RequestBody SearchHistory keywordId, HttpSession httpSession) {
+					 NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+					  if(user != null) {
+					      keywordId.setUserId(user.getUserId());
+					  }
+						/*
+						 * SimpleDateFormat i = new SimpleDateFormat();
+						 * i.applyPattern("yyyy-MM-dd HH:mm:ss a");
+						 */
+						Date date = new Date();
+					    Integer count = null;  
+				        Long keyWordId = newBeeMallGoodsService.getMaxKeyWordId(keywordId.getUserId());
+				        keywordId.setId(keyWordId);
+				        keywordId.setDate(date);
+				        if(keywordId != null) {
+				            count = newBeeMallGoodsService.insertSearchHistory(keywordId);
+				        }
+				        if(!(count > 0))  {
+				        return ResultGenerator.genFailResult("投稿失敗！");
+				        }      
+				        return ResultGenerator.genSuccessResult(count);    
+				}
 }

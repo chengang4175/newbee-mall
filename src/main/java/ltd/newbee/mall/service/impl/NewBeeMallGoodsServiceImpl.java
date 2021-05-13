@@ -33,6 +33,10 @@ import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
+import ltd.newbee.mall.entity.GoodsCoupon;
+import ltd.newbee.mall.entity.GoodsSale;
+import ltd.newbee.mall.entity.TbCategory;
+import ltd.newbee.mall.entity.TbSale;
 
 @Service
 public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
@@ -228,14 +232,14 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	//
 	
 	@Override
-	public int insertSearchHistory(SearchHistory id) {
-	    int count = goodsMapper.insertSearchHistory(id);
+	public int insertSearchHistory(SearchHistory keywordId) {
+	    int count = goodsMapper.insertSearchHistory(keywordId);
 	    return count;
 	}
 	//getMaxKeywordID
 	@Override
-	public Long getMaxKeywordId(Long userId) {
-	    Long a = goodsMapper.getMaxKeywordId(userId);
+	public Long getMaxKeyWordId(Long userId) {
+	    Long a = goodsMapper.getMaxKeyWordId(userId);
 	     if(a !=null) {
 	     return a + 1;
 	     }else {
@@ -246,50 +250,50 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
   
 	
 	@Override
-	public List<ltd.newbee.mall.entity.TbSale> TbSale(Long id) {
-	    List<ltd.newbee.mall.entity.TbSale> list = goodsMapper.getTbSale(id); 
+	public List<TbSale> TbSale(Long id) {
+	    List<TbSale> list = goodsMapper.getTbSale(id); 
 	    return list;
 	}
 
 	@Override
-	public List<ltd.newbee.mall.entity.TbCategory> TbCategory(Long id) {
-	    List<ltd.newbee.mall.entity.TbCategory> list = goodsMapper.getTbCategory(id);
+	public List<TbCategory> TbCategory(Long id) {
+	    List<TbCategory> list = goodsMapper.getTbCategory(id);
 	    return list;
 	}
 
 	@Override
-	public List<ltd.newbee.mall.entity.GoodsSale> GoodsSale(Long id) {
-	    List<ltd.newbee.mall.entity.GoodsSale> list = goodsMapper.getGoodsSale(id); 
+	public List<GoodsSale> GoodsSale(Long id) {
+	    List<GoodsSale> list = goodsMapper.getGoodsSale(id); 
 	    return list;
 	}
 
 	@Override
-	public List<ltd.newbee.mall.entity.GoodsCoupon> GoodsCoupon(Long couponId) {
-	     List<ltd.newbee.mall.entity.GoodsCoupon> list = goodsMapper.getGoodsCoupon(couponId);
+	public List<GoodsCoupon> GoodsCoupon(Long couponId) {
+	     List<GoodsCoupon> list = goodsMapper.getGoodsCoupon(couponId);
 	    return list;
 	}
    //insert 2021/05/11
 	@Override
-	public int insertTbSale(ltd.newbee.mall.entity.TbSale id) {
+	public int insertTbSale(TbSale id) {
             int count = goodsMapper.insertTbSale(id);
 	    return count;
 	}
 
 	@Override
-	public int insertTbCategory(ltd.newbee.mall.entity.TbCategory id) {
+	public int insertTbCategory(TbCategory id) {
 	    int count = goodsMapper.insertTbCategory(id);
 	    return count;
 	}
 
 
 	@Override
-	public int insertGoodsSale(ltd.newbee.mall.entity.GoodsSale id) {
+	public int insertGoodsSale(GoodsSale id) {
 	    int count = goodsMapper.insertGoodsSale(id);
 	    return count;
 	}
 
 	@Override
-	public int insertGoodsCoupon(ltd.newbee.mall.entity.GoodsCoupon couponId) {
+	public int insertGoodsCoupon(GoodsCoupon couponId) {
 	    int count = goodsMapper.insertGoodsCoupon(couponId);
 	    return count;
 	}

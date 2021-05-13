@@ -9,6 +9,8 @@
 package ltd.newbee.mall.controller.common;
 
 import ltd.newbee.mall.common.Constants;
+import ltd.newbee.mall.entity.TbSale;
+import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.NewBeeMallUtils;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
@@ -24,8 +26,17 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -127,5 +138,43 @@ public class UploadController {
         resultSuccess.setData(fileNames);
         return resultSuccess;
     }
+//csv文件
+    @PostMapping({"/upload/file"})
+    @ResponseBody
+    public Result upload3(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file, TbSale id, TbSale goodsId, TbSale startDate, TbSale endDate) throws URISyntaxException {
+    	
+    	
+        try {
+        	InputStream is = file.getInputStream();
+        	BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        	String line;
+        	while((line = br.readLine())!=null) {
+        		String[] split = line.split(",");
+        		//放入方法
+        		
+				/*
+				 * List<TbSale> list = new ArrayList<>(); list.add(id); list.add(goodsId);
+				 * list.add(startDate); list.add(endDate);
+				 */
+        		TbSale tbEntity = new TbSale();
+        		tbEntity.setId(arr[0]);
+        		tbEntity.setGoodsId(arr[1]);
+        		tbEntity.setStartDate(arr[2]);
+        		tbEntity.setEndDate(arr[3]);
+        		//插入服务
+        		int flag = NewBeeMallGoodsService.insertTbSale(TbSale id);
+        		
+        	}
+        	
+        
+        } catch (IOException e) {
+            e.printStackTrace();
+            
+      
+           }
+		return null;
+        }
+    
+    
 
 }

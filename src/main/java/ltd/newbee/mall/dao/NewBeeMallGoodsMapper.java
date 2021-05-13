@@ -89,9 +89,9 @@ public interface NewBeeMallGoodsMapper {
 	 */
 
 //
-    int insertSearchHistory(SearchHistory id);
+    int insertSearchHistory(SearchHistory keywordId);
     //getMaxKeywordID
-    Long getMaxKeywordId(Long userId);
+    Long getMaxKeyWordId(Long userId);
     //sale 2021/05/11
     List<TbSale> getTbSale(Long id); 
     List<TbCategory> getTbCategory(Long id);

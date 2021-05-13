@@ -5,7 +5,7 @@ import java.util.Date;
 public class SearchHistory {
 	private Long id;
 	private Long userId;
-	private String keyWord;
+	private String keyword;
 	private Date date;
 	public Long getId() {
 		return id;
@@ -19,11 +19,11 @@ public class SearchHistory {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public String getKeyWord() {
-		return keyWord;
+	public String getKeyword() {
+		return keyword;
 	}
-	public void setKeyWord(String keyWord) {
-		this.keyWord = keyWord;
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 	public Date getDate() {
 		return date;
@@ -33,8 +33,9 @@ public class SearchHistory {
 	}
 	@Override
 	public String toString() {
-		return "SearchHistory [id=" + id + ", userId=" + userId + ", keyWord=" + keyWord + ", date=" + date + "]";
+		return "SearchHistory [id=" + id + ", userId=" + userId + ", keyword=" + keyword + ", date=" + date + "]";
 	}
+	
 	
 
 }

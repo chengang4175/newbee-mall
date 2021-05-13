@@ -50,13 +50,13 @@ $( "#keyword" ).focus(function(){//focus：使元素集中于焦点。设置焦�
          })
 });		
 //鼠标移开时候删除elements的内容
-$("#keyword").focusout(function(){//focusout：当元素失去焦点时被触发
+/*$("#keyword").focusout(function(){//focusout：当元素失去焦点时被触发
 	if(MouseOnSearchResultUl)
 	return;
     clearResultList()//清空列表
 	//hide #searchResultUl
 	$("#searchResultUl").hide();
-})
+})*/
 //ajax 暧昧検索
 $("#keyword").keyup(function(){
 	debugger;
@@ -76,26 +76,15 @@ $("#keyword").keyup(function(){
             //insert ajax
             debugger;
             //这个方法就是说从指定位置往后找返回字符在该字符串中第一次出现处的索引，比如“woaizhongguo”indexOf（'o',2）那返回值就是6而不是1
-              var list =json_data.data.list[0];
-              var str = list.goodsName;
-              var keywordIndex = str.indexOf(keyword);
-              var startIndex;
-              var endIndex;
-              var temp = [];
-              var spaceIndex = str.indexOf(' ');
-              while(spaceIndex>-1){
-                temp.push(spaceIndex);
-                spaceIndex = str.indexOf(' ',spaceIndex+1);
-              }
-              for(var i = 0;i<temp.length;i++){
-                 while(temp[i]<keywordIndex<temp[i+1]){
-                  startIndex=temp[i];
-                  endIndex=temp[i+1];
-                  i++
-                 }
-               }
-              var key = list.goodsName.substring(startIndex,endIndex);
-          },
+             var list = json_data.data.list[0];
+             var str = list.goodsName;
+             var arr = str.split(" ");
+             arr.filter(keyword => keyword.includes(keyword));  
+
+             keywordInsert(keyword);
+             
+             
+           },
 		error: function() {
 			debugger;
 			alert("Service Error. Pleasy try again later.")
@@ -189,10 +178,13 @@ $("#searchResultUl").mouseleave(function(){
             }
         });
 });*/
-function keywordInsert(key){
-	var data = {
-		"keyword":keyword,
-	 };
+function keywordInsert(keyword){
+	/*var keyword = $("#keyword").val();*/
+	debugger;
+	
+		var    data = {
+			  "keyword":keyword,
+		    };	   
 	 $.ajax({
             type: 'POST',            
             url : "/goods/insertKeyword",
@@ -200,7 +192,7 @@ function keywordInsert(key){
             data:JSON.stringify(data),
             success: function (result) {
                 if (result.resultCode == 200) {  
-	                swal("chengong",{  
+	                swal("成功",{  
 		                incon:"success"
 		             });
                 } else {                  	

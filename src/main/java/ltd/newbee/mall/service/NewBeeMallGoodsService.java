@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ltd.newbee.mall.entity.GoodsQa;
@@ -21,6 +22,11 @@ import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
+import ltd.newbee.mall.entity.GoodsCoupon;
+import ltd.newbee.mall.entity.GoodsSale;
+import ltd.newbee.mall.entity.TbCategory;
+import ltd.newbee.mall.entity.TbSale;
+
 
 public interface NewBeeMallGoodsService {
     /**
@@ -103,19 +109,23 @@ public interface NewBeeMallGoodsService {
 
 	PageResult findHitGoodsList(PageQueryUtil pageUtil);
 //
-	int insertSearchHistory(SearchHistory id);
+	int insertSearchHistory(SearchHistory keywordId);
     //getMaxKeywordID
-    Long getMaxKeywordId(Long userId);
+    Long getMaxKeyWordId(Long userId);
     //20210511
-    List<ltd.newbee.mall.entity.TbSale>TbSale(Long id); 
-    List<ltd.newbee.mall.entity.TbCategory>TbCategory(Long id);
-    List<ltd.newbee.mall.entity.GoodsSale>GoodsSale(Long id);   
-    List<ltd.newbee.mall.entity.GoodsCoupon>GoodsCoupon(Long couponId);
+    List<TbSale>TbSale(Long id); 
+    List<TbCategory>TbCategory(Long id);
+    List<GoodsSale>GoodsSale(Long id);   
+    List<GoodsCoupon>GoodsCoupon(Long couponId);
     //insert 20210511
-    int insertTbSale(ltd.newbee.mall.entity.TbSale id);
-    int insertTbCategory(ltd.newbee.mall.entity.TbCategory id);
-    int insertGoodsSale(ltd.newbee.mall.entity.GoodsSale id);
-    int insertGoodsCoupon(ltd.newbee.mall.entity.GoodsCoupon couponId);
+    int insertTbSale(TbSale id);
+    int insertTbCategory(TbCategory id);
+    int insertGoodsSale(GoodsSale id);
+    int insertGoodsCoupon(GoodsCoupon couponId);
+
+	
+
+	
 
 	
 	
