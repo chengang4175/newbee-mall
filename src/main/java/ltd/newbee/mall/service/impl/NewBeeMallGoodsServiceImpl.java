@@ -297,9 +297,16 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	    int count = goodsMapper.insertGoodsCoupon(couponId);
 	    return count;
 	}
-
-	
-
-	
-	
+	//5/14
+	@Override
+	public PageResult getTbSaleDownload(PageQueryUtil pageUtil) {
+		   List<TbCategory> goodsList = goodsMapper.getTbSaleDownload(pageUtil);
+	        PageResult pageResult = new PageResult(goodsList, 10, pageUtil.getLimit(), pageUtil.getPage());
+	        return pageResult;
+	}
 }
+
+	
+
+	
+

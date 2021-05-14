@@ -18,13 +18,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.BufferedInputStream;
@@ -39,6 +42,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -51,7 +56,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/admin")
 public class UploadController {
-
+	@Resource
+    private NewBeeMallGoodsService newBeeMallGoodsService;
     @Autowired
     private StandardServletMultipartResolver standardServletMultipartResolver;
 
@@ -139,17 +145,17 @@ public class UploadController {
         return resultSuccess;
     }
 //csv文件
-    @PostMapping({"/upload/file"})
+    @PostMapping({"/uploadtext/file"})
     @ResponseBody
-    public Result upload3(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file, TbSale id, TbSale goodsId, TbSale startDate, TbSale endDate) throws URISyntaxException {
-    	
-    	
+    public Result uploadtext(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file) throws URISyntaxException, ParseException {
         try {
+        	SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
+        	Integer count = null;
         	InputStream is = file.getInputStream();
         	BufferedReader br = new BufferedReader(new InputStreamReader(is));
         	String line;
         	while((line = br.readLine())!=null) {
-        		String[] split = line.split(",");
+        		String[] arr = line.split(",");
         		//放入方法
         		
 				/*
@@ -157,14 +163,22 @@ public class UploadController {
 				 * list.add(startDate); list.add(endDate);
 				 */
         		TbSale tbEntity = new TbSale();
-        		tbEntity.setId(arr[0]);
-        		tbEntity.setGoodsId(arr[1]);
-        		tbEntity.setStartDate(arr[2]);
-        		tbEntity.setEndDate(arr[3]);
+        		tbEntity.setId(Long.parseLong(arr[0]));
+        		tbEntity.setGoodsId(Long.parseLong(arr[1]));
+        		tbEntity.setStartDate(sdFormat.parse(arr[2]));
+        		tbEntity.setEndDate(sdFormat.parse(arr[3]));
         		//插入服务
-        		int flag = NewBeeMallGoodsService.insertTbSale(TbSale id);
+        		  if(tbEntity !=null) {
+        			  count = newBeeMallGoodsService.insertTbSale(tbEntity);
+        			  
+        		      } 
+        		  if(!(count > 0)) {
+        			  return ResultGenerator.genFailResult("");
+        		      }
+        		  return ResultGenerator.genSuccessResult(count);
         		
         	}
+        	br.close();
         	
         
         } catch (IOException e) {
@@ -172,9 +186,21 @@ public class UploadController {
             
       
            }
-		return null;
+		return ResultGenerator.genSuccessResult();
         }
     
-    
+  //五月十四日下载
+    @RequestMapping(value = "/carousels/updown", method = RequestMethod.POST)
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] id) {
+        if (id.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (newBeeMallGoodsService.getTbSaleDownload(id)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("删除失败");
+        }
+    }
 
 }

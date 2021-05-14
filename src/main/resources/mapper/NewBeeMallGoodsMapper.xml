@@ -582,7 +582,7 @@
        where goods_id = #{goodsId,jdbcType=BIGINT}
   </select>
   <select id="getTbSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TbSale">
-  select id,goods_id,start_date,end_date from goods_table
+  select id,goods_id,start_date,end_date from tb_ble
        where goods_id = #{goodsId,jdbcType=BIGINT}
   </select>
   <select id="getGoodsSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsSale">
@@ -750,6 +750,14 @@
             </if>
         </trim>
     </insert>
+    <select id="getTbSaleDownload" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TbSale">
+    select id,goods_id,start_date,end_date from tb_sale
+       where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+  </select>
+  
   
   
   

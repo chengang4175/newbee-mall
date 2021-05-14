@@ -122,7 +122,9 @@ public interface NewBeeMallGoodsService {
     int insertTbCategory(TbCategory id);
     int insertGoodsSale(GoodsSale id);
     int insertGoodsCoupon(GoodsCoupon couponId);
-
+  //20210514
+    
+    PageResult getTbSaleDownload(PageQueryUtil pageUtil);
 	
 
 	

@@ -68,6 +68,28 @@ $(function () {
             }
         }
     });
+    //五月1十三日增删改查
+     new AjaxUpload('#testUpload', {
+        action: '/admin/uploadtext/file',
+        name: 'file',
+        autoSubmit: true,
+        responseType: "json",
+        onSubmit: function (file, extension) {
+            if (!(extension && /^(jpg|jpeg|png|gif|csv)$/.test(extension.toLowerCase()))) {
+                alert('只支持jpg、png、gif、csv格式的文件！');
+                return false;
+            }
+        },
+        onComplete: function (file, r) {
+            if (r != null && r.resultCode == 200) {
+                $("#goodsCoverImg").attr("src", r.data);
+                $("#goodsCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
+                return false;
+            } else {
+                alert("error");
+            }
+        }
+    });
 });
 
 $('#saveButton').click(function () {
@@ -300,47 +322,43 @@ $('#levelTwo').on('change', function () {
     });
 });
 
-//五月1十三日增删改查
-new AjaxUpload('#testUpload', {
-        action: '/admin/upload/file',
-        name: 'file',
-        autoSubmit: true,
-        responseType: "json",
-        onSubmit: function (file, extension) {
-            if (!(extension && /^(jpg|jpeg|png|gif|csv)$/.test(extension.toLowerCase()))) {
-                alert('只支持jpg、png、gif格式的文件！');
-                return false;
+
+//5月14日下载
+
+$('#download').on('click',function(){
+	debugger;
+	
+		/*var    data = {
+			  "keyword":keyword,
+		    };	   */
+	 $.ajax({
+            type: 'POST',            
+            url : "/goods/insertKeyword",
+            contentType: 'application/json',
+            data:JSON[1.2],
+            success: function (result) {
+                if (result.resultCode == 200) {  
+	                /*swal("成功",{  
+		                incon:"success"
+		             });*/
+		             data.url
+		             function Download(url){
+			           document.getElementById("download").src = url;
+			
+		             };
+                } else {                  	
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                };
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
             }
-        },
-        onComplete: function (file, r) {
-            if (r != null && r.resultCode == 200) {
-                $("#goodsCoverImg").attr("src", r.data);
-                $("#goodsCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
-                return false;
-            } else {
-                alert("error");
-            }
-        }
-        
-});
-$.ajax({
-    url: '/admin/upload/file',
-    type: 'POST',
-    cache: false, //上传文件不需要缓存
-    data: formData,
-    processData: false, // 告诉jQuery不要去处理发送的数据
-    contentType: false, // 告诉jQuery不要去设置Content-Type请求头
-    success: function (data) {
-        var rs = eval("("+data+")");
-        if(rs.state==1){
-            tipTopShow('上传成功！');
-        }else{
-            tipTopShow(rs.msg);
-        }
-    },
-    error: function (data) {
-        tipTopShow("上传失败");
-    }
-})  
+        });
+})
+
 
 
