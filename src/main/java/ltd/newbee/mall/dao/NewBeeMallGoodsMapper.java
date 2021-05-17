@@ -103,7 +103,9 @@ public interface NewBeeMallGoodsMapper {
     int insertGoodsSale(GoodsSale id);
     int insertGoodsCoupon(GoodsCoupon couponId);
 //2021/05/14
-    List<TbCategory> getTbSaleDownload(PageQueryUtil pageUtil);  
-	
+    List<TbSale> getTbSaleDownload(Integer[] ids);  
+//2021/05/17
+    List<GoodsSale> goodsSalePagAndSort(PageQueryUtil pageUtil);
+    int getGoodsSale(PageQueryUtil pageUtil);
 }
  

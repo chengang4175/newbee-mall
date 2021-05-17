@@ -123,11 +123,11 @@ public interface NewBeeMallGoodsService {
     int insertGoodsSale(GoodsSale id);
     int insertGoodsCoupon(GoodsCoupon couponId);
   //20210514
-    
-    PageResult getTbSaleDownload(PageQueryUtil pageUtil);
-	
+     
+    List<TbSale> getTbSaleDownload(Integer[] ids);
+  //20210517
 
-	
+    PageResult goodsSalePagAndSort(PageQueryUtil pageUtil);
 
 	
 	

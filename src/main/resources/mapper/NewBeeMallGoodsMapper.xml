@@ -757,8 +757,22 @@
             #{id}
         </foreach>
   </select>
-  
-  
-  
+<!-- 5月17日修 -->
+  <select id="goodsSalePagAndSort" parameterType="Map" resultMap="BaseResultMap">
+         select id,name,start_date,end_date,campaign,
+         content1,content2,content3,content4,content5,flag
+	     from goods_sale 
+      <where>
+            <if test="keyword!=null and keyword!=''">
+	        and name like CONCAT('%',#{keyword},'%')
+	        </if>	       
+	  </where>
+	        <if test="orderBy!=null and orderBy!=''"> 
+	        order by #{orderBy} #{ascOrDesc}
+	        </if>
+	        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+            </if>
+   </select>
   
 </mapper>

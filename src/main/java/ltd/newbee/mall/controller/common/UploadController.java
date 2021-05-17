@@ -9,14 +9,19 @@
 package ltd.newbee.mall.controller.common;
 
 import ltd.newbee.mall.common.Constants;
+import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
+import ltd.newbee.mall.entity.PagingQa;
 import ltd.newbee.mall.entity.TbSale;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.NewBeeMallUtils;
+import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -190,17 +195,78 @@ public class UploadController {
         }
     
   //五月十四日下载
-    @RequestMapping(value = "/carousels/updown", method = RequestMethod.POST)
+    @RequestMapping(value = "/Download/file", method = RequestMethod.POST)
     @ResponseBody
-    public Result delete(@RequestBody Integer[] id) {
-        if (id.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
-        if (newBeeMallGoodsService.getTbSaleDownload(id)) {
-            return ResultGenerator.genSuccessResult();
-        } else {
-            return ResultGenerator.genFailResult("删除失败");
-        }
+    public Result Download(@RequestBody Integer[] ids){
+        File f = new File("D:\\zhaopian\\upload\\text.csv");
+		/* SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd"); */
+        
+        try { 
+          BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+          List<TbSale> tbSale = newBeeMallGoodsService.getTbSaleDownload(ids);
+          tbSale.stream().forEach( c  -> {
+        	  try {
+        		  bw.write(c.toString());
+        		  bw.newLine();
+        		  
+        	  }catch (IOException e) {
+        		  e.printStackTrace(); 
+        	  }
+        	  
+          });
+          bw.close();
+         }catch (IOException e) {
+        	 e.printStackTrace();
+         }
+			/*
+			 * List<TbSale> tbSale = newBeeMallGoodsService.getTbSaleDownload(ids); for(int
+			 * i= 0; i < tbSale.size();i++) { TbSale tb = tbSale.get(i); if(tb != null) {
+			 * try { bw.write(tb.toString()); bw.newLine(); } catch (IOException e) {
+			 * e.printStackTrace(); }
+			 * 
+			 * } }
+			 */
+        Result resultSuccess = ResultGenerator.genSuccessResult();
+    	resultSuccess.setData("/upload/tset.csv");
+    	return resultSuccess;
     }
-
+    
+  //2021/05/17
+	/*
+	 * @RequestMapping(value = "/goods/saleSort", method = RequestMethod.POST)
+	 * 
+	 * @ResponseBody public Result tbSale(@RequestBody PagingQa page) {
+	 * 
+	 * Map<String,Object> params = new HashMap<>();
+	 * 
+	 * params.put("page",page.getPage());
+	 * params.put("limit",Constants.INDEX_GOODS_RECOMMOND_NUMBER);
+	 * params.put("keyword","name"); params.put("orderBy","id"); PageQueryUtil
+	 * pageUtil = new PageQueryUtil(params); return
+	 * ResultGenerator.genSuccessResult(newBeeMallGoodsService.searchNewBeeMallGoods
+	 * (pageUtil)); }
+	 */
+  //2021/05/17
+    @GetMapping({"/search", "/search.html"})
+    public String searchPage(@RequestParam Map<String, Object> params, HttpServletRequest request) {
+        if (StringUtils.isEmpty(params.get("page"))) {
+            params.put("page", 1);
+        }
+        params.put("limit", Constants.GOODS_SEARCH_PAGE_LIMIT);
+        //封装参数供前端回显
+        if (params.containsKey("orderBy") && !StringUtils.isEmpty(params.get("orderBy") + "")) {
+            request.setAttribute("orderBy", params.get("orderBy") + "");
+        }
+        String keyword = "";
+        //对keyword做过滤 去掉空格
+        if (params.containsKey("keyword") && !StringUtils.isEmpty((params.get("keyword") + "").trim())) {
+            keyword = params.get("keyword") + "";
+        }
+        request.setAttribute("keyword", keyword);
+        params.put("keyword", keyword);
+        //封装商品数据
+        PageQueryUtil pageUtil = new PageQueryUtil(params);
+        request.setAttribute("pageResult", newBeeMallGoodsService.goodsSalePagAndSort(pageUtil));
+        return "mall/search";
+    }
 }

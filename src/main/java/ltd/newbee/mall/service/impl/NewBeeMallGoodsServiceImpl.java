@@ -299,11 +299,19 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	}
 	//5/14
 	@Override
-	public PageResult getTbSaleDownload(PageQueryUtil pageUtil) {
-		   List<TbCategory> goodsList = goodsMapper.getTbSaleDownload(pageUtil);
-	        PageResult pageResult = new PageResult(goodsList, 10, pageUtil.getLimit(), pageUtil.getPage());
-	        return pageResult;
+	public List<TbSale> getTbSaleDownload(Integer[] ids) {
+		List<TbSale> tbSale = goodsMapper.getTbSaleDownload(ids); 
+	    return tbSale;
 	}
+	//5/17
+	@Override
+	public PageResult goodsSalePagAndSort(PageQueryUtil pageUtil) {
+		List<GoodsSale> goodsList = goodsMapper.goodsSalePagAndSort(pageUtil);
+        int total = goodsMapper.getGoodsSale(pageUtil);
+        PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+	
 }
 
 	

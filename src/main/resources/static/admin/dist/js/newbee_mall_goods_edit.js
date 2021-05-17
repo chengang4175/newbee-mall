@@ -327,25 +327,22 @@ $('#levelTwo').on('change', function () {
 
 $('#download').on('click',function(){
 	debugger;
-	
+	var _data = [1,2,3]
 		/*var    data = {
 			  "keyword":keyword,
 		    };	   */
 	 $.ajax({
             type: 'POST',            
-            url : "/goods/insertKeyword",
+            url : "/admin/Download/file",
             contentType: 'application/json',
-            data:JSON[1.2],
+            data:JSON.stringify(_data),
             success: function (result) {
                 if (result.resultCode == 200) {  
 	                /*swal("成功",{  
 		                incon:"success"
 		             });*/
-		             data.url
-		             function Download(url){
-			           document.getElementById("download").src = url;
-			
-		             };
+		            var url = window.location.assign(result.data);
+		            Download(url);
                 } else {                  	
                     swal(result.message, {
                         icon: "error",
@@ -358,7 +355,12 @@ $('#download').on('click',function(){
                 });
             }
         });
-})
+        
+});
+function Download(url){
+    document.getElementById('my_iframe').src = url;
+};
 
+//5月17日
 
 
