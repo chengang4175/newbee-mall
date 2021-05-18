@@ -307,7 +307,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	@Override
 	public PageResult goodsSalePagAndSort(PageQueryUtil pageUtil) {
 		List<GoodsSale> goodsList = goodsMapper.goodsSalePagAndSort(pageUtil);
-        int total = goodsMapper.getGoodsSale(pageUtil);
+        int total = goodsMapper.getTotalGoodsSale(pageUtil);
         PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }

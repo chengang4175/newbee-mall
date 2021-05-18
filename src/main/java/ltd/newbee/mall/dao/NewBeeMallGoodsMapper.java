@@ -106,6 +106,6 @@ public interface NewBeeMallGoodsMapper {
     List<TbSale> getTbSaleDownload(Integer[] ids);  
 //2021/05/17
     List<GoodsSale> goodsSalePagAndSort(PageQueryUtil pageUtil);
-    int getGoodsSale(PageQueryUtil pageUtil);
+    int getTotalGoodsSale(PageQueryUtil pageUtil);
 }
  

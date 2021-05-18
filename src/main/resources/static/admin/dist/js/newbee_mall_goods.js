@@ -83,6 +83,16 @@ function addGoods() {
     window.location.href = "/admin/goods/edit";
 }
 
+function addGoods() {
+    window.location.href = "/admin/goods/sale";
+}
+function editGoods() {
+    var id = getSelectedRow();
+    if (id == null) {
+        return;
+    }
+    window.location.href = "/admin/goods/sale/" + id;
+}
 /**
  * 修改商品
  */

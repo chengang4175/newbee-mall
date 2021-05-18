@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ltd.newbee.mall.dao.NewBeeMallGoodsMapper">
     <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.NewBeeMallGoods">
+    
         <id column="goods_id" jdbcType="BIGINT" property="goodsId"/>
         <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
         <result column="goods_intro" jdbcType="VARCHAR" property="goodsIntro"/>
@@ -17,6 +18,19 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+     <resultMap id="GoodsSaleMap" type="ltd.newbee.mall.entity.GoodsSale">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="start_date" jdbcType="TIMESTAMP" property="startDate"/>
+        <result column="end_date" jdbcType="TIMESTAMP" property="endDate"/>
+        <result column="campaign" jdbcType="VARCHAR" property="campaign"/>
+        <result column="cotent1" jdbcType="VARCHAR" property="cotent1"/>
+        <result column="cotent2" jdbcType="VARCHAR" property="cotent2"/>
+        <result column="cotent3" jdbcType="VARCHAR" property="cotent3"/>
+        <result column="cotent4" jdbcType="VARCHAR" property="cotent4"/>
+        <result column="cotent5" jdbcType="VARCHAR" property="cotent5"/>
+        <result column="flag" jdbcType="VARCHAR" property="flag"/>
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="ltd.newbee.mall.entity.NewBeeMallGoods">
         <result column="goods_detail_content" jdbcType="LONGVARCHAR" property="goodsDetailContent"/>
@@ -67,7 +81,7 @@
         from tb_newbee_mall_goods_info
         <where>
             <if test="goodsName!=null and goodsName!=''">
-                and goods_name like CONCAT('%','#{goodsName}','%')
+                and goods_name like CONCAT('%',#{goodsName},'%')
             </if>
             <if test="goodsSellStatus!=null and goodsSellStatus!=''">
                 and goods_sell_status = #{goodsSellStatus}
@@ -586,8 +600,10 @@
        where goods_id = #{goodsId,jdbcType=BIGINT}
   </select>
   <select id="getGoodsSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsSale">
-  select content1,content2,content3,content4,content5,flagfrom goods_table
-       where flag = #{flag	,jdbcType=BIGINT}
+  select id,name,start_date,end_date,campaign,
+         content1,content2,content3,content4,content5,flag
+	     from goods_sale
+       where flag = #{flag,jdbcType=BIGINT}
   </select>
   <insert id="getGoodsCoupon" parameterType="ltd.newbee.mall.entity.SearchHistory">
     insert into goods_coupon
@@ -758,21 +774,21 @@
         </foreach>
   </select>
 <!-- 5月17日修 -->
-  <select id="goodsSalePagAndSort" parameterType="Map" resultMap="BaseResultMap">
-         select id,name,start_date,end_date,campaign,
-         content1,content2,content3,content4,content5,flag
-	     from goods_sale 
+  <select id="goodsSalePagAndSort" parameterType="Map" resultMap="GoodsSaleMap">
+   select id,name,start_date,end_date,campaign,content1,content2,content3,content4,content5,flag from goods_sale
       <where>
-            <if test="keyword!=null and keyword!=''">
+            <if test="keyword != null and keyword != ''">
 	        and name like CONCAT('%',#{keyword},'%')
 	        </if>	       
 	  </where>
-	        <if test="orderBy!=null and orderBy!=''"> 
-	        order by #{orderBy} #{ascOrDesc}
+	        <if test="orderBy != null and orderBy != ''and ascOrDesc != null and ascOrDesc !=''"> 
+	        order by #{orderBy} #{ascOrDesc} 
 	        </if>
-	        <if test="start!=null and limit!=null">
-            limit #{start},#{limit}
-            </if>
+   </select>
+   <select id = "getTotalGoodsSale" parameterType="Map" resultType="int">
+   select count(*) from goods_sale 
+   where id = #{id,jdbcType=BIGINT}
+   
    </select>
   
 </mapper>

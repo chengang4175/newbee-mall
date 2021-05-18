@@ -247,7 +247,7 @@ public class UploadController {
 	 * (pageUtil)); }
 	 */
   //2021/05/17
-    @GetMapping({"/search", "/search.html"})
+    @GetMapping({"/goods/sale", "/sale.html"})
     public String searchPage(@RequestParam Map<String, Object> params, HttpServletRequest request) {
         if (StringUtils.isEmpty(params.get("page"))) {
             params.put("page", 1);
@@ -267,6 +267,6 @@ public class UploadController {
         //封装商品数据
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         request.setAttribute("pageResult", newBeeMallGoodsService.goodsSalePagAndSort(pageUtil));
-        return "mall/search";
+        return "admin/sale";
     }
 }
