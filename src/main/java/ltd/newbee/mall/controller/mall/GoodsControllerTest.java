@@ -116,10 +116,12 @@ NewBeeMallGoodsService newBeeMallGoodsService;
 	  @Test 
 	  public void testGoodsSale() { 
 		  Map<String,Object> params = new HashMap<String,Object>(); 
-		  params.put("page",1); 
+		  params.put("page",2); 
 		  params.put("limit",3);
-	      params.put("orderBy","end_date"); 
-	      params.put("keyword","name");
+	      params.put("orderBy","end_date");
+	      params.put("orderBy","asc");
+	      params.put("orderBy","Desc");
+	      params.put("keyword","大");
 	      PageQueryUtil pageUtil = new PageQueryUtil(params); 
 	      PageResult rs =newBeeMallGoodsService.goodsSalePagAndSort(pageUtil); 
 	      List<GoodsSale> goodsList = (List<GoodsSale>) rs.getList();
@@ -132,26 +134,40 @@ NewBeeMallGoodsService newBeeMallGoodsService;
 	       Long a =1L;
 	       Long b =2L; 
 	       Long c =3L;
+	       Long d =4L;
 	       assertEquals(a,goodsList.get(0).getId());
 	       assertEquals(b,goodsList.get(1).getId());
-	       assertEquals(c,goodsList.get(2).getId()); 
+	       assertEquals(c,goodsList.get(2).getId());
+	       assertEquals(d,goodsList.get(3).getId());
 	       
 	       assertEquals("大甩賣",goodsList.get(0).getName());
 	       assertEquals("大處理",goodsList.get(1).getName());
-	       assertEquals("打折扣",goodsList.get(2).getName()); 
+	       assertEquals("大折扣",goodsList.get(2).getName());
+	       assertEquals("大減價",goodsList.get(3).getName());
 	       
 	       assertEquals("打折扣",goodsList.get(0).getCampaign());
 	       assertEquals("買一送一",goodsList.get(1).getCampaign());
 	       assertEquals("半價出售",goodsList.get(2).getCampaign());
+	       assertEquals("半折",goodsList.get(3).getCampaign());
 	       
 			
-		   SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy/MM/dd"); String
-			  startDate1 = dmyFormat.format(goodsList.get(0).getStartDate()); String
-			  startDate2 = dmyFormat.format(goodsList.get(1).getStartDate()); String
-			  startDate3 = dmyFormat.format(goodsList.get(2).getStartDate());
-			  assertEquals("2021-05-14",startDate1);
-			  assertEquals("2022-05-14",startDate2);
-			  assertEquals("2022-06-15",startDate3);
+		   SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy/MM/dd"); 
+		   String  startDate1 = dmyFormat.format(goodsList.get(0).getStartDate()); 
+		   String  startDate2 = dmyFormat.format(goodsList.get(1).getStartDate()); 
+		   String  startDate3 = dmyFormat.format(goodsList.get(2).getStartDate());
+		   String  startDate4 = dmyFormat.format(goodsList.get(3).getStartDate());
+		   assertEquals("2021-05-14",startDate1);
+		   assertEquals("2022-05-14",startDate2);
+		   assertEquals("2022-06-15",startDate3);
+		   assertEquals("2022-07-16",startDate4);
+		   String  endDate1 = dmyFormat.format(goodsList.get(0).getEndDate());
+		   String  endDate2 = dmyFormat.format(goodsList.get(0).getEndDate());
+		   String  endDate3 = dmyFormat.format(goodsList.get(0).getEndDate());
+		   String  endDate4 = dmyFormat.format(goodsList.get(0).getEndDate());
+		   assertEquals("2021-05-04",endDate1);
+		   assertEquals("2022-06-15",endDate1);
+		   assertEquals("2022-07-15",endDate1);
+		   assertEquals("2022-07-17",endDate1);
 			 
 	  }
 	

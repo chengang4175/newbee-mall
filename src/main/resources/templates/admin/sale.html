@@ -71,16 +71,39 @@
 						            </tr>
 						        </thead>
 						        <tbody>
+						        <form>
+                                    <div>
+                                       <label for="example">Let's submit some text</label>
+                                         <input id="example" type="text" name="text">
+                                    </div>
+                                    <div>
+                                        <input type="submit" value="Send">
+                                    </div>
+                                 </form>
+						        <a href="#" onClick="document.location.reload()" class="css3">刷新</a>
+						        <th:block th:each="sale: ${goodsSaleDetail}" th:if="${sale != null}">
 						            <tr>
 						                <td>
 						                    <input type="checkbox"/>
 						                </td>
-						                <td></td>
-						                <td></td>
-						                <td></td>
-						                <td></td>
-						                <td></td>
+						                <td th:text="${sale.id}"></td>	
+						                <td th:text="${sale.name}"></td>
+						                <td th:text="${sale.startDate}"></td>
+						                <td th:text="${sale.endDate}"></td>
+						                <td ></td>
 						            </tr>
+						            </th:block>
+						             <tr>
+						                <td>
+						                    <input class="zv-cqa hiddenSeleDiv" type="checkbox"/>
+						                </td>
+						                <td class=zv-cqa-q-id></td>	
+						                <td class=zv-cqa-q-name></td>
+						                <td class=zv-cqa-q-startDate></td>
+						                <td class=zv-cqa-q-endDate></td>
+						               
+						            </tr>
+						            
 								</tbody>
 							</table>
 						</div>
@@ -107,6 +130,7 @@
 <script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
 <script th:src="@{/admin/dist/js/newbee.mall.goods.js}"></script>
+<script th:src="@{/mall/js/sale.js}" type="text/javascript"></script>
 
 
 </body>

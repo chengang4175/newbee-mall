@@ -784,6 +784,9 @@
 	        <if test="orderBy != null and orderBy != ''and ascOrDesc != null and ascOrDesc !=''"> 
 	        order by #{orderBy} #{ascOrDesc} 
 	        </if>
+	        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+            </if>
    </select>
    <select id = "getTotalGoodsSale" parameterType="Map" resultType="int">
    select count(*) from goods_sale 

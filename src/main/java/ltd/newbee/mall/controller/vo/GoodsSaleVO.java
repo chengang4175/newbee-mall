@@ -1,12 +1,49 @@
 package ltd.newbee.mall.controller.vo;
 
+import java.util.Date;
+
 public class GoodsSaleVO {
+	private Long id;
+    private String name;
+    private Date startDate;
+    private Date endDate;
+    private String campaign;
 	private String cotent1;
 	private String cotent2;
 	private String cotent3;
 	private String cotent4;
 	private String cotent5;
 	private String flag;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public String getCampaign() {
+		return campaign;
+	}
+	public void setCampaign(String campaign) {
+		this.campaign = campaign;
+	}
 	public String getCotent1() {
 		return cotent1;
 	}
@@ -43,4 +80,6 @@ public class GoodsSaleVO {
 	public void setFlag(String flag) {
 		this.flag = flag;
 	}
+	
+	
 }

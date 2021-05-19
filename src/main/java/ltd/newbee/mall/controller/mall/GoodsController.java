@@ -15,19 +15,23 @@ import ltd.newbee.mall.controller.vo.GoodsDescVO;
 import ltd.newbee.mall.controller.vo.GoodsImageVO;
 import ltd.newbee.mall.controller.vo.GoodsQaVO;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
+import ltd.newbee.mall.controller.vo.GoodsSaleVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.controller.vo.SearchHistoryVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
+import ltd.newbee.mall.controller.vo.TbSaleVO;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.HelpNum;
 
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.PagingQa;
 import ltd.newbee.mall.entity.SearchHistory;
+import ltd.newbee.mall.entity.TbSale;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
@@ -183,9 +187,23 @@ public class GoodsController<GoddsImageVo> {
             		 
             	 }
               }
+				/*
+				 * List<TbSale> tbSale = newBeeMallGoodsService.TbSale(goodsId); if(tbSale ==
+				 * null) {
+				 * NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult()); }
+				 * List<TbSaleVO> saleVOList = new ArrayList<TbSaleVO>(); for(int i = 0; i <
+				 * tbSale.size();i++) { TbSale sale = new TbSale(); sale = tbSale.get(i); if
+				 * (sale !=null) { TbSaleVO saleVO = new TbSaleVO();
+				 * BeanUtil.copyProperties(sale, saleVO); saleVOList.add(saleVO);
+				 * 
+				 * } }
+				 */
+	           
+				/* request.setAttribute("tbSaleDetail", saleVOList); */
              request.setAttribute("goodsImegeDetail", imageVOList); 
              request.setAttribute("goodsQaDetail", qaVOList);
              request.setAttribute("goodsReviewDetail", reviewVOList);
+             
 //===================================================================================================================================
           GoodsDesc goodsDesc = newBeeMallGoodsService.getGoodsDescEntityByGoodsId(goodsId);
           if (goodsDesc == null) {
@@ -311,4 +329,8 @@ public class GoodsController<GoddsImageVo> {
 				        }      
 				        return ResultGenerator.genSuccessResult(count);    
 				}
+			 
+			
+			  
+	             
 }

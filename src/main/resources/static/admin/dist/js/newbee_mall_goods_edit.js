@@ -68,7 +68,7 @@ $(function () {
             }
         }
     });
-    //五月1十三日增删改查
+    //五月十三日增删改查
      new AjaxUpload('#testUpload', {
         action: '/admin/uploadtext/file',
         name: 'file',

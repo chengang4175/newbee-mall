@@ -9,12 +9,20 @@
 package ltd.newbee.mall.controller.common;
 
 import ltd.newbee.mall.common.Constants;
+import ltd.newbee.mall.common.NewBeeMallException;
+import ltd.newbee.mall.common.ServiceResultEnum;
+import ltd.newbee.mall.controller.vo.GoodsQaVO;
+import ltd.newbee.mall.controller.vo.GoodsSaleVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
+import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.PagingQa;
 import ltd.newbee.mall.entity.TbSale;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
+import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.NewBeeMallUtils;
 import ltd.newbee.mall.util.PageQueryUtil;
+import ltd.newbee.mall.util.PageResult;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -267,6 +275,30 @@ public class UploadController {
         //封装商品数据
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         request.setAttribute("pageResult", newBeeMallGoodsService.goodsSalePagAndSort(pageUtil));
+        
+        
+        Map<String,Object> paramsgs = new HashMap<>();
+        paramsgs.put("page","1");
+        paramsgs.put("limit","3");
+        PageQueryUtil gs = new PageQueryUtil(paramsgs);
+        PageResult rs = newBeeMallGoodsService.goodsSalePagAndSort(gs);
+        List<GoodsSale> listSale = (List<GoodsSale>) rs.getList();
+        if(listSale == null) {
+        	NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+        List<GoodsSaleVO> goodsSaleVOList = new ArrayList<GoodsSaleVO>();
+           for(int i = 0; i < listSale.size();i++) {
+        	   GoodsSale sale = new GoodsSale();
+        	   sale = listSale.get(i);
+        	   if (sale !=null) {        		  
+        		   GoodsSaleVO saleVO = new GoodsSaleVO();      
+        		   BeanUtil.copyProperties(sale, saleVO);
+        		   goodsSaleVOList.add(saleVO);
+        	   }  
+           }
+        request.setAttribute("goodsSaleDetail",goodsSaleVOList);
         return "admin/sale";
     }
+    
+    
 }
