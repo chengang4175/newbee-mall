@@ -125,6 +125,7 @@ public interface NewBeeMallGoodsService {
   //20210514
      
     List<TbSale> getTbSaleDownload(Integer[] ids);
+    List<GoodsSale> getGoodsSaleDownload(Integer[] ids);
   //20210517
 
     PageResult goodsSalePagAndSort(PageQueryUtil pageUtil);

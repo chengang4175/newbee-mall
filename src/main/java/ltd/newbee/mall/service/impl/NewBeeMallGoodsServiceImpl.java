@@ -311,6 +311,12 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
         PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
+
+	@Override
+	public List<GoodsSale> getGoodsSaleDownload(Integer[] ids) {
+		List<GoodsSale> goodsSale = goodsMapper.getGoodsSaleDownload(ids); 
+	    return goodsSale;
+	}
 	
 }
 

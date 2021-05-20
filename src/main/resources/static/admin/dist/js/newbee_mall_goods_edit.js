@@ -325,42 +325,40 @@ $('#levelTwo').on('change', function () {
 
 //5月14日下载
 
-$('#download').on('click',function(){
-	debugger;
-	var _data = [1,2,3]
-		/*var    data = {
-			  "keyword":keyword,
-		    };	   */
-	 $.ajax({
-            type: 'POST',            
-            url : "/admin/Download/file",
+/*$("#download-csv").on('click',function(){
+	      debugger;
+	        var _data = [1,2,3]
+	  	    $.ajax({
+            type: 'POST',//方法类型
+            url: '/admin/goodsSale/download',
             contentType: 'application/json',
-            data:JSON.stringify(_data),
+            data: JSON.stringify(_data),
+            //data:1,
+            
             success: function (result) {
-                if (result.resultCode == 200) {  
-	                /*swal("成功",{  
-		                incon:"success"
-		             });*/
-		            var url = window.location.assign(result.data);
-		            Download(url);
-                } else {                  	
-                    swal(result.message, {
+	        //サーバーが成功した場合
+                if (result.resultCode == 200) {
+	              debugger;
+	             // var url = window.location.assign(result.data);
+	              Download(result.data);
+                } else {
+                    	swal(result.message, {
                         icon: "error",
                     });
-                };
+                }
+                
             },
             error: function () {
                 swal("操作失败", {
                     icon: "error",
                 });
-            }
-        });
-        
-});
-function Download(url){
-    document.getElementById('my_iframe').src = url;
-};
-
+             }
+         })
+  });
+  
+function Download(url) {
+   document.getElementById('my_iframe').src = url;
+};*/
 //5月17日
 
 
