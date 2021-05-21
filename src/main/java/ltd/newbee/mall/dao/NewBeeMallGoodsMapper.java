@@ -61,34 +61,28 @@ public interface NewBeeMallGoodsMapper {
     
     
     
-//获得图片列表
+  //获得图片列表
     List<GoodsImage> getGoodsImageList(Long goodsId);
-//获取评论列表
+  //获取评论列表
     List<GoodsReview> getGoodsReviewList(Long goodsId);
-//获得Qa列表
+  //获得Qa列表
     List<GoodsQa> getGoodsQaList(Long goodsId);
-//获得说明
+  //获得说明
     GoodsDesc getGoodsDesc(Long goodsId);
-//分页功能
+  //分页功能
     List<GoodsQa> getGoodsQaPageList(PageQueryUtil pageUtil);
     int getGoodsQacount(PageQueryUtil pageUtil);
-//四月二十四日页面排序
+  //四月二十四日页面排序
     List<GoodsQa> getHelpedNumList(PageQueryUtil pageUtil);
-//四月二十四日页面内容输入
+  //四月二十四日页面内容输入
     int insertGoodsQa(GoodsQa qaRecord);
     Long getMaxQaId(Long goodsId);
-//展开更多评论s
+  //展开更多评论s
     List<GoodsReview> getGoodsReviews(Long goodsId);
-//参考人数
+  //参考人数
     boolean insertHelpNum(HelpNum goodsReviewaHelpNum);
     boolean updateReviewNum(HelpNum goodsReviewaHelpNum);
     long getGoodsReviewHelpNum(int reviewId);
-//
-	/*
-	 * List<NewBeeMallGoods> getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName);
-	 */
-
-//
     int insertSearchHistory(SearchHistory keywordId);
     //getMaxKeywordID
     Long getMaxKeyWordId(Long userId);
@@ -102,13 +96,11 @@ public interface NewBeeMallGoodsMapper {
     int insertTbCategory(TbCategory id);
     int insertGoodsSale(GoodsSale id);
     int insertGoodsCoupon(GoodsCoupon couponId);
-//2021/05/14
+   //2021/05/14
     List<TbSale> getTbSaleDownload(Integer[] ids);
     List<GoodsSale> getGoodsSaleDownload(Integer[] ids);
-//2021/05/17
+   //2021/05/17
     List<GoodsSale> goodsSalePagAndSort(PageQueryUtil pageUtil);
     int getTotalGoodsSale(PageQueryUtil pageUtil);
-//5月20日新页面暧昧检索
-    List<GoodsSale> findHitGoodsSaleList(PageQueryUtil pageUtil);
 }
  

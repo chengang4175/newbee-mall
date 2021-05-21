@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
+import ltd.newbee.mall.controller.vo.GoodsSaleVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.controller.vo.SearchHistoryVO;
@@ -308,6 +309,17 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	public PageResult goodsSalePagAndSort(PageQueryUtil pageUtil) {
 		List<GoodsSale> goodsList = goodsMapper.goodsSalePagAndSort(pageUtil);
         int total = goodsMapper.getTotalGoodsSale(pageUtil);
+        List<GoodsSaleVO> goodsSaleList = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(goodsList)) {
+        	goodsSaleList = BeanUtil.copyList(goodsList, GoodsSaleVO.class);
+        	for (GoodsSaleVO goodsSaleVO :goodsSaleList) {
+        		String name = goodsSaleVO.getName();
+        		if(name.length() > 28) {
+        			name = name.substring(0,28) + "...";
+        			goodsSaleVO.setName(name);
+        		}
+        	}
+        }
         PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }

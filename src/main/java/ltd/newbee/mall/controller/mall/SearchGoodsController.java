@@ -67,4 +67,13 @@ public class SearchGoodsController {
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         return ResultGenerator.genSuccessResult(newBeeMallGoodsService.searchNewBeeMallGoods(pageUtil));
     }
+    @RequestMapping(value = "/sale/search", method = RequestMethod.GET)
+	   public Result search(@RequestParam String name) {
+		   Map<String,Object> paramsSale = new HashMap<>();
+	        paramsSale.put("page",1);
+	        paramsSale.put("limit",3);
+	        paramsSale.put("keyword",name);
+	        PageQueryUtil pageUtil = new PageQueryUtil(paramsSale);
+	        return ResultGenerator.genSuccessResult(newBeeMallGoodsService.goodsSalePagAndSort(pageUtil));
+	  }
 }

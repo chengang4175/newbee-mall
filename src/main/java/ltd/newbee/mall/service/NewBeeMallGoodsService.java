@@ -89,26 +89,19 @@ public interface NewBeeMallGoodsService {
     List<GoodsReview> getGoodsReviewEntityByGoodsId(Long goodsId);
     List<GoodsImage> getGoodsImageEntityByGoodsId(Long goodsId);
     GoodsDesc getGoodsDescEntityByGoodsId(Long goodsId);
-//关于分页
+   //关于分页
     PageResult getGoodsQaEntityByGoodsId(PageQueryUtil pageUtil);
-//页面排序
+   //页面排序
     PageResult getHelpedNumListEntityByGoodsId(PageQueryUtil pageUtil);
-//页面内容输入实现
+   //页面内容输入实现
     int insertGoodsQa(GoodsQa qaRecord);
     Long getMaxQaId(Long goodsId);
-//
     List<GoodsReviewVO> getGoodsReviews(Long goodsId);
-//参考人数
+   //参考人数
     long getGoodsReviewHelpNum(int reviewId);
-
 	boolean addHelpNum(HelpNum goodsReviewHelpNum);
-
 	boolean updateReviewNum(HelpNum goodsReviewHelpNum); 
-//
-	//List<NewBeeMallGoods> getTotalNewBeeMallGoodsName(NewBeeMallGoods goodsName);
-
 	PageResult findHitGoodsList(PageQueryUtil pageUtil);
-//
 	int insertSearchHistory(SearchHistory keywordId);
     //getMaxKeywordID
     Long getMaxKeyWordId(Long userId);
@@ -122,8 +115,13 @@ public interface NewBeeMallGoodsService {
     int insertTbCategory(TbCategory id);
     int insertGoodsSale(GoodsSale id);
     int insertGoodsCoupon(GoodsCoupon couponId);
-  //20210514
-     
+   //20210514
+    /**
+     * 上传下载
+     *
+     * @param ids
+     * @return
+     */
     List<TbSale> getTbSaleDownload(Integer[] ids);
     List<GoodsSale> getGoodsSaleDownload(Integer[] ids);
   //20210517

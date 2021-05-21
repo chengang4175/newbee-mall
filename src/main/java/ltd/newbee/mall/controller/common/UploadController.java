@@ -13,10 +13,13 @@ import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.GoodsQaVO;
 import ltd.newbee.mall.controller.vo.GoodsSaleVO;
+import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsSale;
+import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.PagingQa;
+import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.TbSale;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
@@ -42,6 +45,7 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -294,5 +298,7 @@ public class UploadController {
 		/* request.setAttribute("goodsSaleDetail", goodsSaleVOList); */
 		return "admin/sale";
 	}
+
+
 
 }

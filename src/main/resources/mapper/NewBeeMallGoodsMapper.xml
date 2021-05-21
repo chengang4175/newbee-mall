@@ -799,16 +799,6 @@
    <select id = "getTotalGoodsSale" parameterType="Map" resultType="int">
    select count(*) from goods_sale 
    </select>
-   <!--  新页面的暧昧检索-->
-    <select id="findGoodsSaleList" parameterType="Map" resultMap="BaseResultMap">
-        select id,name,start_date,end_date,campaign,content1,content2,content3,content4,content5,flag
-        <include refid="Base_Column_List"/>
-        from goods_sale
-        <where>
-            <if test="goodsName!=null and goodsName!=''">
-                and goods_name like CONCAT('%', #{goodsName} ,'%')
-            </if>
-        </where>
-    </select>
+   
   
 </mapper>
