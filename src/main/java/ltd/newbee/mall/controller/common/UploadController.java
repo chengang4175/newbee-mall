@@ -237,29 +237,29 @@ public class UploadController {
 	 * resultSuccess.setData("/upload/text.csv"); return resultSuccess; }
 	 */
 	@RequestMapping(value = "/goodsSale/download", method = RequestMethod.POST)
-	@ResponseBody
-	public Result download(@RequestBody Integer[] ids) throws URISyntaxException, ParseException {
-		File f = new File("D:\\zhaopian\\upload\\text.csv");
+	    @ResponseBody
+	    public Result download(@RequestBody Integer[] ids) throws URISyntaxException, ParseException {
+		File f = new File(Constants.FILE_UPLOAD_CSV);
 		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-			List<GoodsSale> list = newBeeMallGoodsService.getGoodsSaleDownload(ids);
-			list.stream().forEach(c -> {
-				try {
-					bw.write(c.toString());
-					bw.newLine();// 空一行
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			});
-			bw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		    BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+		    List<GoodsSale> list = newBeeMallGoodsService.getGoodsSaleDownload(ids);
+	            list.stream().forEach( c -> {
+	        	   try {
+			    bw.write(c.toString());
+			    bw.newLine();//空一行
+			} catch (IOException e) {
+			    // TODO Auto-generated catch block
+			    e.printStackTrace();
+			}
+	            });
+	            bw.close();
+		}catch (IOException e) {
+	            e.printStackTrace();
+	        }
 		Result resultSuccess = ResultGenerator.genSuccessResult();
-		resultSuccess.setData("/upload/text2.csv");
+		resultSuccess.setData(Constants.FILE_UPLOAD_TEST_CSV);
 		return resultSuccess;
-	}
+	    }
 
 	// 2021/05/17
 	@GetMapping({ "/goods/sale", "/sale.html" })

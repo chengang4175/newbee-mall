@@ -8,11 +8,11 @@ public class GoodsSale {
     private Date startDate;
     private Date endDate;
     private String campaign;
-	private String cotent1;
-	private String cotent2;
-	private String cotent3;
-	private String cotent4;
-	private String cotent5;
+	private String content1;
+	private String content2;
+	private String content3;
+	private String content4;
+	private String content5;
 	private String flag;
 	public Long getId() {
 		return id;
@@ -44,35 +44,35 @@ public class GoodsSale {
 	public void setCampaign(String campaign) {
 		this.campaign = campaign;
 	}
-	public String getCotent1() {
-		return cotent1;
+	public String getContent1() {
+		return content1;
 	}
-	public void setCotent1(String cotent1) {
-		this.cotent1 = cotent1;
+	public void setContent1(String content1) {
+		this.content1 = content1;
 	}
-	public String getCotent2() {
-		return cotent2;
+	public String getContent2() {
+		return content2;
 	}
-	public void setCotent2(String cotent2) {
-		this.cotent2 = cotent2;
+	public void setContent2(String content2) {
+		this.content2 = content2;
 	}
-	public String getCotent3() {
-		return cotent3;
+	public String getContent3() {
+		return content3;
 	}
-	public void setCotent3(String cotent3) {
-		this.cotent3 = cotent3;
+	public void setContent3(String content3) {
+		this.content3 = content3;
 	}
-	public String getCotent4() {
-		return cotent4;
+	public String getContent4() {
+		return content4;
 	}
-	public void setCotent4(String cotent4) {
-		this.cotent4 = cotent4;
+	public void setContent4(String content4) {
+		this.content4 = content4;
 	}
-	public String getCotent5() {
-		return cotent5;
+	public String getContent5() {
+		return content5;
 	}
-	public void setCotent5(String cotent5) {
-		this.cotent5 = cotent5;
+	public void setContent5(String content5) {
+		this.content5 = content5;
 	}
 	public String getFlag() {
 		return flag;
@@ -83,9 +83,8 @@ public class GoodsSale {
 	@Override
 	public String toString() {
 		return "GoodsSale [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", campaign=" + campaign + ", cotent1=" + cotent1 + ", cotent2=" + cotent2 + ", cotent3=" + cotent3
-				+ ", cotent4=" + cotent4 + ", cotent5=" + cotent5 + ", flag=" + flag + "]";
+				+ ", campaign=" + campaign + ", content1=" + content1 + ", content2=" + content2 + ", content3="
+				+ content3 + ", content4=" + content4 + ", content5=" + content5 + ", flag=" + flag + "]";
 	}
 	
-
 }

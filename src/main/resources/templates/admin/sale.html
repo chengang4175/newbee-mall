@@ -134,7 +134,51 @@
 					</span>
             </th:block>
         </div>
+	        </div>
     </div>
+<!--2021/05/23 modal niu -->
+ <div id="modal-main">モーダルウィンドウ
+<div class="button open">OPEN</div>
+<!--<div class="modal">-->
+<div class="modal" id="campaignSaleModal" tabindex="-1" role="dialog" aria-labelledby="campaignSaleModalLabel">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+				aria-hidden="true">&times;</span></button>
+		<h6 class="modal-title" id="categoryModalLabel">Modal</h6>
+	</div>
+
+	<div class="modal_bg"></div>
+	<div class="modal_window" id="campaignSaleModal">
+		<h3>モーダルウィンドウ</h3>
+		<div class="form-group">
+			<label for="campaignName" class="control-label">Campaign Name</label>
+			<input type="text" class="form-control" id="campaignSaleName" name="campaignName"
+				placeholder="campaignNameを入力してください" required="true">
+		</div>
+
+		<div class="form-group">
+			<label for="startDate" class="control-label">開始時間</label>
+			<input type="date" class="form-control" id="startDateSale" name="categoryRank"
+				placeholder="startDateを入力してください" required="true">
+		</div>
+		<div class="form-group">
+			<label for="endDate" class="control-label">終了時間</label>
+			<input type="date" class="form-control" id="endDateSale" name="categoryRank" placeholder="endDateを入力してください"
+				required="true">
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" id="cancel">キャンセル</button>
+			<button type="button" class="btn btn-primary" id="saveSaleButton">確認</button>
+		</div>
+		<!--	<div class="button close">CLOSE</div>-->
+	</div>
+</div>
+</div>
+	<!--</div>-->
+	    <!-- #contents START -->
+	  <div id="contents">
+	   <!-- <p><a id="modal-open">新規追加</a></p>-->
+	  </div>
     <!-- /.content-wrapper -->
     <!-- 引入页脚footer-fragment -->
     <div th:replace="admin/footer::footer-fragment"></div>

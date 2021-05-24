@@ -1,13 +1,106 @@
+.col-1 {
+	width: 8.33%;
+    margin-left: 0%;
+	height:40px;
+}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {
+	width: 50%;
+    float:left; 
+    height:70px;	
+}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+.card-title{
+	width: 16.66%;
+}
+
+#col-119{
+	width: 8.33%;
+    margin-left: 0%;
+	height:auto;
+	color: rgb(0, 0, 0);
+}
+.campaignTable{
+	width: 100%;
+}
 .saledumyLi{
     display:none;
 }
 #salesearchResultUl{
     display:none;
-    z-index:1000;
+    z-index:500;
     border: 1px solid #c5c5c5;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 360px;
+    max-height: auto;
     background-color: #fff;
-    width:300px;
+    width:16.66%;
+}
+#campaignName{
+	width: 25%;
+}	
+#keywordSale{
+	width: 50%;
+}											
+#downloadsale{
+	border: 2px solid rgb(0, 0, 255);
+	background-color: #17a2b8;
+	border-color: #17a2b8;
+	color: #fff;
+}
+#my_iframe{
+	display:none;
+} 
+.header{
+	background-color: rgb(128, 128, 128);
+}
+
+/*2021/05/24  modal 	*/
+#cancel {
+	background-color: rgb(192, 192, 192);
+}
+#modal-open {
+	width: 8.33%;
+    margin-left: 0%;
+	height:40px;
+    color: rgb(0, 0, 0);
+}
+.modal {
+	width: 100%;
+	height:100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;	
+}
+.modal_bg {
+	height: 100%;
+	background-color: rgba(0,0,0,0.8);
+}
+.modal_window {
+	width: 33.33%;
+	height: 58.33%;
+	border-radius:5px;
+	background-color: white;
+	position: absolute;
+	top: 50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+	text-align: center;
+}
+h3{
+	margin-bottom: 10%;
+}
+/*csv txt 2021/05/24*/
+.input-group{
+	left:0;
+	width: 50%;
 } 

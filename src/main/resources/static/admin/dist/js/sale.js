@@ -207,13 +207,41 @@ function showResultForLikeSearch(result){
 }
 function appendToSearchBar(el){
 	debugger;
-	var searchBar = $("#searchForCampaign");//jquery object
+	var searchBar = $("#keywordSale");//jquery object
 	var rect = searchBar[0].getBoundingClientRect();//转换成dom加[0]  convert jquery object to dom by searchBar[0]
 	console.log(rect.top,rect.right,rect.bottom,rect.left);
 	var sbHeight = searchBar.height();
 	el.css({top: rect.top + sbHeight,left: rect.left,position:'absolute'});//相对定位relative  绝对定位absolute
 	}
+$("#salesearchResultUl").mousemove(function(){
+	MouseOnSearchResultUl = true;
+});
+$("#salesearchResultUl").mouseleave(function(){
+	MouseOnSearchResultUl = false;
+})
 
 
 
+// 2021/05/24 toggle
+$('#select-all').click(function(event) {   
+    if(this.checked) {
+        $(':checkbox').each(function() {
+            this.checked = true;                        
+        });
+    } else {
+        $(':checkbox').each(function() {
+            this.checked = false;                       
+        });
 
+  
+    }
+});
+//2021/05/24 modal
+$(function(){
+	$("#modal-open").click(function(){
+		$(".modal").fadeIn();
+	});
+	$("#datequxiao").click(function(){
+		$(".modal").fadeOut();
+	});
+});
