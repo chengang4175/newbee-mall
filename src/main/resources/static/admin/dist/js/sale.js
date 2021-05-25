@@ -280,4 +280,51 @@ $("#saveSaleButton").click(function(){
             });
          }
      })
-  });
+  }); 
+
+  
+  
+  
+  window.onload = function() {
+	var HeadTD = document.getElementById("HeadTD");
+	var ContTD = document.getElementById("ContTD");
+	var HeadList = HeadTD.getElementsByTagName("td");
+	var ContTrList = ContTD.getElementsByTagName("tr");
+	var sortArray = new Array();
+	var newNode;
+	for(var i = 0; i < HeadList.length; i++) {
+		HeadList[i].index = i;
+		HeadList[i].onclick = function() {
+			if(this.className) {
+				newNode = "";
+				for(var j = 0; j < ContTrList.length; j++) {
+					sortArray[j] = new Array();
+					sortArray[j][0] = ContTrList[j].getElementsByTagName("td")[this.index].innerText;
+					sortArray[j][1] = j;
+				}
+				
+				if(!isNaN(sortArray[0][0])){
+					sortArray.sort(sortNumber);
+				}else{
+					sortArray.sort();
+				}
+ 
+				for(var x = 0; x < ContTrList.length; x++) {
+					newNode += "<tr>" + ContTrList[sortArray[x][1]].innerHTML + "</tr>";
+				}
+ 
+				ContTD.innerHTML = newNode;
+			}
+		}
+	}
+}
+function sortNumber(b, a) {
+	if(a > b) {
+		return 1
+	} else if(a < b) {
+		return -1
+	} else {
+		return 0
+	}
+}
+ 
