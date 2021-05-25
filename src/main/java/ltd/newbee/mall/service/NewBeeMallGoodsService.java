@@ -128,6 +128,13 @@ public interface NewBeeMallGoodsService {
 
     PageResult goodsSalePagAndSort(PageQueryUtil pageUtil);
 
-	
+    /**
+     * inset
+     *
+     * @param id
+     * @return
+     */
+    Long insertGoodsSaleModal(Long id);
+
 	
 }

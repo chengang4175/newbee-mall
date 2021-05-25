@@ -329,8 +329,24 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		List<GoodsSale> list = goodsMapper.getGoodsSaleDownload(ids); 
 	    return list;
 	}
+
+	@Override
 	
+	public Long insertGoodsSaleModal(Long id) {
+		 Long maxId = goodsMapper.insertGoodsSaleAndModal(id);
+		    if(maxId !=null) {
+		    return maxId + 1;
+		    }else {
+		      return 1L;
+		    }
+	    
+	}
+
 }
+
+	
+	
+
 
 	
 

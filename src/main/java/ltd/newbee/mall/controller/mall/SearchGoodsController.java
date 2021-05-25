@@ -34,6 +34,7 @@ import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.HelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
@@ -76,4 +77,26 @@ public class SearchGoodsController {
 	        PageQueryUtil pageUtil = new PageQueryUtil(paramsSale);
 	        return ResultGenerator.genSuccessResult(newBeeMallGoodsService.goodsSalePagAndSort(pageUtil));
 	  }
-}
+    
+    
+    
+    @RequestMapping(value = "/goods/insertGoodsSale", method = RequestMethod.POST)
+    @ResponseBody
+    public Result insertGoodsSale(@RequestBody GoodsSale goodsSale) {
+	GoodsSale list = new GoodsSale();
+        Integer count = null;  
+        Long saleId = newBeeMallGoodsService.insertGoodsSaleModal(list.getId());
+        list.setId(saleId);
+        list.setName(goodsSale.getName());
+        list.setStartDate(goodsSale.getStartDate());
+        list.setEndDate(goodsSale.getEndDate());
+
+        if(list != null) {
+            count = newBeeMallGoodsService.insertGoodsSale(list);
+        }
+        if(!(count > 0))  {
+        return ResultGenerator.genFailResult("投稿失敗！");
+        }      
+        return ResultGenerator.genSuccessResult(count);    
+    }
+} 

@@ -797,6 +797,9 @@
    <select id = "getTotalGoodsSale" parameterType="Map" resultType="int">
    select count(*) from goods_sale 
    </select>
+   <select id="insertGoodsSaleAndModal" parameterType="java.lang.Long" resultType= "java.lang.Long">			   
+			select max(id) from goods_sale		  
+	 </select> 
    
   
 </mapper>

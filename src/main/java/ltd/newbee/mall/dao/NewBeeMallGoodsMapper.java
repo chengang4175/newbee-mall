@@ -102,5 +102,6 @@ public interface NewBeeMallGoodsMapper {
    //2021/05/17
     List<GoodsSale> goodsSalePagAndSort(PageQueryUtil pageUtil);
     int getTotalGoodsSale(PageQueryUtil pageUtil);
+    Long insertGoodsSaleAndModal(Long id); 
 }
  

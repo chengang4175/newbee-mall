@@ -241,7 +241,43 @@ $(function(){
 	$("#modal-open").click(function(){
 		$(".modal").fadeIn();
 	});
-	$("#datequxiao").click(function(){
+	$("#cancel").click(function(){
 		$(".modal").fadeOut();
 	});
 });
+//2021/05/25 insertSale 绑定modal上的保存按钮
+$("#saveSaleButton").click(function(){	
+	var name = $("#campaignSaleName").val();
+	var startDate = $("#startDateSale").val();
+	var endDate = $("#endDateSale").val();
+    data = {
+	  "name":name,
+	"startDate":startDate,
+	"endDate":endDate,
+    };	  
+    $.ajax({
+        type: 'POST',//方法类型
+        url: '/goods/insertGoodsSale',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (result) {
+//サーバーが成功した場合
+            if (result.resultCode == 200) {
+			debugger;					
+					swal("ご登録ありがとうございました！" ,{
+						icon:"success",
+					});
+            } else {
+                	swal(result.message, {
+                    icon: "error",
+                });
+            }
+
+        },
+        error: function () {
+            swal("操作失败", {
+                icon: "error",
+            });
+         }
+     })
+  });
