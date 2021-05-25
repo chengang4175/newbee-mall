@@ -1,7 +1,10 @@
 <!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<header th:replace="admin/header::header-fragment"></header>
+<header th:replace="admin/header::header-fragment">
+
+
+</header>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- 引入页面头header-fragment -->
@@ -24,59 +27,56 @@
                     </div> <!-- /.card-body -->
                     <div class="card-body">
                         <div class="grid-btn">
-                            <button class="btn btn-info" onclick="campaignAdd()"><i class="fa fa-plus"></i>&nbsp;新規追加
-                            </button>
-                            <button class="btn btn-info" onclick="csvUpload()"><i class="fa fa-pencil-square-o"></i>&nbsp;CSV登録
-                            </button>
+						    <button class="btn btn-info" id="modal-open" onclick="campaignAdd()"><i
+								   class="fa fa-plus"></i>&nbsp;新規追加&nbsp;
+						   </button>&nbsp;&nbsp;&nbsp;&nbsp;
+						   <button class="btn btn-info" id="col-119" onclick="csvUpload()"><i
+								   class="fa fa-pencil-square-o"></i>&nbsp;CSV登録
+						   </button>
                         </div>
-                        <br>
                         <div>
-	                        <div style="float:left; width:30%;height:50px;">
-	                        	<span>
-	                        		<b>すべて(0)</b>
-	                        	</span>
-	                        </div>
-	                        <div style="float:left;width:30%;height:50px;">
-	                        	<span>
-	                        		<b>クローズ(0)</b>
-	                        	</span>
-	                        </div>
-	                        </div>
-                        <br>
+                         <button class="btn btn-info" id="col-119" onclick="campaignAdd(2)">
+								す べ て
+						</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="btn btn-info" id="col-119" onclick="campaignAdd(1)">&nbsp;クローズ
+						</button>
+                        
                         <div>
-	                        <div class="campaignDownload"  style="float:left; width:50%;height:50px;">
-	                        	<!--<name="input" action="html_form_action.php" method="get">-->
-									<select type="text" name="キャンペーン名" id="campaignName" style="width:200px"></select>
-									<button id="dumy download">Download</button>
-									<!--5月20日-->
-									<button class="btn btn-info" style="margin-bottom: 5px;"
-                                                id="downloadGoodsSale">
-                                            <i class="my_iframe"></i>&nbsp;下载功能
-                                    </button>
-                                    <button class="btn btn-info" style="margin-bottom: 5px;"
-                                                id="testUploadSale">
-                                            <i class="fa fa-picture-o"></i>&nbsp;上传功能
-                                    </button>
-								<!--</form>-->
+                        <br>
+                        </div>
+	                       
+									<div class="input-group">
+										<select class="custom-select" id="inputGroupSelect04">
+											<option "selected">Choose...</option>
+											<option value="1">ファイル (.txt)</option>
+										 	<option value="2"> ファイル (.csv)</option>
+									    </select>
+										 <div class="input-group-append">
+											<button id="downloadsale" type="button">Download</button>
+										 </div>
+									</div>
+									<iframe id="my_iframe"></iframe>
 	                        </div>
-	                        <div class="campaignSearch"  style="float:left;width:50%;height:50px;">
-	                        	<input type="search" id="searchForCampaign" >
-								<button id="dumy search">絞り込み検索</button>
+	                        <div class="col-6">
+	                        	<input type="search" id="keywordSale" autocomplete="off">
+								<button class="btn btn-info" type="button" id="downloadsale">絞り込み検索</button>
+								<div class="search_hot">
 	                        </div>
                         </div>
+                         <div>
                         <br>
                         <div class="campaignTable">
-	                        <table id="table" border="1" style="width:1200px">
-	                        	<thead>
+	                        <table class="col-7" id="table" border="1">
+	                        	<thead class="header">
 						            <tr>
-						                <th style="width:20px">
-						                    <input type="checkbox" id="checkAll"/>
+						                <th class="col-1">
+						                    <input type="checkbox" name="select-all" id="select-all" 
 						                </th>
-						                <th style="width:80px">キャンペーンID</th>
-						                <th style="width:180px">キャンペーン名</th>
-						                <th style="width:150px">開始時間</th>
-						                <th style="width:150px">終了時間</th>
-						                <th style="width:80px">ステータス</th>
+						                <th class="col-2">キャンペーンID </th>
+						                <th class="col-2">キャンペーン名</th>
+						                <th class="col-2" >開始時間</th>
+						                <th class="col-2">終了時間</th>
+						                <th class="col-2">ステータス</th>
 						            </tr>
 						        </thead>
 						        <tbody>
@@ -86,20 +86,20 @@
 						             <th:block th:unless="${#lists.isEmpty(pageResult.list)}">
 						             	<th:block th:each="saleList : ${pageResult.list}">
 						             	<tr>
-							                <td>
+							                <td class="col-1">
 							                    <input type="checkbox"/>
 							                </td>
-							                <td><th:block th:text="${saleList.id}"></th:block></td>
-							                <td><th:block th:text="${saleList.name}"></td>
-							                <td><th:block th:text="${saleList.startDate}"></td>
-							                <td><th:block th:text="${saleList.endDate}"></td>
-							                <td></td>
+							                <td class="col-1" th:text="${saleList.id}"></td>
+							                <td class="col-1" th:text="${saleList.name}"></td>
+							                <td class="col-1" th:text="${#dates.format(saleList.startDate, 'yyyy-MM-dd')}"></td>
+						                    <td class="col-1" th:text="${#dates.format(saleList.endDate, 'yyyy-MM-dd')}"></td>
+							                <td class="col-1" th:text="${saleList.flag}"></td>
 							                </tr>
 							             </th:block>
-							                <td class="col-1" th:text="${#dates.format(saleList.startDate, 'yyyy-MM-dd')}"></td>
 						             </th:block>
 						            
 						            <br>
+						            
 								</tbody>
 							</table>
 						</div>
@@ -135,10 +135,9 @@
 					</span>
             </th:block>
         </div>
-	        </div>
     </div>
-<!--2021/05/23 modal niu -->
- <div id="modal-main">モーダルウィンドウ
+    <!--2021/05/23 modal-->
+ <div id="modal-main">
 <div class="button open">OPEN</div>
 <!--<div class="modal">-->
 <div class="modal" id="campaignSaleModal" tabindex="-1" role="dialog" aria-labelledby="campaignSaleModalLabel">
@@ -171,16 +170,11 @@
 			<button type="button" class="btn btn-default" id="cancel">キャンセル</button>
 			<button type="button" class="btn btn-primary" id="saveSaleButton">確認</button>
 		</div>
-		<!--	<div class="button close">CLOSE</div>-->
 	</div>
 </div>
 </div>
-	<!--</div>-->
-	    <!-- #contents START -->
 	  <div id="contents">
-	   <!-- <p><a id="modal-open">新規追加</a></p>-->
 	  </div>
-    <!-- /.content-wrapper -->
     <!-- 引入页脚footer-fragment -->
     <div th:replace="admin/footer::footer-fragment"></div>
 </div>
@@ -198,8 +192,8 @@
 <!-- wangEditor -->
 <script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
-<script th:src="@{/admin/js/sale.js}"></script>
-<script th:src="@{/admin/dist/js/sale.js}" type="text/javascript"></script>
+<script th:src="@{/admin/dist/js/sale.js}"></script>
+<link rel="stylesheet" th:href="@{/admin/dist/css/sale.css}">
 <ul id ="salesearchResultUl">
 	   	<li class="saledumyLi searchLi">
 	       <a>
