@@ -54,42 +54,37 @@
 										 </div>
 									</div>
 									<iframe id="my_iframe"></iframe>
-	                </div>
+	                        </div>
 	                        <div class="col-6">
 	                        	<input type="search" id="keywordSale" autocomplete="off">
 								<button class="btn btn-info" type="button" id="downloadsale">絞り込み検索</button>
 								<div class="search_hot">
 	                        </div>
                         </div>
-                         <div>
-                        <br>
+                    </div>
+                    </div>
+                        
                         <div class="campaignTable">
-                        <table border="1" cellpadding="5" style="border-collapse: collapse;text-align: center;">
 	                        <table class="col-7" id="table" border="1">
 	                        	<thead class="header">
-	                        	  
-						            <tr id="HeadTD">
-						                <th class="col-1">
-						                    <input type="checkbox" name="select-all" id="select-all"> 
+						            <tr>
+						                <th class="col-1"id="0"><span id="sort0" sort=""></span>
+						                    <input type="checkbox" name="select-all" id="select-all"/>Toggle All<br/>
 						                </th>
-						                <th class="col-2">キャンペーンID </th>
-						                <th class="col-2">キャンペーン名</th>
-						                <th class="col-2" >開始時間</th>
-						                <th class="col-2">終了時間</th>
-						                <th class="col-2">ステータス</th>
+						                <th class="col-2" id="1">キャンペーンID<span id="sort1" sort=""></span></th>
+						                <th class="col-2" id="2">キャンペーン名<span id="sort2" sort=""></span></th>
+						                <th class="col-2" id="3">開始時間<span id="sort3" sort=""></span></th>
+						                <th class="col-2" id="4">終了時間<span id="sort4" sort=""></span></th>
+						                <th class="col-2" id="5">ステータス<span id="sort5" sort=""></span></th>
 						            </tr>
 						        </thead>
-						        
-						            
-								 <tbody id="ContTD">
-						            
+						        <tbody>
 						             <th:block th:unless="${#lists.isEmpty(pageResult.list)}">
 						             	<th:block th:each="saleList : ${pageResult.list}">
 						             	<tr>
 							                <td class="col-1">
 							                    <input type="checkbox"/>
 							                </td>
-							                
 							                <td class="col-1" th:text="${saleList.id}"></td>
 							                <td class="col-1" th:text="${saleList.name}"></td>
 							                <td class="col-1" th:text="${#dates.format(saleList.startDate, 'yyyy-MM-dd')}"></td>
