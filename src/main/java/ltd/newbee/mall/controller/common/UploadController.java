@@ -298,6 +298,30 @@ public class UploadController {
 		/* request.setAttribute("goodsSaleDetail", goodsSaleVOList); */
 		return "admin/sale";
 	}
+	@RequestMapping(value = "/goodsSale/downloadtxt", method = RequestMethod.POST)
+    @ResponseBody
+    public Result downloadtxt(@RequestBody Integer[] ids) throws URISyntaxException, ParseException {
+	File f = new File(Constants.FILE_UPLOAD_TXT);
+	try {
+	    BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+	    List<GoodsSale> list = newBeeMallGoodsService.getGoodsSaleDownload(ids);
+            list.stream().forEach( c -> {
+        	   try {
+		    bw.write(c.toString());
+		    bw.newLine();//空一行
+		} catch (IOException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
+            });
+            bw.close();
+	}catch (IOException e) {
+            e.printStackTrace();
+        }
+	Result resultSuccess = ResultGenerator.genSuccessResult();
+	resultSuccess.setData(Constants.FILE_UPLOAD_TEST_TXT);
+	return resultSuccess;
+    }
 
 
 

@@ -22,7 +22,9 @@ public class Constants {
     public final static String FILE_UPLOAD_CSV = "D:\\zhaopian\\upload\\text.csv";//上传csv文件
 
     public final static String FILE_UPLOAD_TEST_CSV = ("/upload/text.csv");//resultSuccess("/upload/tset.csv");
-
+    public final static String FILE_UPLOAD_TXT = "D:\\zhaopian\\upload\\text.txt";
+    public final static String FILE_UPLOAD_TEST_TXT = ("/upload/text.txt");
+    
     public final static int INDEX_CAROUSEL_NUMBER = 5;//首页轮播图数量(可根据自身需求修改)
 
     public final static int INDEX_CATEGORY_NUMBER = 10;//首页一级分类的最大数量

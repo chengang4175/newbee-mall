@@ -138,24 +138,34 @@ function Download(url) {
         },
         onComplete: function (file, r) {
             if (r != null && r.resultCode == 200) {
-                $("#goodsCoverImg").attr("src", r.data);
-                $("#goodsCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
-                return false;
+              swal("uploadがOKです！" ,{
+								icon:"success",
+							});
             } else {
                 alert("error");
             }
         }
-    });
-    
-    
- //暧昧查询
-  var MouseOnSearchResultUl 
 
-//ajax暧昧検索
-$("#searchForCampaign").keyup(function(){
+ });
+    //keyword 2021/05/21 ajax与后台通信，查找查询履历
+$( "#keywordSale" ).focus(function(){
+	var keyword = $( "#keywordSale" ).val();
+	if(keyword != ""){
+		$( "#keywordSale" ).trigger("keyup");
+	}
+});		
+//鼠标移开时候删除elements的内容delete elements when focus out
+$("#keywordSale").focusout(function(){
+	if(MouseOnSearchResultUl)
+	return;
+    clearResultList()
+	//hide #searchResultUl
+	$("#searchResultUl").hide();
+});
+  // 2021/05/21 ajax あいまい検索
+$("#keywordSale").keyup(function(){
 	debugger;
-	var keyword = $("#searchForCampaign").val();
-	   
+	var keyword = $("#keywordSale").val();
 	    $.ajax({
             type: 'get',//方法类型  //method = "POST"
             url: "/sale/search?name="+keyword,  //Post送信先のurl
@@ -245,15 +255,26 @@ $(function(){
 		$(".modal").fadeOut();
 	});
 });
-//2021/05/25 insertSale 绑定modal上的保存按钮
 $("#saveSaleButton").click(function(){	
 	var name = $("#campaignSaleName").val();
 	var startDate = $("#startDateSale").val();
 	var endDate = $("#endDateSale").val();
+	var campaign = $("#campaign").val();
+	var content1 = $("#content1").val();
+	var content2 = $("#content2").val();
+	var content3 = $("#content3").val();
+	var content4 = $("#content4").val();
+	var content5 = $("#content5").val();
     data = {
 	  "name":name,
 	"startDate":startDate,
 	"endDate":endDate,
+	"campaign":campaign,
+	"content1":content1,
+	"content2":content2,
+	"content3":content3,
+	"content4":content4,
+	"content5":content5,
     };	  
     $.ajax({
         type: 'POST',//方法类型
@@ -355,3 +376,42 @@ $("#saveSaleButton").click(function(){
   }
 });
  
+
+
+
+
+
+//絞り込み検索 改修 2021/05/25
+(function(document) {
+  'use strict';
+  var LightTableFilter = (function(Arr) {
+    var _input;
+    function _onInputEvent(e) {
+      _input = e.target;
+      var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+      Arr.forEach.call(tables, function(table) {
+        Arr.forEach.call(table.tBodies, function(tbody) {
+          Arr.forEach.call(tbody.rows, _filter);
+        });
+      });
+    }
+    function _filter(row) {
+      var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+      row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+    }
+    return {
+      init: function() {
+        var inputs = document.getElementsByClassName('light-table-filter');
+        Arr.forEach.call(inputs, function(input) {
+          input.oninput = _onInputEvent;
+        });
+      }
+    };
+  })(Array.prototype);
+  document.addEventListener('readystatechange', function() {
+    if (document.readyState === 'complete') {
+      LightTableFilter.init();
+    }
+  });
+
+})(document);

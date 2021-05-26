@@ -87,7 +87,7 @@
 }
 .modal_window {
 	width: 33.33%;
-	height: 58.33%;
+	height:120.33%;
 	border-radius:5px;
 	background-color: white;
 	position: absolute;
@@ -95,6 +95,7 @@
 	left:50%;
 	transform: translate(-50%,-50%);
 	text-align: center;
+	
 }
 h3{
 	margin-bottom: 10%;
