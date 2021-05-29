@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
@@ -87,10 +88,7 @@ public interface NewBeeMallGoodsMapper {
     //getMaxKeywordID
     Long getMaxKeyWordId(Long userId);
     //sale 2021/05/11
-    List<TbSale> getTbSale(Long id); 
-    List<TbCategory> getTbCategory(Long id);
-    List<GoodsSale> getGoodsSale(Long id);   
-    List<GoodsCoupon> getGoodsCoupon(Long couponId);
+    
     //sale insert 2021/05/11
     int insertTbSale(TbSale id);
     int insertTbCategory(TbCategory id);
@@ -102,6 +100,17 @@ public interface NewBeeMallGoodsMapper {
    //2021/05/17
     List<GoodsSale> goodsSalePagAndSort(PageQueryUtil pageUtil);
     int getTotalGoodsSale(PageQueryUtil pageUtil);
-    Long insertGoodsSaleAndModal(Long id); 
+    Long insertGoodsSaleAndModal(Long id);
+  //2021/05/28GoodsCategory
+    List<GoodsCategory> selectByLevelAndParentIdsAndNumber(@Param("parentIds") List<Long> parentIds, @Param("categoryLevel") int categoryLevel, @Param("number") int number);
+	 List<GoodsCategory> selectByLevelAndParentIds(List<Long> parentIds,int categoryLevel, int i); 
+	 List<TbSale> getTbSale(Long id); 
+	 List<TbCategory>getTbCategory(Long id);  
+	 List<GoodsSale> getGoodsSale();
+	 List<GoodsCoupon> getGoodsCoupon(Long couponId);
+	 
+	 
+ 
+	
 }
  

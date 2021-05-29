@@ -34,6 +34,7 @@ import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
+import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.TbCategory;
@@ -250,29 +251,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	//5/11
   
 	
-	@Override
-	public List<TbSale> TbSale(Long id) {
-	    List<TbSale> list = goodsMapper.getTbSale(id); 
-	    return list;
-	}
-
-	@Override
-	public List<TbCategory> TbCategory(Long id) {
-	    List<TbCategory> list = goodsMapper.getTbCategory(id);
-	    return list;
-	}
-
-	@Override
-	public List<GoodsSale> GoodsSale(Long id) {
-	    List<GoodsSale> list = goodsMapper.getGoodsSale(id); 
-	    return list;
-	}
-
-	@Override
-	public List<GoodsCoupon> GoodsCoupon(Long couponId) {
-	     List<GoodsCoupon> list = goodsMapper.getGoodsCoupon(couponId);
-	    return list;
-	}
+	
    //insert 2021/05/11
 	@Override
 	public int insertTbSale(TbSale id) {
@@ -323,15 +302,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
         PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
-
 	@Override
-	public List<GoodsSale> getGoodsSaleDownload(Integer[] ids) {
-		List<GoodsSale> list = goodsMapper.getGoodsSaleDownload(ids); 
-	    return list;
-	}
-
-	@Override
-	
 	public Long insertGoodsSaleModal(Long id) {
 		 Long maxId = goodsMapper.insertGoodsSaleAndModal(id);
 		    if(maxId !=null) {
@@ -341,7 +312,43 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		    }
 	    
 	}
+	//5月27日实现txt和csv文件下载
+	@Override
+	public List<GoodsSale> getGoodsSaleDownload(Integer[] ids, String format) {
+		List<GoodsSale> list = goodsMapper.getGoodsSaleDownload(ids);
+	     return list;
+	    }
+	//5月28日
 
+	
+	 @Override
+	    public List<GoodsCategory> selectByLevelAndParentIds(List<Long> categoryId, int categoryLevel) {
+		return goodsMapper.selectByLevelAndParentIds(categoryId, categoryLevel, categoryLevel);
+	    }
+	@Override
+	public List<TbSale> TbSale(Long id) {
+	    List<TbSale> list = goodsMapper.getTbSale(id); 
+	    return list;
+	}
+
+	@Override
+	public List<TbCategory> TbCategory(Long id) {
+	    List<TbCategory> list = goodsMapper.getTbCategory(id);
+	    return list;
+	}
+
+	@Override
+	public List<GoodsSale> GoodsSale() {
+	    List<GoodsSale> list = goodsMapper.getGoodsSale(); 
+	    return list;
+	}
+
+	@Override
+	public List<GoodsCoupon> GoodsCoupon(Long couponId) {
+	     List<GoodsCoupon> list = goodsMapper.getGoodsCoupon(couponId);
+	    return list;
+	
+	}
 }
 
 	

@@ -281,28 +281,17 @@ public class GoodsController<GoddsImageVo> {
             	NewBeeMallGoods goods2 = new NewBeeMallGoods();
             	NewBeeMallGoods goods3 = new NewBeeMallGoods();
             	goods1.setGoodsId(10700L);
-            	goods1.setGoodsName("iphone10");
+            	goods1.setGoodsName("家电");
             	list.add(goods1);
             	goods2.setGoodsId(10003L);
-            	goods2.setGoodsName("无印良品 MUJI 柔和洁面泡沫");
+            	goods2.setGoodsName("手机");
             	list.add(goods2);
             	goods3.setGoodsId(10004L);
-            	goods3.setGoodsName("无印良品 MUJI 基础润肤乳液");
+            	goods3.setGoodsName("电器");
             	list.add(goods3);
             	return ResultGenerator.genSuccessResult(list);
              }
-				/*
-				 * @RequestMapping(value = "/goods/search", method = RequestMethod.POST)
-				 * 
-				 * @ResponseBody //public Result getHitGoodsList(@RequestParam Map<String,
-				 * Object> params) { public Result getHitGoodsList(@RequestBody String
-				 * goodsName) { Map<String, Object> params = new HashMap<String, Object>();
-				 * params.put("keyword", goodsName); params.put("page", 1); params.put("limit",
-				 * 9); //params.put("start", 0); PageQueryUtil pageUtil = new
-				 * PageQueryUtil(params); return
-				 * ResultGenerator.genSuccessResult(newBeeMallGoodsService.searchNewBeeMallGoods
-				 * (pageUtil)); }
-				 */
+				
             // 5/11
 			
 			  @RequestMapping(value ="/goods/insertKeyword", method = RequestMethod.POST)

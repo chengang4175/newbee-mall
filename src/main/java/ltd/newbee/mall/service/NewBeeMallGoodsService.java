@@ -22,6 +22,7 @@ import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
+import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.TbCategory;
@@ -106,10 +107,8 @@ public interface NewBeeMallGoodsService {
     //getMaxKeywordID
     Long getMaxKeyWordId(Long userId);
     //20210511
-    List<TbSale>TbSale(Long id); 
-    List<TbCategory>TbCategory(Long id);
-    List<GoodsSale>GoodsSale(Long id);   
-    List<GoodsCoupon>GoodsCoupon(Long couponId);
+    
+   
     //insert 20210511
     int insertTbSale(TbSale id);
     int insertTbCategory(TbCategory id);
@@ -123,7 +122,7 @@ public interface NewBeeMallGoodsService {
      * @return
      */
     List<TbSale> getTbSaleDownload(Integer[] ids);
-    List<GoodsSale> getGoodsSaleDownload(Integer[] ids);
+    List<GoodsSale> getGoodsSaleDownload(Integer[] ids,String format);
   //20210517
 
     PageResult goodsSalePagAndSort(PageQueryUtil pageUtil);
@@ -135,6 +134,24 @@ public interface NewBeeMallGoodsService {
      * @return
      */
     Long insertGoodsSaleModal(Long id);
+    /**
+     * 修改商品
+     *
+     * @param parentIds
+     * @return
+     */
+    
+   
+	
+	  List<TbSale>TbSale(Long id); 
+	  List<TbCategory>TbCategory(Long id);
+	  List<GoodsSale>GoodsSale(); 
+	  List<GoodsCoupon>GoodsCoupon(Long couponId);
+	  
+	  List<GoodsCategory> selectByLevelAndParentIds(List<Long> categoryId, int categoryLevel);
+
+	 
+
 
 	
 }

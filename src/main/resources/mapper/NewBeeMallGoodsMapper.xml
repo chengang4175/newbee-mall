@@ -589,21 +589,20 @@
   <!-- 5月11号 -->
    <select id="getgoodsCoupon" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsCoupon">
   select coupon_id,coupon_name,flag from goods_coupon
-       where id = #{Id,jdbcType=BIGINT}
+       where coupon_id = #{couponId,jdbcType=BIGINT}
   </select>
    <select id="getTbCategory" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TbCategory">
   select id,category_id,start_date,end_date from tb_category
-       where goods_id = #{goodsId,jdbcType=BIGINT}
+       where category_id = #{categoryId,jdbcType=BIGINT}
   </select>
   <select id="getTbSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TbSale">
   select id,goods_id,start_date,end_date from tb_ble
        where goods_id = #{goodsId,jdbcType=BIGINT}
   </select>
   <select id="getGoodsSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsSale">
-  select id,name,start_date,end_date,campaign,
-         content1,content2,content3,content4,content5,flag
-	     from goods_sale
-       where flag = #{flag,jdbcType=BIGINT}
+  select id,name,start_date,end_date,campaign,content1,content2,content3,content4,content5,flag
+	   from goods_sale
+       where id = #{Id,jdbcType=BIGINT}
   </select>
   <insert id="getGoodsCoupon" parameterType="ltd.newbee.mall.entity.SearchHistory">
     insert into goods_coupon
@@ -799,7 +798,38 @@
    </select>
    <select id="insertGoodsSaleAndModal" parameterType="java.lang.Long" resultType= "java.lang.Long">			   
 			select max(id) from goods_sale		  
-	 </select> 
+   </select> 
+	 
+	 
+	 
+   <select id="selectByLevelAndParentIds" resultMap="BaseResultMap">
+        select
+   <include refid="Base_Column_List"/>
+     from tb_newbee_mall_goods_category
+     where parent_id in
+   <foreach item="parentId" collection="parentIds" open="(" separator="," close=")">
+     #{parentId,jdbcType=BIGINT}
+   </foreach>
+     and category_level = #{categoryLevel,jdbcType=TINYINT}
+     and is_deleted = 0
+     order by category_rank desc
+    <if test="number>0">
+     limit #{number}
+   </if>
+    </select>
+    <!-- 
+    <select id="findCategoryId" parameterType="Map" resultMap="ltd.newbee.mall.entity.GoodsCategory">
+      select category_id,category_level,parent_id,category_name,category_rank,is_deleted,
+             create_time,create_user,update_time,update_user from tb_newbee_mall_goods_category
+       <where>
+           <if test="categoryLevel!=null and categoryLevel!=''">
+               add category_level = #{categoryLevel}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+               add parent_id = #{parentId}
+            </if>
+       </where>
+    </select> -->
    
   
 </mapper>

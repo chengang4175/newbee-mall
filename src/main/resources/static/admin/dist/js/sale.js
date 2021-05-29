@@ -1,115 +1,46 @@
-$(function(){
-   //disable previous page 	  
-  $(".previousPageSale").css("pointer-events", "none").css("color","grey");
-  });   
- $("#zv-cqa-select-sort").change(function(){
-    paging(2);
-  });     
-   //下一页
- $( ".nextPageSale" ).click(function(){
-	  debugger;
-	  paging(0);
-	  $(".previousPageSale").css("pointer-events", "auto").css("color","#009e96");
- });
-	   //上一页
- $( ".previousPageSale" ).click(function(){
-	  paging(1);
- });	
-	debugger; 
-	//fenye  
-function paging(num){
-	//alert("Handlerfor .click() called." );   
-
-    var page = $("#currentPageNoN").text();
-    var pageNo = 0;
-    console.log("current page: ",page);
-	var url = "admin//goods/sale";
-	if(num == 0){
-		//下页
-		 pageNo = parseInt(page) + 1;
-	}else if (num == 1){
-		//上页
-		 pageNo = parseInt(page) - 1;
-	}else{
-		 pageNo = 1 
-	}
-	   var data = {
-		"page":pageNo
-	           };	    
-        $.ajax({
+	var MouseOnSearchResultUl  //全局变量
+$("#downloadsale").on('click',function(){
+	        debugger;
+	      var ids = [];
+			var format=$("#inputGroupSelect04").val();
+			var index = ids.indexOf("Campaign ID");
+			  if (index > -1) {
+			  ids.splice(index, 1);
+			}
+			var data = {
+				"ids": ids,
+				"format": format,
+			}
+			$('input:checkbox:checked').parent().next().map(function (){
+			    ids.push($(this).text())
+			    return ids;
+			})
+			if (!ids){
+			    swal("请选择一条记录" ,{
+				icon:"warning",
+				});
+			    return
+		    }
+	  	    $.ajax({
             type: 'POST',//方法类型
-            url: url,
+            url: '/admin/goodsSale/download',
             contentType: 'application/json',
             data: JSON.stringify(data),
+            //data:1,
+            
             success: function (result) {
-	//サーバーが成功した場合
+	        //サーバーが成功した場合
                 if (result.resultCode == 200) {
-	                    var el;
-	                    if(result.data.list.length > 0){
-
-							$(".campaignTable").find(".delete").remove();
-					  	}
-				        var ar = result.data.list;
-
-					    debugger;
-	                       for(let i = 0; i <ar.length;i++){
-	                   el = $(".hiddenSaleDiv").clone().removeClass("hiddenSaleDiv");
-	                   el.find(".zv-cqa-q-id").html(result.data.list[i].id);
-	                   el.find(".zv-cqa-q-name").html(result.data.list[i].name);
-	                   el.find(".zv-cqa-q-startDate").html(result.data.list[i].startDate);
-	                   el.find(".zv-cqa-q-endDate").html(result.data.list[i].endDate);
-	                   $("#dateilFooter"),before(el);
-	               }
-                } else {                  	
-                    swal(result.message, {
+	              debugger;
+	             // var url = window.location.assign(result.data);
+	              Download(result.data);
+                } else {
+                    	swal(result.message, {
                         icon: "error",
                     });
                 }
-                ;
+                
             },
-            error: function () {
-                swal("操作失败", {
-                    icon: "error",
-                });
-            }
-        });
-}
-		
-
-/*download*/
-$("#downloadGoodsSale").on('click',function(){
-   debugger;
-   var ids = [];
-   $('input:checkbox:checked').parent().next().map(function (){
-	 ids.push($(this).text())
-	 return ids;
-})
-   if(ids == null){
-	swal("请选择一条记录",{
-		icon:"warning",
-	});
-	return
-}
-	  $.ajax({
-          type: 'POST',//方法类型
-          url: '/admin/goodsSale/download',
-          contentType: 'application/json',
-          data: JSON.stringify(_data),
-            //data:1,
-
-          success: function (result) {
-	        //サーバーが成功した場合
-              if (result.resultCode == 200) {
-	            debugger;
-	             // var url = window.location.assign(result.data);
-	            Download(result.data);
-              } else {
-                   swal(result.message, {
-                      icon: "error",
-                  });
-                }
-
-           },
             error: function () {
                 swal("操作失败", {
                     icon: "error",
@@ -117,15 +48,55 @@ $("#downloadGoodsSale").on('click',function(){
              }
          })
   });
-
 function Download(url) {
    document.getElementById('my_iframe').src = url;
 };
-
-/*文件上传*/
-
-    //图片上传插件初始化 用于商品预览图上传
-     new AjaxUpload('#testUploadSale', {
+/*txt*/
+/*$("#downloadsaleTxt").on('click',function(){
+	        debugger;
+	        var ids = [];
+	        $('input:checkbox:checked').parent().next().map(function (){
+			    ids.push($(this).text())
+			    return ids;
+			})
+			var index = ids.indexOf("Campaign ID");
+			  if (index > -1) {
+			  ids.splice(index,1);
+			}
+			if (!ids){
+			    swal("请选择一条记录" ,{
+				icon:"warning",
+				});
+			    return
+		    }
+	  	    $.ajax({
+            type: 'POST',//方法类型
+            url: '/admin/goodsSale/downloadtxt',
+            contentType: 'application/json',
+            data: JSON.stringify(ids),
+            //data:1,
+            
+            success: function (result) {
+	        //サーバーが成功した場合
+                if (result.resultCode == 200) {
+	              debugger;
+	             // var url = window.location.assign(result.data);
+	              Download(result.data);
+                } else {
+                    	swal(result.message, {
+                        icon: "error",
+                    });
+                }
+                
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+             }
+         })
+  });*/
+new AjaxUpload('#col-119', {
         action: '/admin/sale/search',
         name: 'file',
         autoSubmit: true,
@@ -174,25 +145,15 @@ $("#keywordSale").keyup(function(){
 			debugger;
 			clearResultList();
 			showResultForLikeSearch(json_data);
-			 //1.提取第一行数据 1-1直接去页面取数据。
-            //2.提取keyword 结果入力ip
-            //apple iPhone 11 => 截取结果keyword：iPhone
-            //insert ajax
-            debugger;
-            //这个方法就是说从指定位置往后找返回字符在该字符串中第一次出现处的索引，比如“woaizhongguo”indexOf（'o',2）那返回值就是6而不是1
-             var list = json_data.data.list[0];
-             var str = list.name;
-             var arr = str.split(" ");
-             arr.filter(keyword => keyword.includes(keyword));  
-
-             
-             
-           },
+			debugger;
+	   	    var list = json_data.data.list[0];
+		    var str = list.name;
+		},
 		error: function() {
 			debugger;
-			alert("Service Error. Pleasy try again later.")
+			alert("Service Error. Pleasy try again later.");
 		}
-	  });
+	});
 		
 });
 function clearResultList(){
@@ -203,7 +164,6 @@ function clearResultList(){
 		}
 	})
 }
-
 function showResultForLikeSearch(result){
 	var list = result.data.list;
 	for(var i = 0; i< list.length; i++){
@@ -305,7 +265,7 @@ $("#saveSaleButton").click(function(){
 
   
   
-  
+  //排序
   $(function(){
   // カラムのクリックイベント
   $("th").click(function(){

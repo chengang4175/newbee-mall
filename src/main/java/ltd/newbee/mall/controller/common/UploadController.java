@@ -15,6 +15,7 @@ import ltd.newbee.mall.controller.vo.GoodsQaVO;
 import ltd.newbee.mall.controller.vo.GoodsSaleVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
+import ltd.newbee.mall.entity.Download;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
@@ -192,75 +193,24 @@ public class UploadController {
         return ResultGenerator.genSuccessResult();
     }    
 
-	/*
-	 * @PostMapping({ "/uploadtext/file" })
-	 * 
-	 * @ResponseBody public Result uploadtext(HttpServletRequest
-	 * httpServletRequest, @RequestParam("file") MultipartFile file) throws
-	 * URISyntaxException, ParseException { try { SimpleDateFormat sdFormat = new
-	 * SimpleDateFormat("yyyy/MM/dd"); Integer count = null; InputStream is =
-	 * file.getInputStream(); BufferedReader br = new BufferedReader(new
-	 * InputStreamReader(is)); String line; while ((line = br.readLine()) != null) {
-	 * String[] arr = line.split(","); // 放入方法 TbSale tbEntity = new TbSale();
-	 * tbEntity.setId(Long.parseLong(arr[0]));
-	 * tbEntity.setGoodsId(Long.parseLong(arr[1]));
-	 * tbEntity.setStartDate(sdFormat.parse(arr[2]));
-	 * tbEntity.setEndDate(sdFormat.parse(arr[3])); // 插入服务 if (tbEntity != null) {
-	 * count = newBeeMallGoodsService.insertTbSale(tbEntity);
-	 * 
-	 * } if (!(count > 0)) { return ResultGenerator.genFailResult(""); } return
-	 * ResultGenerator.genSuccessResult(count);
-	 * 
-	 * } br.close();
-	 * 
-	 * } catch (IOException e) { e.printStackTrace();
-	 * 
-	 * } return ResultGenerator.genSuccessResult(); }
-	 */
+	
 	// 五月十四日下载
+	//之前的下载
 	/*
-	 * @RequestMapping(value = "/Download/file", method = RequestMethod.POST)
+	 * @RequestMapping(value = "/goodsSale/download", method = RequestMethod.POST)
 	 * 
-	 * @ResponseBody public Result Download(@RequestBody Integer[] ids){ File f =
-	 * new File("D:\\zhaopian\\upload\\text.csv"); SimpleDateFormat sdFormat = new
-	 * SimpleDateFormat("yyyy/MM/dd");
-	 * 
-	 * try { BufferedWriter bw = new BufferedWriter(new FileWriter(f)); List<TbSale>
-	 * tbSale = newBeeMallGoodsService.getTbSaleDownload(ids);
-	 * tbSale.stream().forEach( c -> { try { bw.write(c.toString()); bw.newLine();
-	 * 
-	 * }catch (IOException e) { e.printStackTrace(); }
-	 * 
-	 * }); bw.close(); }catch (IOException e) { e.printStackTrace(); }
-	 * 
-	 * Result resultSuccess = ResultGenerator.genSuccessResult();
-	 * resultSuccess.setData("/upload/text.csv"); return resultSuccess; }
+	 * @ResponseBody public Result download(@RequestBody Integer[] ids) throws
+	 * URISyntaxException, ParseException { File f = new
+	 * File(Constants.FILE_UPLOAD_CSV); try { BufferedWriter bw = new
+	 * BufferedWriter(new FileWriter(f)); List<GoodsSale> list =
+	 * newBeeMallGoodsService.getGoodsSaleDownload(ids); list.stream().forEach( c ->
+	 * { try { bw.write(c.toString()); bw.newLine();//空一行 } catch (IOException e) {
+	 * // TODO Auto-generated catch block e.printStackTrace(); } }); bw.close();
+	 * }catch (IOException e) { e.printStackTrace(); } Result resultSuccess =
+	 * ResultGenerator.genSuccessResult();
+	 * resultSuccess.setData(Constants.FILE_UPLOAD_TEST_CSV); return resultSuccess;
+	 * }
 	 */
-	@RequestMapping(value = "/goodsSale/download", method = RequestMethod.POST)
-	    @ResponseBody
-	    public Result download(@RequestBody Integer[] ids) throws URISyntaxException, ParseException {
-		File f = new File(Constants.FILE_UPLOAD_CSV);
-		try {
-		    BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-		    List<GoodsSale> list = newBeeMallGoodsService.getGoodsSaleDownload(ids);
-	            list.stream().forEach( c -> {
-	        	   try {
-			    bw.write(c.toString());
-			    bw.newLine();//空一行
-			} catch (IOException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
-			}
-	            });
-	            bw.close();
-		}catch (IOException e) {
-	            e.printStackTrace();
-	        }
-		Result resultSuccess = ResultGenerator.genSuccessResult();
-		resultSuccess.setData(Constants.FILE_UPLOAD_TEST_CSV);
-		return resultSuccess;
-	    }
-
 	// 2021/05/17
 	@GetMapping({ "/goods/sale", "/sale.html" })
 	public String searchPage(@RequestParam Map<String, Object> params, HttpServletRequest request) {
@@ -282,47 +232,57 @@ public class UploadController {
 		// 封装商品数据
 		PageQueryUtil pageUtil = new PageQueryUtil(params);
 		request.setAttribute("pageResult", newBeeMallGoodsService.goodsSalePagAndSort(pageUtil));
-
-		/*
-		 * Map<String, Object> paramsgs = new HashMap<>(); paramsgs.put("page", "1");
-		 * paramsgs.put("limit", "3"); PageQueryUtil gs = new PageQueryUtil(paramsgs);
-		 * PageResult rs = newBeeMallGoodsService.goodsSalePagAndSort(gs);
-		 * List<GoodsSale> listSale = (List<GoodsSale>) rs.getList(); if (listSale ==
-		 * null) {
-		 * NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult()); }
-		 * List<GoodsSaleVO> goodsSaleVOList = new ArrayList<GoodsSaleVO>(); for (int i
-		 * = 0; i < listSale.size(); i++) { GoodsSale sale = new GoodsSale(); sale =
-		 * listSale.get(i); if (sale != null) { GoodsSaleVO saleVO = new GoodsSaleVO();
-		 * BeanUtil.copyProperties(sale, saleVO); goodsSaleVOList.add(saleVO); } }
-		 */
-		/* request.setAttribute("goodsSaleDetail", goodsSaleVOList); */
 		return "admin/sale";
 	}
-	@RequestMapping(value = "/goodsSale/downloadtxt", method = RequestMethod.POST)
+	/*
+	 * @RequestMapping(value = "/goodsSale/downloadtxt", method =
+	 * RequestMethod.POST)
+	 * 
+	 * @ResponseBody public Result downloadtxt(@RequestBody Integer[] ids) throws
+	 * URISyntaxException, ParseException { File f = new
+	 * File(Constants.FILE_UPLOAD_TXT); try { BufferedWriter bw = new
+	 * BufferedWriter(new FileWriter(f)); List<GoodsSale> list =
+	 * newBeeMallGoodsService.getGoodsSaleDownload(ids); list.stream().forEach( c ->
+	 * { try { bw.write(c.toString()); bw.newLine();//空一行 } catch (IOException e) {
+	 * // TODO Auto-generated catch block e.printStackTrace(); } }); bw.close();
+	 * }catch (IOException e) { e.printStackTrace(); } Result resultSuccess =
+	 * ResultGenerator.genSuccessResult();
+	 * resultSuccess.setData(Constants.FILE_UPLOAD_TEST_TXT); return resultSuccess;
+	 * }
+	 */
+	/* csv add txt download 2021/05/27 */
+    @RequestMapping(value = "/goodsSale/download", method = RequestMethod.POST)
     @ResponseBody
-    public Result downloadtxt(@RequestBody Integer[] ids) throws URISyntaxException, ParseException {
-	File f = new File(Constants.FILE_UPLOAD_TXT);
-	try {
-	    BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-	    List<GoodsSale> list = newBeeMallGoodsService.getGoodsSaleDownload(ids);
-            list.stream().forEach( c -> {
-        	   try {
-		    bw.write(c.toString());
-		    bw.newLine();//空一行
-		} catch (IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
-            });
-            bw.close();
-	}catch (IOException e) {
-            e.printStackTrace();
+    public Result downloadFile (@RequestBody Download download) {
+       StringBuilder txCv = new StringBuilder();
+       txCv.append("."+ download.getFormat());
+       String test= "test" + txCv;
+       File f = new File(Constants.FILE_UPLOAD_DIC + test);
+       BufferedWriter bw=null;
+       try {
+           bw = new BufferedWriter(new FileWriter(f));
+           } catch (IOException e1) {
+              e1.printStackTrace();
+           }
+       List<GoodsSale> List =newBeeMallGoodsService.getGoodsSaleDownload(download.getIds(), test);
+        for(int i = 0; i < List.size();i++) {
+            GoodsSale gs=List.get(i);
+             if(gs != null) {
+                try {
+                  bw.write(gs.toString());
+                  bw.newLine();        
+                    } catch (IOException e) {
+                       e.printStackTrace();
+                    }
+             }
         }
-	Result resultSuccess = ResultGenerator.genSuccessResult();
-	resultSuccess.setData(Constants.FILE_UPLOAD_TEST_TXT);
-	return resultSuccess;
-    }
-
-
-
+        try {
+         bw.close();
+         } catch (IOException e) {
+           e.printStackTrace();
+         }
+      Result resultSuccess = ResultGenerator.genSuccessResult();
+      resultSuccess.setData("/upload/"+ test);
+      return resultSuccess;
+     }
 }

@@ -1,0 +1,97 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini" onload="time()">
+	<div class="wrapper">
+		<!-- 引入页面头header-fragment -->
+		<div th:replace="admin/header::header-nav"></div>
+		<!-- 引入工具栏sidebar-fragment -->
+		<div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+				</div><!-- /.container-fluid -->
+			</div>
+			<!-- Main content -->
+			<div class="content">
+				<div class="container-fluid">
+					<div class="card card-primary card-outline">
+						<div class="card-header">
+							<h3 class="card-title">商品折扣</h3>
+							</div> 
+						 <div class="card-body"> <!-- /.card-body -->
+							<div>
+								<div>
+									<table class="order-table">
+										<tbody>
+										
+											<tr>
+												<td>
+													<select class="custom-select" id="inputGroupSelect04">
+														<option value="selected">选择折扣</option>
+														<option value="1">换季大促销(40%)</option>
+														<option value="2">换季大促销(30%)</option>
+													 </th:block>
+													 </th:block>
+													</select>
+													</td>
+												<td>
+													<input type="checkbox"/> 数码 家电 手机
+													<button class="button1" id="downBox">➕</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+
+								</div>
+
+								<div>
+
+
+								</div><!-- /.card-body -->
+							</div><!-- /.container-fluid -->
+							</div>
+							</div>
+	    <!-- #contents START -->
+	  <div id="contents">
+	  </div>
+    <!-- /.content-wrapper -->
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+<ul id="searchResultUl">
+		<li class="dumyLi">
+		<select class="custom-select" id="inputGroupSelect05">
+			<option value="selected">选择折扣</option>
+			<option value="1">换季大促销(40%)</option>
+			<option value="2">换季大促销(30%)</option>
+		</select>
+		<input type="checkbox" />
+			<a>
+			link
+		</a>
+		<button class="button1" id="downBox">➕</button>
+	</li>
+</ul>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- sweetalert -->
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- ajaxupload -->
+<script th:src="@{/admin/plugins/ajaxupload/ajaxupload.js}"></script>
+<!-- wangEditor -->
+<script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
+<script th:src="@{/admin/dist/js/public.js}"></script>
+<script th:src="@{/admin/dist/js/newHtml.js}"></script>
+<link rel="stylesheet" th:href="@{/admin/dist/css/newHtml.css}">
+
+</body>
+</html>
